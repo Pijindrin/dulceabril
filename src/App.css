@@ -1,0 +1,3601 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+:root {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+  color: #332a2d;
+  background: #fcf8f6;
+  color-scheme: only light;
+  --bg: #f9e2d4;
+  --cream: #f9e2d4;
+  --pink-soft: #f3e3e0;
+  --pink: #d99aaa;
+  --wine: #965d6d;
+  --wine-dark: #784957;
+  --text: #332a2d;
+  --muted: #786b6e;
+  --line: #ead7d5;
+  --white: #fff;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--text); }
+button, input, textarea, select { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; }
+
+.app { min-height: 100vh; overflow-x: hidden; background: var(--bg); }
+
+/* HEADER */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+.header-inner {
+  width: 100%; max-width: none; min-height: 82px; margin: 0 auto;
+  padding: 0 clamp(24px, 4vw, 60px); display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 24px;
+}
+.menu-button, .cart-button {
+  width: 48px; height: 48px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--cream); color: var(--wine);
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+.menu-button { justify-self: start; }
+.menu-button span { width: 23px; height: 2px; background: var(--wine); display: block; margin: 3px 0; }
+.cart-button { justify-self: end; position: relative; font-size: 22px; }
+.cart-icon { line-height: 1; filter: grayscale(.2); }
+.brand {
+  border: 0; background: transparent; color: var(--text); cursor: pointer;
+  padding: 4px 12px; text-align: center; justify-self: center;
+}
+.brand-script, .footer-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 25px; font-weight: 600; line-height: 1.05;
+}
+.brand-script span, .footer-logo span { color: var(--wine); }
+.brand small { display:block; margin-top: 5px; font-size: 7px; letter-spacing: 2px; color: var(--muted); }
+.desktop-nav { justify-self: start; display: none; align-items: center; gap: 22px; }
+.desktop-nav a { text-decoration: none; font-size: 12px; color: var(--muted); }
+.desktop-nav a:hover { color: var(--wine); }
+.cart-count {
+  position: absolute; right: -6px; top: -6px; min-width: 19px; height: 19px;
+  padding: 0 5px; border-radius: 50%; background: var(--pink); color: #fff;
+  font-size: 10px; display:flex; align-items:center; justify-content:center;
+}
+
+/* MOBILE MENU */
+.mobile-menu-overlay, .cart-overlay, .checkout-overlay, .product-detail-overlay {
+  position: fixed; inset: 0; z-index: 100; background: rgba(51,42,45,.35);
+}
+.mobile-menu { width: min(330px, 86vw); height: 100%; background: var(--cream); padding: 26px; box-shadow: 12px 0 40px rgba(0,0,0,.12); }
+.mobile-menu-close, .cart-close, .checkout-close, .product-detail-close {
+  border: 0; background: transparent; cursor:pointer; color: var(--wine); font-size: 30px;
+}
+.mobile-menu-close { display:block; margin-left:auto; }
+.mobile-menu-brand { margin: 12px 0 30px; text-align:center; font-family:'Playfair Display',serif; font-size:26px; }
+.mobile-menu-brand small { display:block; font: 8px 'DM Sans', sans-serif; letter-spacing:2px; color:var(--muted); margin-top:5px; }
+.mobile-menu > button:not(.mobile-menu-close) { width:100%; padding:15px 0; text-align:left; border:0; border-bottom:1px solid var(--line); background:transparent; color:var(--text); cursor:pointer; }
+
+/* HERO */
+.hero { padding: 34px 30px 20px; background: var(--cream); }
+.hero-slide { position:relative; width:100%; max-width:none; margin:auto; min-height:420px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hero-background { position:absolute; inset:0; background: linear-gradient(120deg,#ead5d1,#f5e6e2 52%,#ead5d1); overflow:hidden; }
+.circle-one, .circle-two { position:absolute; border-radius:50%; background:rgba(255,255,255,.22); filter:blur(2px); }
+.circle-one { width:300px; height:300px; left:-100px; bottom:-130px; }
+.circle-two { width:240px; height:240px; right:-70px; top:-80px; }
+.hero-product-shape { position:absolute; right:8%; bottom:-70px; width:220px; height:250px; border-radius:50% 50% 18% 18%; background:rgba(255,255,255,.20); color:transparent; }
+.hero-content { position:relative; z-index:2; width:100%; padding:48px 26px 40px; text-align:center; }
+.hero-eyebrow { font-size:12px; font-weight:600; letter-spacing:5px; color:#5c4a4e; margin-bottom:25px; }
+.hero-brand { font-family:'Playfair Display', Georgia, serif; font-size:58px; font-weight:600; color:#30272a; line-height:1; margin-bottom:20px; }
+.hero-brand span { color:var(--wine); }
+.hero-text { max-width:650px; margin:0 auto 28px; color:#66595d; font-size:17px; line-height:1.55; }
+.hero-main-button, .promotion-button, .instagram-button {
+  border:0; background:var(--wine); color:#fff; min-width:190px; padding:15px 28px;
+  cursor:pointer; font-size:13px; letter-spacing:.7px; transition:.2s ease;
+}
+.hero-main-button:hover, .promotion-button:hover, .instagram-button:hover { background:var(--wine-dark); }
+.hero-arrow { position:absolute; z-index:3; top:50%; transform:translateY(-50%); width:38px; height:38px; border:0; border-radius:50%; background:#fff; color:#42373a; font-size:28px; line-height:1; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,.08); }
+.hero-arrow-left { left:20px; } .hero-arrow-right { right:20px; }
+.hero-dots { display:flex; gap:7px; justify-content:center; margin-top:30px; }
+.hero-dots span { width:7px; height:7px; border-radius:50%; background:#fff; border:1px solid #fff; }
+.hero-dots span.active { background:#30272a; }
+
+/* BENEFITS */
+.benefits { width:100%; max-width:none; margin:0 auto; padding:30px clamp(24px, 5vw, 80px) 48px; display:grid; grid-template-columns:repeat(4,1fr); gap:22px; background:var(--cream); }
+.benefit { display:flex; align-items:center; gap:14px; cursor:default; }
+.benefit-icon { width:54px; height:54px; flex:0 0 54px; border-radius:50%; background:#f6e7e4; display:flex; align-items:center; justify-content:center; font-size:25px; }
+.benefit strong { display:block; font-size:14px; margin-bottom:6px; }
+.benefit p { margin:0; color:var(--muted); font-size:12px; line-height:1.4; }
+.benefit:last-child { cursor:pointer; }
+
+/* FEATURED */
+.featured-section, .products-section, .promotions-section, .instagram-section { width:100%; max-width:none; margin:0 auto; }
+.featured-section { padding:55px clamp(24px, 5vw, 80px) 70px; }
+.featured-heading { display:flex; align-items:end; justify-content:space-between; margin-bottom:30px; }
+.featured-heading p, .section-heading p, .promotion-content > p, .instagram-section > p:first-child { margin:0 0 10px; color:var(--wine); font-size:11px; letter-spacing:4px; }
+.featured-heading h2, .section-heading h2 { margin:0; font-family:'Playfair Display', Georgia, serif; font-size:42px; font-weight:500; }
+.view-all-button { border:0; background:transparent; color:var(--wine); cursor:pointer; font-size:13px; }
+.featured-grid, .product-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.product-card { background:#fff; border:1px solid var(--line); cursor:pointer; overflow:hidden; transition:transform .2s, box-shadow .2s; }
+.product-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(90,50,60,.08); }
+.product-image { position:relative; aspect-ratio:1/1; background:#f4e8e5; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.product-image img { width:100%; height:100%; object-fit:cover; display:block; }
+.sold-badge { position:absolute; z-index:2; top:12px; left:12px; background:#df7592; color:#fff; border-radius:14px; padding:6px 12px; font-size:9px; letter-spacing:.3px; }
+.product-info { padding:18px 16px 20px; }
+.product-info > span { color:var(--wine); font-size:10px; letter-spacing:2px; text-transform:uppercase; }
+.product-info h3 { margin:9px 0 8px; font-family:'Playfair Display',Georgia,serif; font-size:20px; font-weight:500; }
+.product-info strong { display:block; color:var(--wine); font-size:18px; margin-bottom:16px; }
+.add-button { width:100%; border:0; background:var(--wine); color:#fff; padding:13px 12px; cursor:pointer; font-size:12px; }
+.add-button:hover { background:var(--wine-dark); }
+
+/* PRODUCTS */
+.products-section { padding:40px clamp(24px, 5vw, 80px) 80px; }
+.categories-anchor { scroll-margin-top:100px; }
+.section-heading { text-align:center; margin-bottom:28px; }
+.section-heading h2 { font-size:38px; }
+.section-heading span { display:block; width:45px; height:1px; background:var(--pink); margin:20px auto 0; }
+.category-filters { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:30px; }
+.category-button { border:1px solid var(--line); background:transparent; color:var(--muted); padding:9px 16px; cursor:pointer; font-size:11px; }
+.category-button.active, .category-button:hover { background:var(--wine); border-color:var(--wine); color:#fff; }
+.product-grid { grid-template-columns:repeat(3,1fr); }
+
+/* PROMOTIONS */
+.promotions-section { width:100%; margin-top:20px; padding:80px clamp(24px, 5vw, 80px); background:#f2dfdc; text-align:center; }
+.promotion-content { max-width:650px; margin:auto; }
+.promotion-content h2, .instagram-section h2 { margin:0; font-family:'Playfair Display',Georgia,serif; font-size:40px; font-weight:500; }
+.promotion-content > span { display:block; width:45px; height:1px; background:var(--pink); margin:20px auto; }
+.promotion-text { color:var(--muted); line-height:1.7; margin:0 auto 25px; }
+
+/* INSTAGRAM */
+.instagram-section { text-align:center; padding:75px clamp(24px, 5vw, 80px); }
+.instagram-section h2 { margin-bottom:14px; }
+.instagram-section p:not(:first-child) { color:var(--muted); margin:0 auto 22px; }
+
+/* FOOTER */
+.footer { margin-top:0; background:#382d30; color:#fff; padding:55px max(24px,calc((100% - 1180px)/2)); display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+.footer-logo { color:#fff; }
+.footer-brand p, .footer-contact p { color:#d9cdd0; font-size:12px; }
+.footer-contact { justify-self:end; text-align:right; }
+.footer-bottom { grid-column:1/-1; padding-top:22px; border-top:1px solid rgba(255,255,255,.15); display:flex; justify-content:space-between; gap:15px; color:#c9bdc0; font-size:10px; }
+
+/* MOBILE NAV */
+.mobile-bottom-nav { display:none; }
+
+/* CART */
+.cart-overlay, .checkout-overlay, .product-detail-overlay { display:flex; justify-content:flex-end; }
+.cart-panel { width:min(480px,100%); height:100%; background:var(--cream); padding:28px; overflow:auto; box-shadow:-10px 0 35px rgba(0,0,0,.12); }
+.cart-header { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:20px; border-bottom:1px solid var(--line); }
+.cart-header span, .checkout-modal > span { color:var(--wine); font-size:10px; letter-spacing:3px; }
+.cart-header h2 { margin:6px 0 0; font-family:'Playfair Display',Georgia,serif; font-size:30px; font-weight:500; }
+.empty-cart { text-align:center; padding:70px 20px; }
+.empty-cart-icon { font-size:45px; }
+.empty-cart p { color:var(--muted); line-height:1.6; }
+.cart-item { display:grid; grid-template-columns:80px 1fr auto; gap:14px; padding:18px 0; border-bottom:1px solid var(--line); align-items:start; }
+.cart-item-image { width:80px; height:80px; background:#f4e8e5; }
+.cart-item-image img { width:100%; height:100%; object-fit:cover; }
+.cart-item-info > span { color:var(--wine); font-size:9px; text-transform:uppercase; letter-spacing:1px; }
+.cart-item-info h3 { margin:5px 0; font-size:14px; }
+.cart-item-info strong { color:var(--wine); font-size:14px; }
+.quantity-controls { display:flex; width:max-content; border:1px solid var(--line); margin-top:10px; }
+.quantity-controls button, .quantity-controls span { width:30px; height:28px; display:flex; align-items:center; justify-content:center; border:0; background:#fff; }
+.quantity-controls button { cursor:pointer; }
+.remove-item { border:0; background:transparent; color:#9b8187; cursor:pointer; font-size:20px; }
+.cart-summary { border-top:1px solid var(--line); margin-top:20px; padding-top:20px; }
+.cart-total { display:flex; justify-content:space-between; font-size:14px; margin-bottom:18px; }
+.cart-total strong { color:var(--wine); font-size:20px; }
+.checkout-button, .whatsapp-cart-button, .continue-shopping { width:100%; padding:14px; margin-top:9px; border:0; cursor:pointer; }
+.checkout-button { background:var(--wine); color:#fff; }
+.whatsapp-cart-button { background:#2b9d63; color:#fff; }
+.continue-shopping { background:transparent; color:var(--wine); }
+
+/* CHECKOUT */
+.checkout-overlay, .product-detail-overlay { align-items:center; justify-content:center; padding:20px; }
+.checkout-modal, .product-detail-modal { position:relative; width:min(480px,100%); background:var(--cream); padding:38px; }
+.checkout-modal h2 { font-family:'Playfair Display',Georgia,serif; font-size:30px; font-weight:500; margin:10px 0; }
+.checkout-modal p { color:var(--muted); line-height:1.6; }
+.checkout-close, .product-detail-close { position:absolute; top:10px; right:15px; }
+.checkout-option { width:100%; border:0; padding:14px; margin-top:10px; cursor:pointer; }
+.checkout-option.whatsapp { background:#2b9d63; color:#fff; }
+.checkout-option.instagram { background:#f0dce1; color:var(--wine); }
+
+/* PRODUCT DETAIL */
+.product-detail-modal { max-width:800px; display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.product-detail-image { background:#f4e8e5; min-height:350px; }
+.product-detail-image img { width:100%; height:100%; object-fit:cover; }
+.product-detail-info { align-self:center; }
+.product-detail-info > span { color:var(--wine); font-size:10px; letter-spacing:2px; text-transform:uppercase; }
+.product-detail-info h2 { font-family:'Playfair Display',Georgia,serif; font-size:34px; font-weight:500; margin:10px 0; }
+.product-detail-info strong { color:var(--wine); font-size:24px; }
+.product-detail-info p { color:var(--muted); line-height:1.7; }
+
+@media (min-width: 900px) {
+  .header-inner { grid-template-columns:auto 1fr auto; }
+  .menu-button { display:none; }
+  .desktop-nav { display:flex; }
+  .brand { justify-self:start; order:0; }
+  .desktop-nav { order:1; justify-self:center; }
+  .cart-button { order:2; }
+}
+
+@media (max-width: 899px) {
+  .header-inner { grid-template-columns:48px 1fr 48px; min-height:76px; padding:0 30px; }
+  .menu-button { display:inline-flex; flex-direction:column; }
+  .desktop-nav { display:none; }
+  .brand-script { font-size:22px; }
+  .hero { padding:28px 30px 20px; }
+  .hero-slide { min-height:500px; }
+  .hero-brand { font-size:52px; }
+  .benefits { grid-template-columns:repeat(2,1fr); }
+  .featured-grid { grid-template-columns:repeat(2,1fr); }
+  .product-grid { grid-template-columns:repeat(2,1fr); }
+  .mobile-bottom-nav { display:grid; position:fixed; z-index:45; bottom:0; left:0; right:0; height:68px; background:rgba(255,250,248,.98); border-top:1px solid var(--line); grid-template-columns:repeat(4,1fr); padding-bottom:env(safe-area-inset-bottom); }
+  .mobile-bottom-nav button { border:0; background:transparent; color:var(--muted); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; }
+  .mobile-bottom-nav button span { font-size:20px; line-height:1; position:relative; }
+  .mobile-bottom-nav small { font-size:9px; }
+  .mobile-nav-active { color:var(--wine) !important; }
+  .mobile-cart-button b { position:absolute; top:-7px; right:-10px; background:#df7592; color:#fff; border-radius:50%; min-width:16px; height:16px; display:flex; align-items:center; justify-content:center; font-size:9px; }
+  .footer { padding-bottom:100px; }
+}
+
+@media (max-width: 600px) {
+  .header-inner { min-height:70px; padding:0 30px; }
+  .menu-button, .cart-button { width:48px; height:48px; }
+  .brand-script { font-size:19px; }
+  .brand small { font-size:6px; letter-spacing:1.5px; }
+  .hero { padding:28px 30px 15px; }
+  .hero-slide { min-height:440px; }
+  .hero-content { padding:45px 18px 35px; }
+  .hero-eyebrow { font-size:10px; letter-spacing:3.5px; margin-bottom:22px; }
+  .hero-brand { font-size:40px; }
+  .hero-text { font-size:16px; }
+  .hero-arrow { width:34px; height:34px; font-size:24px; }
+  .hero-arrow-left { left:10px; } .hero-arrow-right { right:10px; }
+  .benefits { display:grid; grid-template-columns:repeat(4,1fr); padding:18px 8px 30px; gap:5px; }
+  .benefit { display:flex; flex-direction:column; align-items:center; text-align:center; gap:7px; }
+  .benefit-icon { width:48px; height:48px; flex-basis:48px; font-size:21px; }
+  .benefit strong { font-size:9px; line-height:1.25; margin-bottom:3px; }
+  .benefit p { font-size:8px; line-height:1.25; }
+  .featured-section { padding:50px 30px 60px; }
+  .featured-heading { align-items:flex-start; gap:10px; }
+  .featured-heading h2 { font-size:31px; }
+  .featured-heading p { font-size:9px; letter-spacing:3px; }
+  .featured-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .product-info { padding:13px 12px 15px; }
+  .product-info h3 { font-size:16px; }
+  .product-info strong { font-size:16px; }
+  .product-info .add-button { font-size:10px; padding:11px 6px; }
+  .products-section { padding:30px 20px 60px; }
+  .section-heading h2 { font-size:31px; }
+  .product-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .category-filters { gap:6px; }
+  .category-button { padding:8px 11px; font-size:10px; }
+  .promotions-section { padding:60px 25px; }
+  .promotion-content h2, .instagram-section h2 { font-size:32px; }
+  .instagram-section { padding:60px 25px; }
+  .footer { grid-template-columns:1fr; }
+  .footer-contact { justify-self:start; text-align:left; }
+  .footer-bottom { flex-direction:column; }
+  .cart-panel { padding:22px 18px 90px; }
+  .product-detail-modal { grid-template-columns:1fr; max-height:90vh; overflow:auto; }
+  .product-detail-image { min-height:280px; }
+}
+
+/* =========================================================
+   DULCE ABRIL — DISEÑO FINAL DE REFERENCIA
+   ========================================================= */
+:root {
+  --dulce-bg: #fffafa;
+  --dulce-pink-soft: #fff4f2;
+  --dulce-pink: #f8e9e8;
+  --dulce-rose: #9b6071;
+  --dulce-rose-dark: #825264;
+  --dulce-text: #30292b;
+  --dulce-muted: #756b6d;
+  --dulce-line: #ead9d8;
+}
+
+html, body {
+  background: var(--dulce-bg) !important;
+}
+
+body, .app, main,
+.featured-section, .products-section,
+.promotions-section, .instagram-section, .footer {
+  background: var(--dulce-bg) !important;
+}
+
+/* ---------- ENCABEZADO ---------- */
+.header {
+  background: var(--dulce-pink-soft) !important;
+  border-bottom: 1px solid var(--dulce-line) !important;
+}
+
+.header-inner {
+  min-height: 92px !important;
+  background: transparent !important;
+}
+
+.brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  padding: 2px 10px !important;
+}
+
+.brand-logo-image {
+  display: block !important;
+  width: 88px !important;
+  height: 88px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.brand small {
+  display: block !important;
+  margin-top: 0 !important;
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 7px !important;
+  letter-spacing: .28em !important;
+  color: var(--dulce-muted) !important;
+}
+
+.menu-button,
+.cart-button {
+  background: rgba(255,250,248,.72) !important;
+  border-color: var(--dulce-line) !important;
+  color: var(--dulce-rose) !important;
+}
+
+.menu-button span {
+  background: var(--dulce-rose) !important;
+}
+
+.cart-icon {
+  filter: none !important;
+}
+
+/* ---------- MENÚ MÓVIL ---------- */
+.mobile-menu {
+  background: var(--dulce-pink-soft) !important;
+}
+
+.mobile-menu-brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.mobile-menu-logo {
+  width: 105px !important;
+  height: 105px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  background: var(--dulce-bg) !important;
+  padding: 30px 15px 36px !important;
+}
+
+.hero-slide {
+  min-height: 0 !important;
+  height: 520px !important;
+  overflow: hidden !important;
+  background: var(--dulce-pink) !important;
+  border: 1px solid #ead7d5 !important;
+}
+
+.hero-background {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,.52), transparent 34%),
+    radial-gradient(circle at 48% 86%, rgba(255,255,255,.40), transparent 38%),
+    linear-gradient(135deg, #f3dfdd 0%, #faeceb 52%, #f1dedd 100%) !important;
+}
+
+.hero-product-shape {
+  opacity: .12 !important;
+  background: rgba(255,255,255,.30) !important;
+}
+
+.hero-content {
+  padding: 38px 22px 25px !important;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: .34em !important;
+  margin-bottom: 18px !important;
+  color: #5e5053 !important;
+}
+
+.hero-logo-image {
+  display: block !important;
+  width: 225px !important;
+  height: 225px !important;
+  margin: 0 auto 10px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+.hero-text {
+  max-width: 700px !important;
+  margin: 0 auto 24px !important;
+  color: #665c5e !important;
+  font-size: 19px !important;
+  line-height: 1.45 !important;
+}
+
+.hero-main-button {
+  min-width: 230px !important;
+  padding: 15px 25px !important;
+  background: var(--dulce-rose) !important;
+  border-color: var(--dulce-rose) !important;
+  color: #fff !important;
+}
+
+.hero-main-button:hover {
+  background: var(--dulce-rose-dark) !important;
+}
+
+.hero-arrow {
+  background: #fff !important;
+  color: var(--dulce-text) !important;
+  border: 0 !important;
+  box-shadow: 0 5px 18px rgba(80,50,55,.12) !important;
+}
+
+.hero-dots span.active {
+  background: var(--dulce-text) !important;
+}
+
+/* ---------- BENEFICIOS ---------- */
+.benefits {
+  background: var(--dulce-bg) !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  padding: 28px 20px 45px !important;
+  gap: 10px !important;
+}
+
+.benefit {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 9px !important;
+}
+
+.benefit-icon {
+  width: 58px !important;
+  height: 58px !important;
+  flex-basis: 58px !important;
+  background: var(--dulce-pink) !important;
+  font-size: 25px !important;
+}
+
+.benefit strong {
+  color: var(--dulce-text) !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+}
+
+.benefit p {
+  color: var(--dulce-muted) !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+}
+
+/* ---------- PRODUCTOS DESTACADOS ---------- */
+.featured-section {
+  background: var(--dulce-bg) !important;
+  padding: 28px 30px 70px !important;
+}
+
+.featured-heading p,
+.section-heading p {
+  color: var(--dulce-rose) !important;
+  letter-spacing: .28em !important;
+}
+
+.featured-heading h2,
+.section-heading h2 {
+  color: var(--dulce-text) !important;
+}
+
+.view-all-button {
+  color: var(--dulce-rose) !important;
+}
+
+.product-card {
+  background: #fff !important;
+  border-color: var(--dulce-line) !important;
+}
+
+.product-image {
+  background: var(--dulce-pink) !important;
+}
+
+.sold-badge {
+  background: #df7195 !important;
+  color: #fff !important;
+}
+
+.product-info > span,
+.product-info strong {
+  color: var(--dulce-rose) !important;
+}
+
+.add-button,
+.category-button.active,
+.promotion-button,
+.instagram-button,
+.checkout-button {
+  background: var(--dulce-rose) !important;
+  border-color: var(--dulce-rose) !important;
+}
+
+/* ---------- BARRA INFERIOR ---------- */
+.mobile-bottom-nav {
+  background: var(--dulce-pink-soft) !important;
+  border-top: 1px solid var(--dulce-line) !important;
+}
+
+.mobile-bottom-nav button {
+  color: #776d6f !important;
+}
+
+.mobile-bottom-nav .mobile-nav-active {
+  color: var(--dulce-rose) !important;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (min-width: 900px) {
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .header-inner {
+    grid-template-columns: 52px 1fr 52px !important;
+    min-height: 104px !important;
+    padding: 0 20px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .hero-slide {
+    height: 500px !important;
+  }
+
+  .hero-logo-image {
+    width: 210px !important;
+    height: 210px !important;
+  }
+
+  .hero-text {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 104px !important;
+    padding: 0 18px !important;
+    grid-template-columns: 48px 1fr 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .brand small {
+    font-size: 6px !important;
+    letter-spacing: 1.8px !important;
+  }
+
+  .hero {
+    padding: 30px 15px 28px !important;
+  }
+
+  .hero-slide {
+    height: 445px !important;
+  }
+
+  .hero-content {
+    padding: 34px 14px 22px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .28em !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero-logo-image {
+    width: 185px !important;
+    height: 185px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .hero-text {
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .hero-main-button {
+    min-width: 205px !important;
+    padding: 13px 22px !important;
+  }
+
+  .hero-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 25px !important;
+  }
+
+  .hero-arrow-left { left: 12px !important; }
+  .hero-arrow-right { right: 12px !important; }
+
+  .benefits {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    padding: 25px 8px 38px !important;
+    gap: 5px !important;
+  }
+
+  .benefit-icon {
+    width: 50px !important;
+    height: 50px !important;
+    flex-basis: 50px !important;
+    font-size: 21px !important;
+  }
+
+  .benefit strong {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .benefit p {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .featured-section {
+    padding: 28px 30px 60px !important;
+  }
+
+  .featured-heading {
+    align-items: flex-end !important;
+    gap: 10px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 31px !important;
+  }
+
+  .featured-heading p {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .featured-grid,
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .product-info {
+    padding: 13px 12px 15px !important;
+  }
+
+  .product-info h3 {
+    font-size: 16px !important;
+  }
+
+  .product-info strong {
+    font-size: 16px !important;
+  }
+
+  .product-info .add-button {
+    font-size: 10px !important;
+    padding: 11px 6px !important;
+  }
+
+  .products-section {
+    padding: 30px 20px 60px !important;
+  }
+
+  .section-heading h2 {
+    font-size: 31px !important;
+  }
+
+  .category-filters {
+    gap: 6px !important;
+  }
+
+  .category-button {
+    padding: 8px 11px !important;
+    font-size: 10px !important;
+  }
+
+  .mobile-bottom-nav {
+    height: 68px !important;
+  }
+
+  .mobile-bottom-nav button span {
+    font-size: 20px !important;
+  }
+
+  .mobile-bottom-nav small {
+    font-size: 9px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL SEGÚN DISEÑO DE REFERENCIA
+   Logo real recortado + negro, header compacto y hero más
+   horizontal para coincidir con la referencia móvil.
+   ========================================================= */
+
+.brand-logo-image {
+  width: 78px !important;
+  height: 78px !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: none !important;
+}
+
+.hero-logo-image {
+  width: 155px !important;
+  height: 155px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto 4px !important;
+  filter: none !important;
+}
+
+.header-inner {
+  min-height: 92px !important;
+}
+
+.brand {
+  gap: 2px !important;
+  padding: 0 8px !important;
+}
+
+.brand small {
+  margin-top: 1px !important;
+  font-size: 6px !important;
+  letter-spacing: 2px !important;
+}
+
+.hero {
+  padding: 18px 15px 20px !important;
+}
+
+.hero-slide {
+  height: 285px !important;
+  min-height: 0 !important;
+  aspect-ratio: 1.45 / 1 !important;
+}
+
+.hero-content {
+  height: 100% !important;
+  padding: 18px 14px 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-eyebrow {
+  font-size: 9px !important;
+  letter-spacing: .28em !important;
+  margin-bottom: 7px !important;
+}
+
+.hero-text {
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+  margin: 2px auto 12px !important;
+}
+
+.hero-main-button {
+  min-width: 190px !important;
+  padding: 12px 22px !important;
+}
+
+.hero-dots {
+  margin-top: 12px !important;
+}
+
+.hero-arrow {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.benefits {
+  padding: 22px 8px 30px !important;
+  gap: 4px !important;
+}
+
+.benefit-icon {
+  width: 48px !important;
+  height: 48px !important;
+  flex-basis: 48px !important;
+}
+
+.featured-section {
+  padding-top: 28px !important;
+}
+
+/* En desktop mantenemos el logo protagonista sin deformarlo */
+@media (min-width: 900px) {
+  .header-inner {
+    min-height: 96px !important;
+  }
+
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .hero-slide {
+    height: 430px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .hero-logo-image {
+    width: 205px !important;
+    height: 205px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 92px !important;
+    padding: 0 18px !important;
+    grid-template-columns: 48px 1fr 48px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 78px !important;
+    height: 78px !important;
+  }
+
+  .hero {
+    padding: 18px 15px 20px !important;
+  }
+
+  .hero-slide {
+    height: 285px !important;
+  }
+
+  .hero-content {
+    padding: 16px 10px 10px !important;
+  }
+
+  .hero-logo-image {
+    width: 145px !important;
+    height: 145px !important;
+  }
+
+  .hero-text {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-main-button {
+    min-width: 190px !important;
+    padding: 12px 20px !important;
+  }
+
+  .hero-dots {
+    margin-top: 10px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE VISUAL FINAL 02
+   Basado directamente en la referencia enviada.
+   ========================================================= */
+:root {
+  --dulce-charcoal: #464243;
+  --dulce-card-pink: #f2dedd;
+  --dulce-button-pink: #d86f91;
+  --dulce-button-pink-hover: #c96082;
+}
+
+/* El PNG ya contiene el logo corregido: tipografía más pequeña
+   dentro del círculo y tono carbón en vez de negro puro. */
+.brand-logo-image,
+.hero-logo-image,
+.mobile-menu-logo {
+  filter: none !important;
+}
+
+/* Encabezado */
+.brand-logo-image {
+  width: 92px !important;
+  height: 92px !important;
+}
+
+/* Tarjeta principal: rosa visible como en la referencia */
+.hero-slide {
+  background: var(--dulce-card-pink) !important;
+  border: 1px solid #e5cfcd !important;
+}
+
+.hero-background {
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255,255,255,.42), transparent 31%),
+    radial-gradient(circle at 18% 78%, rgba(255,255,255,.20), transparent 35%),
+    linear-gradient(135deg, #efd7d5 0%, #f5e2e0 48%, #edd3d1 100%) !important;
+}
+
+.hero-product-shape {
+  opacity: .08 !important;
+}
+
+/* El logo protagonista conserva el círculo, pero ahora el texto
+   interno tiene la proporción de la referencia. */
+.hero-logo-image {
+  width: 205px !important;
+  height: 205px !important;
+  object-fit: contain !important;
+  margin: 0 auto 4px !important;
+}
+
+.hero-text {
+  color: var(--dulce-charcoal) !important;
+}
+
+/* Botón de la referencia: rosa, redondeado y sin aspecto de botón duro */
+.hero-main-button {
+  min-width: 220px !important;
+  min-height: 54px !important;
+  padding: 13px 28px !important;
+  background: var(--dulce-button-pink) !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  color: #fff !important;
+  box-shadow: 0 5px 14px rgba(120,70,85,.10) !important;
+}
+
+.hero-main-button:hover {
+  background: var(--dulce-button-pink-hover) !important;
+}
+
+.hero-eyebrow {
+  color: var(--dulce-charcoal) !important;
+}
+
+@media (min-width: 900px) {
+  .brand-logo-image {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .hero-logo-image {
+    width: 250px !important;
+    height: 250px !important;
+  }
+
+  .hero-main-button {
+    min-width: 250px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-logo-image {
+    width: 92px !important;
+    height: 92px !important;
+  }
+
+  .hero-slide {
+    background: var(--dulce-card-pink) !important;
+  }
+
+  .hero-logo-image {
+    width: 145px !important;
+    height: 145px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hero-main-button {
+    min-width: 190px !important;
+    min-height: 50px !important;
+    padding: 12px 20px !important;
+    border-radius: 11px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DEFINITIVO DE REFERENCIA
+   Logo real aclarado + proporción del texto corregida
+   + fondo floral desenfocado + responsive móvil centrado
+   ========================================================= */
+
+:root {
+  --dulce-logo-gray: #686465;
+  --dulce-card-pink-final: #f1dddd;
+  --dulce-button-final: #d86f91;
+}
+
+/* LOGO: la imagen ya contiene la tipografía original,
+   con "Dulce Abril" más pequeña dentro del círculo. */
+.brand-logo-image,
+.hero-logo-image,
+.mobile-menu-logo {
+  filter: none !important;
+  opacity: 1 !important;
+  object-fit: contain !important;
+}
+
+/* HEADER */
+.brand-logo-image {
+  width: 86px !important;
+  height: 86px !important;
+}
+
+/* HERO: fondo fotográfico rosa con flores/vegetación desenfocadas */
+.hero-slide {
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  overflow: hidden !important;
+  border: 1px solid #e5cfcd !important;
+  background: var(--dulce-card-pink-final) !important;
+}
+
+.hero-background {
+  inset: 0 !important;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(245,226,224,.10) 0%,
+      rgba(245,226,224,.03) 62%,
+      rgba(232,204,202,.10) 100%
+    ),
+    url('/dulce-abril-hero-bg.png') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.hero-background .circle-one,
+.hero-background .circle-two,
+.hero-background .hero-product-shape {
+  display: none !important;
+}
+
+/* Logo protagonista */
+.hero-logo-image {
+  width: 220px !important;
+  height: 220px !important;
+  margin: 0 auto 2px !important;
+}
+
+/* Tipografía y botón */
+.hero-eyebrow {
+  color: var(--dulce-logo-gray) !important;
+}
+
+.hero-text {
+  color: #514b4d !important;
+}
+
+.hero-main-button {
+  min-width: 250px !important;
+  min-height: 54px !important;
+  padding: 13px 28px !important;
+  background: var(--dulce-button-final) !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.hero-main-button:hover {
+  background: #c96082 !important;
+}
+
+/* TABLET / MÓVIL */
+@media (max-width: 899px) {
+  .header-inner {
+    width: 100% !important;
+    min-height: 92px !important;
+    padding: 0 18px !important;
+  }
+
+  .brand-logo-image {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .hero {
+    width: 100% !important;
+    padding: 18px 15px 22px !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1.52 / 1 !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 18px 12px 12px !important;
+    justify-content: center !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .28em !important;
+    margin-bottom: 4px !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-logo-image {
+    width: 132px !important;
+    height: 132px !important;
+    margin-bottom: 1px !important;
+  }
+
+  .hero-text {
+    max-width: 95% !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+    margin: 2px auto 12px !important;
+  }
+
+  .hero-main-button {
+    min-width: 190px !important;
+    min-height: 50px !important;
+    padding: 12px 20px !important;
+    border-radius: 11px !important;
+  }
+
+  .hero-dots {
+    margin-top: 10px !important;
+  }
+
+  .hero-arrow-left {
+    left: 10px !important;
+  }
+
+  .hero-arrow-right {
+    right: 10px !important;
+  }
+
+  /* Evita que la barra inferior tape el contenido */
+  .featured-section {
+    padding-bottom: 90px !important;
+  }
+}
+
+/* TELÉFONOS PEQUEÑOS */
+@media (max-width: 420px) {
+  .header-inner {
+    padding: 0 14px !important;
+  }
+
+  .brand-logo-image {
+    width: 68px !important;
+    height: 68px !important;
+  }
+
+  .hero {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 8px !important;
+  }
+
+  .hero-logo-image {
+    width: 122px !important;
+    height: 122px !important;
+  }
+
+  .hero-text {
+    font-size: 14px !important;
+  }
+
+  .hero-main-button {
+    min-width: 180px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — FONDO UNIFICADO CON LA BARRA SUPERIOR
+   Usa el mismo rosa muy suave del encabezado en las
+   superficies que antes quedaban blancas.
+   ========================================================= */
+:root {
+  --dulce-page-surface: #fff4f2;
+}
+
+html,
+body,
+.app,
+main,
+.hero,
+.benefits,
+.featured-section,
+.products-section,
+.promotions-section,
+.instagram-section {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* Botones del encabezado: mismo fondo que la barra superior */
+.menu-button,
+.cart-button {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* Tarjetas: se elimina el blanco puro para mantener la misma base visual */
+.product-card {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* Barra inferior ya usa este tono; se fuerza para mantener consistencia */
+.mobile-bottom-nav {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DE PROPORCIONES
+   Logo de hero un poco más grande; texto y botón más compactos.
+   ========================================================= */
+.hero-logo-image {
+  width: 230px !important;
+  height: 230px !important;
+}
+
+.hero-text {
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  margin: 1px auto 9px !important;
+}
+
+.hero-main-button {
+  min-width: 205px !important;
+  min-height: 48px !important;
+  padding: 10px 20px !important;
+}
+
+@media (max-width: 899px) {
+  .hero-logo-image {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .hero-text {
+    max-width: 94% !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    margin: 1px auto 8px !important;
+  }
+
+  .hero-main-button {
+    min-width: 170px !important;
+    min-height: 46px !important;
+    padding: 9px 18px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* ---------- HERO: integrar la tarjeta con el fondo general ---------- */
+.hero-slide {
+  background: var(--dulce-bg) !important;
+  border: 1px solid rgba(234,217,216,.55) !important;
+}
+
+.hero-background {
+  background: var(--dulce-bg) !important;
+  isolation: isolate !important;
+}
+
+.hero-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/dulce-abril-hero-bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: .34;
+  filter: blur(1.5px);
+  transform: scale(1.015);
+  z-index: -1;
+}
+
+.hero-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(249,226,212,.38);
+  z-index: -1;
+}
+
+@media (max-width: 899px) {
+  .hero-background::before {
+    opacity: .30;
+  }
+  .hero-background::after {
+    background: rgba(249,226,212,.42);
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DE REFERENCIA MÓVIL 03
+   Basado en comparación directa con la maqueta enviada.
+   ========================================================= */
+@media (max-width: 600px) {
+  /* La tarjeta debe tocar el header, sin márgenes laterales. */
+  .hero {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    height: 350px !important;
+    min-height: 350px !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .hero-content {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 18px 16px 12px !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+  }
+
+  /* Título completamente visible arriba del logo. */
+  .hero-eyebrow {
+    flex: 0 0 auto !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    letter-spacing: .27em !important;
+    margin: 0 0 5px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Logo algo más contenido para que respire toda la composición. */
+  .hero-logo-image {
+    flex: 0 0 auto !important;
+    width: 135px !important;
+    height: 135px !important;
+    margin: 0 auto 1px !important;
+  }
+
+  /* Frase más cercana y más parecida a la maqueta. */
+  .hero-text {
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
+    margin: 0 auto 10px !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Botón pequeño como en la referencia. */
+  .hero-main-button {
+    flex: 0 0 auto !important;
+    min-width: 175px !important;
+    width: auto !important;
+    min-height: 45px !important;
+    height: 45px !important;
+    padding: 8px 18px !important;
+    border-radius: 9px !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+  }
+
+  .hero-dots {
+    flex: 0 0 auto !important;
+    margin-top: 13px !important;
+  }
+
+  .hero-arrow {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 22px !important;
+  }
+
+  .hero-arrow-left { left: 10px !important; }
+  .hero-arrow-right { right: 10px !important; }
+
+  /* Beneficios inmediatamente debajo de la tarjeta. */
+  .benefits {
+    padding: 25px 8px 32px !important;
+    gap: 4px !important;
+    background: var(--dulce-page-surface) !important;
+  }
+
+  .benefit {
+    gap: 7px !important;
+  }
+
+  .benefit-icon {
+    width: 50px !important;
+    height: 50px !important;
+    flex-basis: 50px !important;
+    border-radius: 50% !important;
+    background: #fae9e8 !important;
+    font-size: 0 !important;
+  }
+
+  .benefit-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+    display: block !important;
+  }
+
+  .benefit strong {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .benefit p {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .benefit-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+    background: transparent !important;
+    color: #3f3a3c !important;
+    border-radius: 0 !important;
+  }
+
+  .benefit-icon svg {
+    width: 31px !important;
+    height: 31px !important;
+  }
+
+  .benefit strong {
+    color: #252123 !important;
+    font-size: 10px !important;
+  }
+
+  .benefit p {
+    color: #777071 !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE ACTUAL / MOBILE
+   Header y hero más compactos + iconografía unificada.
+   ========================================================= */
+:root {
+  --dulce-logo-gray: #686465;
+  --dulce-action: #9b6071;
+}
+
+/* HEADER más corto */
+.header-inner {
+  min-height: 82px !important;
+}
+
+.brand-logo-image {
+  width: 70px !important;
+  height: 70px !important;
+}
+
+.brand small {
+  font-size: 6px !important;
+  letter-spacing: 1.8px !important;
+}
+
+.menu-button,
+.cart-button {
+  color: var(--dulce-logo-gray) !important;
+  border-color: #ead9d8 !important;
+}
+
+.menu-button span {
+  background: var(--dulce-logo-gray) !important;
+}
+
+.cart-icon {
+  color: var(--dulce-logo-gray) !important;
+  filter: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.cart-icon svg {
+  width: 25px !important;
+  height: 25px !important;
+  stroke: var(--dulce-logo-gray) !important;
+  color: var(--dulce-logo-gray) !important;
+}
+
+/* HERO: sin separación lateral y más corto */
+.hero {
+  padding: 0 !important;
+}
+
+.hero-slide {
+  width: 100% !important;
+  max-width: none !important;
+  height: 390px !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.hero-content {
+  height: 100% !important;
+  padding: 12px 12px 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.hero-eyebrow {
+  font-size: 9px !important;
+  letter-spacing: .28em !important;
+  margin: 3px 0 4px !important;
+  color: var(--dulce-logo-gray) !important;
+}
+
+.hero-logo-image {
+  width: 150px !important;
+  height: 150px !important;
+  margin: 0 auto 1px !important;
+}
+
+.hero-text {
+  max-width: 95% !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  margin: 2px auto 8px !important;
+  color: #514b4d !important;
+}
+
+/* Botón más pequeño y mismo color de los botones de producto */
+.hero-main-button {
+  min-width: 0 !important;
+  width: 150px !important;
+  min-height: 44px !important;
+  padding: 10px 14px !important;
+  background: var(--dulce-action) !important;
+  border-color: var(--dulce-action) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-size: 13px !important;
+}
+
+.hero-main-button:hover {
+  background: #825264 !important;
+}
+
+.hero-dots {
+  margin-top: 8px !important;
+}
+
+/* Flechas discretas */
+.hero-arrow {
+  width: 34px !important;
+  height: 34px !important;
+  color: var(--dulce-logo-gray) !important;
+}
+
+/* BENEFICIOS: mismo gris del logo, sin fondos de color */
+.benefit-icon {
+  width: 48px !important;
+  height: 48px !important;
+  flex-basis: 48px !important;
+  background: transparent !important;
+  color: var(--dulce-logo-gray) !important;
+  font-size: 21px !important;
+}
+
+.benefit-icon svg {
+  width: 31px !important;
+  height: 31px !important;
+  stroke: currentColor !important;
+}
+
+.benefit strong {
+  color: #30292b !important;
+}
+
+.benefit p {
+  color: #756b6d !important;
+}
+
+/* Carrito inferior: mismo lenguaje visual que los beneficios */
+.mobile-cart-button > span:first-child {
+  color: var(--dulce-logo-gray) !important;
+}
+
+.mobile-cart-button > span:first-child svg {
+  width: 24px !important;
+  height: 24px !important;
+  stroke: var(--dulce-logo-gray) !important;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 82px !important;
+    padding: 0 18px !important;
+    grid-template-columns: 48px 1fr 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .hero {
+    padding: 0 !important;
+  }
+
+  .hero-slide {
+    height: 390px !important;
+    min-height: 0 !important;
+  }
+
+  .hero-content {
+    padding: 10px 10px 8px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .hero-logo-image {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .hero-text {
+    font-size: 14px !important;
+    margin: 2px auto 8px !important;
+  }
+
+  .hero-main-button {
+    width: 150px !important;
+    min-width: 150px !important;
+    min-height: 44px !important;
+    padding: 9px 12px !important;
+  }
+
+  .benefits {
+    padding: 22px 8px 30px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .header-inner {
+    min-height: 78px !important;
+  }
+
+  .brand-logo-image {
+    width: 66px !important;
+    height: 66px !important;
+  }
+
+  .hero-slide {
+    height: 375px !important;
+  }
+
+  .hero-logo-image {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .hero-text {
+    font-size: 13px !important;
+  }
+
+  .hero-main-button {
+    width: 145px !important;
+    min-width: 145px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DE PROPORCIONES 04
+   Header más compacto + hero más corto, manteniendo el
+   botón un poco más abajo dentro de la composición.
+   ========================================================= */
+@media (max-width: 600px) {
+  /* Barra superior más chica */
+  .header-inner {
+    min-height: 68px !important;
+    height: 68px !important;
+    padding: 0 14px !important;
+    grid-template-columns: 44px 1fr 44px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .brand-logo-image {
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  .brand small {
+    font-size: 5.5px !important;
+    letter-spacing: 1.6px !important;
+  }
+
+  /* Tarjeta principal más corta */
+  .hero-slide {
+    height: 330px !important;
+    min-height: 330px !important;
+  }
+
+  .hero-content {
+    padding: 12px 12px 8px !important;
+  }
+
+  .hero-eyebrow {
+    margin: 3px 0 4px !important;
+  }
+
+  .hero-logo-image {
+    width: 145px !important;
+    height: 145px !important;
+    margin: 0 auto 2px !important;
+  }
+
+  .hero-text {
+    margin: 1px auto 0 !important;
+  }
+
+  /* Bajamos ligeramente el botón, sin volver a agrandar la tarjeta */
+  .hero-main-button {
+    margin-top: 9px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 9px 14px !important;
+  }
+
+  .hero-dots {
+    margin-top: 8px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-slide {
+    height: 325px !important;
+    min-height: 325px !important;
+  }
+
+  .hero-logo-image {
+    width: 138px !important;
+    height: 138px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — DESKTOP ANCHO REAL
+   Corrección de los márgenes laterales exagerados en PC.
+   El diseño móvil se mantiene intacto.
+   ========================================================= */
+@media (min-width: 900px) {
+  .header-inner {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .hero {
+    width: 100% !important;
+    padding: 18px 0 20px !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .benefits,
+  .featured-section,
+  .products-section,
+  .promotions-section,
+  .instagram-section {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .benefits {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .featured-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .products-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .promotions-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .instagram-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .footer {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL HERO MÓVIL
+   Centra el contenido de la tarjeta un poco más abajo,
+   sin aumentar la altura de la tarjeta.
+   ========================================================= */
+@media (max-width: 600px) {
+  .hero-content {
+    transform: translateY(20px) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-content {
+    transform: translateY(18px) !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — CORRECCIÓN DESKTOP REAL 05
+   Se aplica al App.css que importa App(5).jsx.
+   NO modifica las reglas móviles.
+   ========================================================= */
+@media (min-width: 900px) {
+  /* ENCABEZADO */
+  .header-inner {
+    min-height: 104px !important;
+    height: 104px !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .brand {
+    min-width: 150px !important;
+    padding: 2px 8px !important;
+    gap: 2px !important;
+  }
+
+  .brand-logo-image {
+    width: 104px !important;
+    height: 104px !important;
+  }
+
+  .brand small {
+    display: block !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    letter-spacing: 2.8px !important;
+    margin-top: 1px !important;
+    white-space: nowrap !important;
+    color: #756b6d !important;
+  }
+
+  /* HERO */
+  .hero {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+    height: 520px !important;
+    min-height: 520px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 24px 30px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+  }
+
+  .hero-eyebrow {
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 6px !important;
+    margin: 0 0 14px !important;
+    white-space: nowrap !important;
+    color: #464243 !important;
+  }
+
+  .hero-logo-image {
+    display: block !important;
+    width: 260px !important;
+    height: 260px !important;
+    margin: 0 auto 8px !important;
+    object-fit: contain !important;
+  }
+
+  .hero-text {
+    max-width: 800px !important;
+    margin: 0 auto 20px !important;
+    font-size: 20px !important;
+    line-height: 1.35 !important;
+    color: #514b4d !important;
+  }
+
+  .hero-main-button {
+    width: 230px !important;
+    min-width: 230px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .hero-dots {
+    margin-top: 15px !important;
+  }
+
+  .hero-dots span {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .hero-arrow {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 30px !important;
+  }
+
+  .hero-arrow-left { left: 24px !important; }
+  .hero-arrow-right { right: 24px !important; }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL DESKTOP V4
+   Último ajuste de composición del hero.
+   MÓVIL SIN CAMBIOS.
+   ========================================================= */
+@media (min-width: 900px) {
+  .hero-slide {
+    height: 540px !important;
+    min-height: 540px !important;
+  }
+
+  .hero-content {
+    height: 100% !important;
+    padding: 38px 30px 22px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    transform: none !important;
+  }
+
+  .hero-eyebrow {
+    flex: 0 0 auto !important;
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 5.5px !important;
+    margin: 0 0 24px !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-logo-image {
+    flex: 0 0 auto !important;
+    width: 280px !important;
+    height: 280px !important;
+    margin: 0 auto 18px !important;
+    object-fit: contain !important;
+  }
+
+  .hero-text {
+    flex: 0 0 auto !important;
+    max-width: 800px !important;
+    margin: 0 auto 24px !important;
+    font-size: 21px !important;
+    line-height: 1.35 !important;
+  }
+
+  .hero-main-button {
+    flex: 0 0 auto !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 13px 24px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .hero-dots {
+    flex: 0 0 auto !important;
+    margin-top: 16px !important;
+  }
+
+  .hero-dots span {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .hero-arrow {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 30px !important;
+  }
+
+  .hero-arrow-left {
+    left: 24px !important;
+  }
+
+  .hero-arrow-right {
+    right: 24px !important;
+  }
+}
+
+
+/* =========================================================
+   AJUSTE PUNTUAL — BENEFICIOS DESKTOP
+   Mantener el diseño existente, solo dar aire y equilibrio.
+   ========================================================= */
+.hero-tagline {
+  color: #8b626f !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 4px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  text-align: center !important;
+  margin: 0 auto 18px !important;
+  white-space: nowrap !important;
+}
+
+@media (min-width: 900px) {
+  .hero-content {
+    padding-top: 20px !important;
+  }
+
+  .hero-tagline {
+    font-size: 14px !important;
+    letter-spacing: 5px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .benefits {
+    min-height: 190px !important;
+    padding-top: 30px !important;
+    padding-bottom: 34px !important;
+    align-items: center !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero-tagline {
+    font-size: 11px !important;
+    letter-spacing: 3.5px !important;
+    margin-bottom: 14px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-tagline {
+    font-size: 10px !important;
+    letter-spacing: 3px !important;
+    margin-bottom: 15px !important;
+  }
+}
+
+
+/* =========================================================
+   AJUSTE PUNTUAL V2
+   Iconos lineales restaurados + slogan móvil más pequeño.
+   No tocar el resto del hero.
+   ========================================================= */
+
+.benefit-icon {
+  background: transparent !important;
+  color: var(--dulce-logo-gray, #686465) !important;
+  font-size: 0 !important;
+}
+
+.benefit-icon svg {
+  width: 31px !important;
+  height: 31px !important;
+  display: block !important;
+  stroke: currentColor !important;
+}
+
+@media (max-width: 899px) {
+  .hero-tagline {
+    font-size: 7px !important;
+    letter-spacing: 2.6px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 9px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-tagline {
+    font-size: 7px !important;
+    letter-spacing: 2.5px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .28em !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — AJUSTE PC DEFINITIVO
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+  /* Hero completamente al ancho disponible */
+  .hero {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* VER PRODUCTOS — más chico */
+  .hero-main-button {
+    width: 180px !important;
+    min-width: 180px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — AJUSTE PC DEFINITIVO
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+  /* Hero completamente al ancho disponible */
+  .hero {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* VER PRODUCTOS — más chico */
+  .hero-main-button {
+    width: 180px !important;
+    min-width: 180px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — CORRECCIÓN DEFINITIVA DE ANCHO PC
+   Elimina los márgenes laterales del contenedor raíz.
+   No modifica el diseño móvil.
+   ========================================================= */
+
+#root {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@media (min-width: 900px) {
+  html,
+  body,
+  #root,
+  .app,
+  main,
+  .header,
+  .hero,
+  .hero-slide,
+  .benefits,
+  .featured-section,
+  .products-section,
+  .promotions-section,
+  .instagram-section,
+  .footer {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .hero {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-slide {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE ÚNICO BOTÓN MÓVIL
+   Solo modifica "Ver productos" en pantallas móviles.
+   PC queda exactamente igual.
+   ========================================================= */
+@media (max-width: 899px) {
+  .hero-main-button {
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 8px 12px !important;
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE MÓVIL DEL BOTÓN
+   Solo móvil: más chico y un poco más abajo.
+   PC queda intacta.
+   ========================================================= */
+@media (max-width: 899px) {
+  .hero-main-button {
+    width: 125px !important;
+    min-width: 125px !important;
+    max-width: 125px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 6px 10px !important;
+    margin-top: 28px !important;
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    border-radius: 9px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — NUEVA SECCIÓN PRODUCTOS DESTACADOS
+   Usa los productos existentes sin modificar el catálogo.
+   ========================================================= */
+.featured-section {
+  padding: 72px 54px 82px !important;
+  background: var(--dulce-page-surface) !important;
+}
+
+.featured-heading {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 30px !important;
+  margin-bottom: 30px !important;
+}
+
+.featured-heading > div {
+  text-align: left !important;
+}
+
+.featured-heading p {
+  margin: 0 0 10px !important;
+  font-size: 10px !important;
+  letter-spacing: .30em !important;
+  line-height: 1.2 !important;
+}
+
+.featured-heading h2 {
+  margin: 0 !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 48px !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+}
+
+.view-all-button {
+  flex: 0 0 auto !important;
+  padding: 8px 0 !important;
+  font-size: 13px !important;
+  letter-spacing: .02em !important;
+}
+
+.featured-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+}
+
+.featured-card {
+  border: 1px solid rgba(120, 88, 94, .13) !important;
+  border-radius: 2px !important;
+  box-shadow: 0 5px 20px rgba(90, 50, 60, .035) !important;
+  transition: transform .22s ease, box-shadow .22s ease !important;
+}
+
+.featured-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 14px 32px rgba(90, 50, 60, .09) !important;
+}
+
+.featured-card .product-image {
+  aspect-ratio: 1 / 1 !important;
+  background: #f8e9e6 !important;
+}
+
+.featured-card .product-image img {
+  transition: transform .3s ease !important;
+}
+
+.featured-card:hover .product-image img {
+  transform: scale(1.025) !important;
+}
+
+.featured-card .product-info {
+  padding: 17px 17px 18px !important;
+  text-align: left !important;
+}
+
+.featured-card .product-info > span {
+  font-size: 9px !important;
+  letter-spacing: .18em !important;
+}
+
+.featured-card .product-info h3 {
+  margin: 7px 0 6px !important;
+  font-size: 20px !important;
+  line-height: 1.15 !important;
+}
+
+.featured-card .product-info strong {
+  margin: 0 0 14px !important;
+  font-size: 17px !important;
+}
+
+.featured-card .add-button {
+  width: 100% !important;
+  min-height: 38px !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  border-radius: 7px !important;
+}
+
+.featured-card .sold-badge {
+  top: 12px !important;
+  left: 12px !important;
+  padding: 5px 8px !important;
+  border-radius: 20px !important;
+  font-size: 8px !important;
+  letter-spacing: .04em !important;
+  box-shadow: 0 3px 10px rgba(90, 50, 60, .10) !important;
+}
+
+@media (max-width: 899px) {
+  .featured-section {
+    padding: 58px 28px 90px !important;
+  }
+
+  .featured-heading {
+    align-items: flex-end !important;
+    margin-bottom: 24px !important;
+    gap: 16px !important;
+  }
+
+  .featured-heading p {
+    font-size: 9px !important;
+    letter-spacing: .25em !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 34px !important;
+    line-height: .98 !important;
+  }
+
+  .view-all-button {
+    font-size: 12px !important;
+    padding-bottom: 2px !important;
+  }
+
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .featured-card .product-info {
+    padding: 13px 11px 14px !important;
+  }
+
+  .featured-card .product-info > span {
+    font-size: 8px !important;
+    letter-spacing: .13em !important;
+  }
+
+  .featured-card .product-info h3 {
+    font-size: 16px !important;
+    margin: 6px 0 5px !important;
+  }
+
+  .featured-card .product-info strong {
+    font-size: 15px !important;
+    margin-bottom: 11px !important;
+  }
+
+  .featured-card .add-button {
+    min-height: 35px !important;
+    font-size: 10px !important;
+    padding: 7px 5px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .featured-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .featured-heading {
+    gap: 10px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 30px !important;
+  }
+
+  .featured-heading p {
+    font-size: 8px !important;
+    letter-spacing: .20em !important;
+  }
+
+  .view-all-button {
+    font-size: 11px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE SOLICITADO 28/09
+   Carrusel sin flechas + swipe + autoplay + destacados visibles.
+   ========================================================= */
+
+/* Las flechas desaparecen: el carrusel se maneja con swipe y puntos. */
+.hero-arrow {
+  display: none !important;
+}
+
+.hero-slide {
+  touch-action: pan-y !important;
+  user-select: none !important;
+}
+
+.hero-dots {
+  z-index: 5 !important;
+  position: relative !important;
+  gap: 8px !important;
+}
+
+.hero-dots button {
+  width: 8px !important;
+  height: 8px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+.hero-dots button.active {
+  background: #30272a !important;
+}
+
+/* Encabezado de destacados como la referencia: limpio, sans y contundente. */
+.featured-heading h2 {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.025em !important;
+  color: #30292b !important;
+}
+
+.view-all-button {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #d86f91 !important;
+}
+
+@media (max-width: 600px) {
+  /* Compactamos la primera pantalla sin tocar el catálogo. */
+  .hero-slide {
+    height: 300px !important;
+    min-height: 300px !important;
+  }
+
+  .hero-content {
+    transform: translateY(8px) !important;
+  }
+
+  .benefits {
+    padding: 16px 8px 22px !important;
+    gap: 4px !important;
+  }
+
+  .benefit-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  .benefit-icon svg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .benefit strong {
+    font-size: 9px !important;
+  }
+
+  .benefit p {
+    font-size: 7px !important;
+  }
+
+  .featured-section {
+    padding: 20px 20px 70px !important;
+  }
+
+  .featured-heading {
+    margin-bottom: 12px !important;
+    gap: 8px !important;
+  }
+
+  .featured-heading > div {
+    text-align: left !important;
+  }
+
+  /* Ocultamos solo el pequeño subtítulo para copiar la referencia. */
+  .featured-heading p {
+    display: none !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 27px !important;
+    line-height: 1.05 !important;
+  }
+
+  .view-all-button {
+    font-size: 13px !important;
+    padding: 0 !important;
+    align-self: center !important;
+  }
+
+  .featured-grid {
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-slide {
+    height: 290px !important;
+    min-height: 290px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 26px !important;
+  }
+
+  .view-all-button {
+    font-size: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   BENEFICIOS — ICONOS LINEALES, COMPACTOS
+   ========================================================= */
+.benefit-icon {
+  width: 40px !important;
+  height: 40px !important;
+  flex-basis: 40px !important;
+  background: transparent !important;
+  color: #686465 !important;
+  font-size: 0 !important;
+  border-radius: 0 !important;
+}
+
+.benefit-icon svg {
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  stroke: currentColor !important;
+}
+
+@media (max-width: 600px) {
+  .benefits {
+    padding: 15px 8px 20px !important;
+    gap: 4px !important;
+  }
+
+  .benefit {
+    gap: 5px !important;
+  }
+
+  .benefit-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  .benefit-icon svg {
+    width: 29px !important;
+    height: 29px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINO DE LA PRIMERA PANTALLA
+   ========================================================= */
+
+@media (max-width: 600px) {
+  /* Iconos de beneficios: lineales, más pequeños y con más aire. */
+  .benefits {
+    padding: 13px 9px 14px !important;
+    gap: 3px !important;
+  }
+
+  .benefit {
+    gap: 4px !important;
+  }
+
+  .benefit-icon {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .benefit-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+  }
+
+  .benefit strong {
+    font-size: 9px !important;
+    line-height: 1.18 !important;
+  }
+
+  .benefit p {
+    font-size: 7.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Acercamos destacados a los beneficios, como en la referencia. */
+  .featured-section {
+    padding: 16px 20px 65px !important;
+  }
+
+  .featured-heading {
+    margin-bottom: 10px !important;
+    align-items: center !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 28px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.035em !important;
+    white-space: nowrap !important;
+  }
+
+  .view-all-button {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+  }
+
+  .featured-grid {
+    gap: 9px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .featured-section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 26px !important;
+  }
+
+  .view-all-button {
+    font-size: 12px !important;
+  }
+}
+
+/* =========================================================
+   CATÁLOGO — PRIMERA VERSIÓN FUNCIONAL
+   ========================================================= */
+.products-section {
+  scroll-margin-top: 92px;
+}
+
+.catalog-count {
+  display: block;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: .4px;
+}
+
+.category-filters {
+  padding: 4px 0 8px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  scrollbar-width: none;
+}
+
+.category-filters::-webkit-scrollbar { display: none; }
+
+.category-button {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  transition: .2s ease;
+}
+
+.product-card {
+  border-radius: 10px;
+}
+
+.product-image {
+  border-radius: 10px 10px 0 0;
+}
+
+.sold-badge {
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 10px;
+}
+
+.catalog-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 45px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,.35);
+}
+
+.catalog-empty h3 {
+  margin: 0 0 8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.catalog-empty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .products-section {
+    padding-top: 42px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .section-heading {
+    margin-bottom: 20px !important;
+  }
+
+  .section-heading h2 {
+    font-size: 29px !important;
+    line-height: 1.05 !important;
+  }
+
+  .catalog-count {
+    margin-top: 10px;
+    font-size: 10px;
+  }
+
+  .category-filters {
+    justify-content: flex-start !important;
+    margin-bottom: 22px !important;
+    padding-bottom: 5px !important;
+  }
+
+  .category-button {
+    padding: 8px 13px !important;
+    font-size: 10px !important;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .product-info {
+    padding: 12px 10px 13px !important;
+  }
+
+  .product-info > span {
+    font-size: 8px !important;
+  }
+
+  .product-info h3 {
+    font-size: 15px !important;
+    margin: 7px 0 5px !important;
+  }
+
+  .product-info strong {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .product-info .add-button {
+    font-size: 9px !important;
+    padding: 10px 5px !important;
+  }
+
+  .sold-badge {
+    top: 9px !important;
+    left: 9px !important;
+    padding: 7px 10px !important;
+    font-size: 8px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — HEADER MÓVIL + CARRITO LINEAL
+   Último ajuste: barra superior más compacta y carrito con
+   el mismo lenguaje de iconos lineales de beneficios.
+   ========================================================= */
+.cart-icon {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  color:var(--dulce-logo-gray, #756b6d);
+  filter:none;
+}
+.cart-icon svg {
+  width:28px;
+  height:28px;
+  display:block;
+  stroke:currentColor;
+}
+.mobile-cart-icon {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:25px;
+  height:25px;
+  position:relative;
+  color:var(--dulce-logo-gray, #756b6d);
+  font-size:initial !important;
+}
+.mobile-cart-icon svg {
+  width:25px;
+  height:25px;
+  display:block;
+  stroke:currentColor;
+}
+.mobile-cart-icon b {
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:#df7592;
+  color:#fff;
+  border-radius:50%;
+  min-width:16px;
+  height:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:9px !important;
+  font-weight:500;
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    min-height:58px !important;
+    height:58px !important;
+    padding:0 12px !important;
+    grid-template-columns:40px 1fr 40px !important;
+    gap:8px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width:40px !important;
+    height:40px !important;
+    border-radius:6px !important;
+  }
+
+  .menu-button span {
+    width:21px !important;
+    height:2px !important;
+    margin:3px 0 !important;
+  }
+
+  .brand-logo-image {
+    width:52px !important;
+    height:52px !important;
+  }
+
+  .brand {
+    padding:0 !important;
+  }
+
+  .brand small {
+    display:none !important;
+  }
+
+  .cart-icon {
+    width:25px !important;
+    height:25px !important;
+  }
+
+  .cart-icon svg {
+    width:25px !important;
+    height:25px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — BOTONES HEADER MÁS CHICOS SOLO EN MÓVIL
+   No modifica PC
+   ========================================================= */
+@media (max-width: 600px) {
+  .header-inner {
+    grid-template-columns: 38px 1fr 38px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .menu-button span {
+    width: 19px !important;
+    height: 2px !important;
+    margin: 2px 0 !important;
+  }
+
+  .cart-button {
+    font-size: 18px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — CORRECCIÓN SOLO PC ESCRITORIO
+   NO MODIFICA MÓVIL
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+  /* Quitar "REGALOS QUE ENAMORAN" que aparece debajo
+     del logo del encabezado */
+  .header .brand > small {
+    display: none !important;
+  }
+
+  /* Encabezado */
+  .header-inner {
+    position: relative !important;
+  }
+
+  /* Navegación perfectamente centrada en la pantalla */
+  .desktop-nav {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Texto de navegación más elegante */
+  .desktop-nav a {
+    color: #756b6d !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.02em !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    padding: 6px 0 !important;
+  }
+
+  .desktop-nav a:hover {
+    color: #9b6071 !important;
+  }
+
+  /* Logo queda a la izquierda */
+  .header .brand {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  /* Carrito queda a la derecha */
+  .header .cart-button {
+    position: relative !important;
+    z-index: 2 !important;
+    margin-left: auto !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — BOTÓN CARRITO VACÍO
+   Cambio puntual: no modifica header ni responsive.
+   ========================================================= */
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 13px 24px;
+  margin-top: 18px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--dulce-rose, #9b6071);
+  color: #fff;
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.button-primary:hover {
+  background: var(--dulce-rose-dark, #825264);
+  transform: translateY(-1px);
+}
+/* =========================================================
+   DULCE ABRIL — PULIDO VISUAL DEL CARRITO
+   Solo apariencia. No modifica la funcionalidad.
+   ========================================================= */
+
+/* Cantidad */
+.quantity-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  border: 1px solid var(--dulce-line, #ead9d8) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  margin-top: 10px !important;
+}
+
+.quantity-controls button,
+.quantity-controls span {
+  width: 32px !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  background: #fff !important;
+  color: var(--dulce-rose, #9b6071) !important;
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 14px !important;
+}
+
+.quantity-controls button {
+  cursor: pointer !important;
+  font-weight: 500 !important;
+}
+
+.quantity-controls button:hover {
+  background: var(--dulce-pink-soft, #fff4f2) !important;
+}
+
+/* Botón WhatsApp */
+.whatsapp-cart-button {
+  width: 100% !important;
+  padding: 13px 16px !important;
+  margin-top: 9px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #2b9d63 !important;
+  color: #fff !important;
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: .02em !important;
+  cursor: pointer !important;
+  transition: transform .2s ease, opacity .2s ease !important;
+}
+
+.whatsapp-cart-button:hover {
+  opacity: .92 !important;
+  transform: translateY(-1px) !important;
+}
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL CARRITO Y CONTACTO
+   SOLO ESTOS ELEMENTOS — NO MODIFICA EL RESTO DEL SITIO
+   ========================================================= */
+
+/* Fondo del carrito igual al fondo de la imagen 3 */
+.cart-panel {
+  background: var(--dulce-bg) !important;
+}
+
+/* Botones del carrito más chicos y redondeados */
+.checkout-button,
+.whatsapp-cart-button {
+  width: 92% !important;
+  max-width: 420px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+}
+
+/* Seguir comprando también más compacto */
+.continue-shopping {
+  width: auto !important;
+  display: block !important;
+  margin: 14px auto 0 !important;
+  border-radius: 10px !important;
+  padding: 10px 20px !important;
+}
+
+/* Tarjeta "Hacé tu pedido" */
+.checkout-modal {
+  background: var(--dulce-bg) !important;
+  border-radius: 18px !important;
+}
+
+/* Botones de contacto */
+.checkout-option {
+  width: 88% !important;
+  max-width: 380px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+}
+
+/* WhatsApp — color oficial aproximado + texto blanco */
+.checkout-option.whatsapp,
+.whatsapp-cart-button {
+  background: #25D366 !important;
+  color: #fff !important;
+}
+
+/* Instagram — degradado característico */
+.checkout-option.instagram {
+  background: linear-gradient(
+    135deg,
+    #833AB4 0%,
+    #C13584 35%,
+    #E1306C 65%,
+    #F77737 100%
+  ) !important;
+  color: #fff !important;
+}
+
+/* Botones superiores del carrito redondeados */
+.menu-button,
+.cart-button {
+  border-radius: 12px !important;
+}
+/* =========================================================
+   DULCE ABRIL — CARRITO MÓVIL
+   Solo móvil — NO modifica PC
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* Fondo del carrito igual al menú móvil */
+  .cart-panel {
+    background: #fff4f2 !important;
+  }
+
+  /* Carrito móvil con apariencia de panel */
+  .cart-panel {
+    width: 86% !important;
+    max-width: 420px !important;
+    min-height: 100vh !important;
+  }
+
+  /* Evita que el contenido quede pegado a los bordes */
+  .cart-panel {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Tarjeta "Hacé tu pedido" */
+  .checkout-modal {
+    background: #fff4f2 !important;
+    border-radius: 18px !important;
+  }
+
+  /* Botones del carrito */
+  .checkout-button,
+  .whatsapp-cart-button {
+    border-radius: 12px !important;
+  }
+
+  /* Botones de contacto */
+  .checkout-option {
+    border-radius: 12px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — COLOR CARRITO PC
+   Solo PC — NO TOCAR MOBILE
+   ========================================================= */
+
+@media (min-width: 601px) {
+  .cart-panel,
+  .checkout-modal {
+    background: #fff4f2 !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — PRODUCTO ABIERTO
+   Corrección estética solamente.
+   NO modifica carrito, menú ni diseño móvil general.
+   ========================================================= */
+
+.product-detail-modal {
+  background: #fff4f2 !important;
+  color: #3f3739 !important;
+  border-radius: 0 !important;
+  border: 1px solid #ead8d5 !important;
+  box-shadow: 0 18px 50px rgba(80, 55, 60, 0.16) !important;
+  overflow: hidden !important;
+}
+
+.product-detail-image {
+  background: #f1dddd !important;
+  border: 1px solid #ead8d5 !important;
+}
+
+.product-detail-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.product-detail-info {
+  color: #3f3739 !important;
+}
+
+.product-detail-info > span {
+  color: #9b6172 !important;
+}
+
+.product-detail-info h2 {
+  color: #3f3739 !important;
+}
+
+.product-detail-info strong {
+  color: #9b6172 !important;
+}
+
+.product-detail-info p {
+  color: #756b6e !important;
+}
+
+.product-detail-close {
+  color: #9b6172 !important;
+  background: transparent !important;
+}
+
+/* Botón del producto: mismo lenguaje visual de Dulce Abril */
+.product-detail-info .add-button {
+  background: #a66378 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.product-detail-info .add-button:hover {
+  background: #91566a !important;
+}
+
+/* MÓVIL: solamente colores, NO tocar tamaños ni distribución */
+@media (max-width: 899px) {
+  .product-detail-modal {
+    background: #fff4f2 !important;
+  }
+
+  .product-detail-image {
+    background: #f1dddd !important;
+  }
+
+  .product-detail-info h2 {
+    color: #3f3739 !important;
+  }
+
+  .product-detail-info p {
+    color: #756b6e !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — PALETA UNIFICADA PC + MÓVIL
+   SOLO COLORES — NO MODIFICA TAMAÑOS NI POSICIONES
+   ========================================================= */
+
+:root {
+  --dulce-unified-bg: #fff4f2;
+  --dulce-unified-pink: #f1dddd;
+  --dulce-unified-rose: #9b6071;
+  --dulce-unified-text: #30292b;
+  --dulce-unified-muted: #756b6d;
+  --dulce-unified-line: #ead9d8;
+}
+
+/* ---------- BASE ---------- */
+
+html,
+body,
+#root,
+.app,
+main {
+  background: var(--dulce-unified-bg) !important;
+  color: var(--dulce-unified-text) !important;
+}
+
+/* ---------- HEADER ---------- */
+
+.header {
+  background: var(--dulce-unified-bg) !important;
+  border-bottom-color: var(--dulce-unified-line) !important;
+}
+
+.menu-button,
+.cart-button {
+  background: var(--dulce-unified-bg) !important;
+  border-color: var(--dulce-unified-line) !important;
+  color: var(--dulce-unified-muted) !important;
+}
+
+.menu-button span {
+  background: var(--dulce-unified-muted) !important;
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+  background: var(--dulce-unified-bg) !important;
+}
+
+.hero-slide {
+  background: var(--dulce-unified-pink) !important;
+  border-color: var(--dulce-unified-line) !important;
+}
+
+/* Mismo tratamiento del fondo floral en PC y móvil */
+.hero-background::before {
+  opacity: .30 !important;
+}
+
+.hero-background::after {
+  background: rgba(241, 221, 221, .42) !important;
+}
+
+/* ---------- BENEFICIOS ---------- */
+
+.benefits {
+  background: var(--dulce-unified-bg) !important;
+}
+
+.benefit strong {
+  color: var(--dulce-unified-text) !important;
+}
+
+.benefit p {
+  color: var(--dulce-unified-muted) !important;
+}
+
+.benefit-icon {
+  background: transparent !important;
+  color: var(--dulce-unified-muted) !important;
+}
+
+/* ---------- PRODUCTOS ---------- */
+
+.featured-section,
+.products-section {
+  background: var(--dulce-unified-bg) !important;
+}
+
+.product-card {
+  background: var(--dulce-unified-bg) !important;
+  border-color: var(--dulce-unified-line) !important;
+}
+
+.product-image {
+  background: var(--dulce-unified-pink) !important;
+}
+
+.featured-heading h2,
+.section-heading h2 {
+  color: var(--dulce-unified-text) !important;
+}
+
+.featured-heading p,
+.section-heading p,
+.view-all-button,
+.product-info > span,
+.product-info strong {
+  color: var(--dulce-unified-rose) !important;
+}
+
+/* ---------- BOTONES ---------- */
+
+.hero-main-button,
+.add-button,
+.category-button.active,
+.promotion-button,
+.instagram-button,
+.checkout-button {
+  background: var(--dulce-unified-rose) !important;
+  border-color: var(--dulce-unified-rose) !important;
+}
+
+/* ---------- CARRITO ---------- */
+
+.cart-panel,
+.checkout-modal,
+.product-detail-modal {
+  background: var(--dulce-unified-bg) !important;
+}
+
+.cart-header,
+.cart-summary,
+.cart-item {
+  border-color: var(--dulce-unified-line) !important;
+}
+
+.cart-header span,
+.checkout-modal > span,
+.cart-item-info > span,
+.cart-item-info strong,
+.cart-total strong,
+.continue-shopping,
+.product-detail-info > span,
+.product-detail-info strong {
+  color: var(--dulce-unified-rose) !important;
+}
+
+.cart-header h2,
+.checkout-modal h2,
+.product-detail-info h2,
+.cart-item-info h3 {
+  color: var(--dulce-unified-text) !important;
+}
+
+.empty-cart p,
+.checkout-modal p,
+.product-detail-info p {
+  color: var(--dulce-unified-muted) !important;
+}
+
+/* ---------- BARRA INFERIOR ---------- */
+
+.mobile-bottom-nav {
+  background: var(--dulce-unified-bg) !important;
+  border-top-color: var(--dulce-unified-line) !important;
+}
+
+.mobile-bottom-nav button {
+  color: var(--dulce-unified-muted) !important;
+}
+
+.mobile-bottom-nav .mobile-nav-active {
+  color: var(--dulce-unified-rose) !important;
+}
