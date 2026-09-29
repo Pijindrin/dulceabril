@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { products } from "./products";
+import { supabase } from "./supabase";
 
 function App() {
   const [cart, setCart] = useState([]);
