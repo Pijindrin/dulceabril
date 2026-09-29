@@ -1,11 +1,54 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import { products } from "./products";
+import { products as localProducts } from "./products";
 import { supabase } from "./supabase";
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState(localProducts);
   const [cartOpen, setCartOpen] = useState(false);
+    useEffect(() => {
+    async function cargarProductos() {
+      const { data, error } = await supabase
+        .from("products")
+        .select(`
+          id,
+          name,
+          description,
+          price,
+          image_url,
+          featured,
+          active,
+          category_id,
+          categories (
+            name
+          )
+        `)
+        .eq("active", true);
+
+      if (error) {
+        console.error("Error cargando productos desde Supabase:", error);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        const productosAdaptados = data.map((product) => ({
+          id: product.id,
+          name: product.name,
+          category: product.categories?.name || "",
+          price: Number(product.price),
+          image: product.image_url,
+          description: product.description || "",
+          featured: product.featured === true,
+          promotion: false,
+        }));
+
+        setProducts(productosAdaptados);
+      }
+    }
+
+    cargarProductos();
+  }, []);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("Todos");
