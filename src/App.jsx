@@ -541,17 +541,36 @@ function App() {
     .filter((product) => product.featured)
     .slice(0, 4);
 
-  // Las posiciones 2 y 3 del Hero se controlan exclusivamente desde el Admin.
-  // Si una posición no tiene un producto asignado, esa slide no se muestra.
+  // Si la dueña definió una posición explícita, esa selección tiene prioridad.
+  // Los fallbacks mantienen compatibilidad con productos existentes que todavía
+  // no tengan configurada una posición del Hero.
   const heroSlide2Product =
-    products.find((product) => product.heroSlide === 2) || null;
+    products.find((product) => product.heroSlide === 2) ||
+    featuredProducts[0] ||
+    products[0] ||
+    null;
 
   const heroSlide3Product =
     products.find(
       (product) =>
         product.heroSlide === 3 &&
         product.id !== heroSlide2Product?.id
-    ) || null;
+    ) ||
+    products.find(
+      (product) =>
+        product.promotion &&
+        product.id !== heroSlide2Product?.id
+    ) ||
+    featuredProducts.find(
+      (product) =>
+        product.id !== heroSlide2Product?.id
+    ) ||
+    products.find(
+      (product) =>
+        product.id !== heroSlide2Product?.id
+    ) ||
+    heroSlide2Product ||
+    null;
 
   const heroSlides = [
     {
