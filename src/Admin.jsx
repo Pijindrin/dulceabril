@@ -2922,7 +2922,23 @@ console.log("USER EMAIL:", user?.email);
                 padding: 0 10px 14px;
               }
             }
-            `}</style>
+        /* AJUSTE PUNTUAL — botones del formulario en escritorio */
+        @media (min-width: 821px) {
+          .admin-form-cancel,
+          .admin-form-submit {
+            width: auto !important;
+            min-width: 0 !important;
+            flex: 0 0 auto !important;
+            min-height: 34px !important;
+            height: 34px !important;
+            padding: 6px 12px !important;
+            font-size: 11px !important;
+            border-radius: 8px !important;
+          }
+        }
+            `}
+
+</style>
       <div
         className="admin-panel"
         style={{

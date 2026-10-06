@@ -1121,7 +1121,7 @@ function App() {
 
             {cart.length === 0 ? (
               <div className="empty-cart">
-                <div className="empty-cart-icon">🛒</div>
+                <div className="empty-cart-icon"><NavIcon type="cart" size={45} /></div>
 
                 <h3>Tu carrito está vacío</h3>
 
@@ -1612,16 +1612,32 @@ function App() {
                       </div>
                     )}
                     <p style={{fontSize:"clamp(15px, 4vw, 17px)",lineHeight:1.55,margin:"18px 0 20px",color:"#756b6e"}}>{selectedProduct.description}</p>
-                    <button className="add-button" disabled={Number(selectedProduct.price) === 0 || (variants.length > 0 && (!activeVariant || Number(activeVariant.stock ?? 0) <= 0)) || (variants.length === 0 && Number(selectedProduct.stock ?? 0) <= 0)} onClick={() => {
-                      if (Number(selectedProduct.price) === 0) return;
-                      if (variants.length > 0 && selectedVariantIndex == null) { alert("Elegí un color o modelo antes de agregar al carrito."); return; }
-                      if (variants.length > 0 && Number(activeVariant?.stock ?? 0) <= 0) return;
-                      if (variants.length === 0 && Number(selectedProduct.stock ?? 0) <= 0) return;
-                      addToCart(selectedProduct, activeVariant);
-                      setSelectedProduct(null);
-                      setSelectedVariantIndex(null);
-                      setSelectedImageIndex(0);
-                    }}>{Number(selectedProduct.price) === 0 ? "Precio a consultar" : (variants.length > 0 && activeVariant && Number(activeVariant.stock ?? 0) <= 0) || (variants.length === 0 && Number(selectedProduct.stock ?? 0) <= 0) ? "Sin stock" : "Agregar al carrito"}</button>
+                    {Number(selectedProduct.price) === 0 ? (
+                      <button
+                        className="add-button"
+                        onClick={() => {
+                          const phoneNumber = "5493815086810";
+                          const variantText = activeVariant?.name
+                            ? `\nModelo/color: ${activeVariant.name}`
+                            : "";
+                          const message = `Hola! Quería consultar el precio de "${selectedProduct.name}".${variantText}\n\n¿Me pasan el precio, por favor?`;
+                          const whatsappUrl = `https://wa.me/${phoneNumber}?text=` + encodeURIComponent(message);
+                          window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+                        }}
+                      >
+                        Precio a consultar
+                      </button>
+                    ) : (
+                      <button className="add-button" disabled={(variants.length > 0 && (!activeVariant || Number(activeVariant.stock ?? 0) <= 0)) || (variants.length === 0 && Number(selectedProduct.stock ?? 0) <= 0)} onClick={() => {
+                        if (variants.length > 0 && selectedVariantIndex == null) { alert("Elegí un color o modelo antes de agregar al carrito."); return; }
+                        if (variants.length > 0 && Number(activeVariant?.stock ?? 0) <= 0) return;
+                        if (variants.length === 0 && Number(selectedProduct.stock ?? 0) <= 0) return;
+                        addToCart(selectedProduct, activeVariant);
+                        setSelectedProduct(null);
+                        setSelectedVariantIndex(null);
+                        setSelectedImageIndex(0);
+                      }}>{(variants.length > 0 && activeVariant && Number(activeVariant.stock ?? 0) <= 0) || (variants.length === 0 && Number(selectedProduct.stock ?? 0) <= 0) ? "Sin stock" : "Agregar al carrito"}</button>
+                    )}
                   </div>
                 </>
               );
