@@ -1,0 +1,7407 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+:root {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+  color: #332a2d;
+  background: #fcf8f6;
+  color-scheme: only light;
+  --bg: #f9e2d4;
+  --cream: #f9e2d4;
+  --pink-soft: #f3e3e0;
+  --pink: #d99aaa;
+  --wine: #965d6d;
+  --wine-dark: #784957;
+  --text: #332a2d;
+  --muted: #786b6e;
+  --line: #ead7d5;
+  --white: #fff;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--text); }
+button, input, textarea, select { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; }
+
+.app { min-height: 100vh; overflow-x: hidden; background: var(--bg); }
+
+/* HEADER */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+.header-inner {
+  width: 100%; max-width: none; min-height: 82px; margin: 0 auto;
+  padding: 0 clamp(24px, 4vw, 60px); display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 24px;
+}
+.menu-button, .cart-button {
+  width: 48px; height: 48px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--cream); color: var(--wine);
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+.menu-button { justify-self: start; }
+.menu-button span { width: 23px; height: 2px; background: var(--wine); display: block; margin: 3px 0; }
+.cart-button { justify-self: end; position: relative; font-size: 22px; }
+.cart-icon { line-height: 1; filter: grayscale(.2); }
+.brand {
+  border: 0; background: transparent; color: var(--text); cursor: pointer;
+  padding: 4px 12px; text-align: center; justify-self: center;
+}
+.brand-script, .footer-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 25px; font-weight: 600; line-height: 1.05;
+}
+.brand-script span, .footer-logo span { color: var(--wine); }
+.brand small { display:block; margin-top: 5px; font-size: 7px; letter-spacing: 2px; color: var(--muted); }
+.desktop-nav { justify-self: start; display: none; align-items: center; gap: 22px; }
+.desktop-nav a { text-decoration: none; font-size: 12px; color: var(--muted); }
+.desktop-nav a:hover { color: var(--wine); }
+.cart-count {
+  position: absolute; right: -6px; top: -6px; min-width: 19px; height: 19px;
+  padding: 0 5px; border-radius: 50%; background: var(--pink); color: #fff;
+  font-size: 10px; display:flex; align-items:center; justify-content:center;
+}
+
+/* MOBILE MENU */
+.mobile-menu-overlay, .cart-overlay, .checkout-overlay, .product-detail-overlay {
+  position: fixed; inset: 0; z-index: 100; background: rgba(51,42,45,.35);
+}
+.mobile-menu { width: min(330px, 86vw); height: 100%; background: var(--cream); padding: 26px; box-shadow: 12px 0 40px rgba(0,0,0,.12); }
+.mobile-menu-close, .cart-close, .checkout-close, .product-detail-close {
+  border: 0; background: transparent; cursor:pointer; color: var(--wine); font-size: 30px;
+}
+.mobile-menu-close { display:block; margin-left:auto; }
+.mobile-menu-brand { margin: 12px 0 30px; text-align:center; font-family:'Playfair Display',serif; font-size:26px; }
+.mobile-menu-brand small { display:block; font: 8px 'DM Sans', sans-serif; letter-spacing:2px; color:var(--muted); margin-top:5px; }
+.mobile-menu > button:not(.mobile-menu-close) { width:100%; padding:15px 0; text-align:left; border:0; border-bottom:1px solid var(--line); background:transparent; color:var(--text); cursor:pointer; }
+
+/* HERO */
+.hero { padding: 34px 30px 20px; background: var(--cream); }
+.hero-slide { position:relative; width:100%; max-width:none; margin:auto; min-height:420px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hero-background { position:absolute; inset:0; background: linear-gradient(120deg,#ead5d1,#f5e6e2 52%,#ead5d1); overflow:hidden; }
+.circle-one, .circle-two { position:absolute; border-radius:50%; background:rgba(255,255,255,.22); filter:blur(2px); }
+.circle-one { width:300px; height:300px; left:-100px; bottom:-130px; }
+.circle-two { width:240px; height:240px; right:-70px; top:-80px; }
+.hero-product-shape { position:absolute; right:8%; bottom:-70px; width:220px; height:250px; border-radius:50% 50% 18% 18%; background:rgba(255,255,255,.20); color:transparent; }
+.hero-content { position:relative; z-index:2; width:100%; padding:48px 26px 40px; text-align:center; }
+.hero-eyebrow { font-size:12px; font-weight:600; letter-spacing:5px; color:#5c4a4e; margin-bottom:25px; }
+.hero-brand { font-family:'Playfair Display', Georgia, serif; font-size:58px; font-weight:600; color:#30272a; line-height:1; margin-bottom:20px; }
+.hero-brand span { color:var(--wine); }
+.hero-text { max-width:650px; margin:0 auto 28px; color:#66595d; font-size:17px; line-height:1.55; }
+.hero-main-button, .promotion-button, .instagram-button {
+  border:0; background:var(--wine); color:#fff; min-width:190px; padding:15px 28px;
+  cursor:pointer; font-size:13px; letter-spacing:.7px; transition:.2s ease;
+}
+.hero-main-button:hover, .promotion-button:hover, .instagram-button:hover { background:var(--wine-dark); }
+.hero-arrow { position:absolute; z-index:3; top:50%; transform:translateY(-50%); width:38px; height:38px; border:0; border-radius:50%; background:#fff; color:#42373a; font-size:28px; line-height:1; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,.08); }
+.hero-arrow-left { left:20px; } .hero-arrow-right { right:20px; }
+.hero-dots { display:flex; gap:7px; justify-content:center; margin-top:30px; }
+.hero-dots span { width:7px; height:7px; border-radius:50%; background:#fff; border:1px solid #fff; }
+.hero-dots span.active { background:#30272a; }
+
+/* BENEFITS */
+.benefits { width:100%; max-width:none; margin:0 auto; padding:30px clamp(24px, 5vw, 80px) 48px; display:grid; grid-template-columns:repeat(4,1fr); gap:22px; background:var(--cream); }
+.benefit { display:flex; align-items:center; gap:14px; cursor:default; }
+.benefit-icon { width:54px; height:54px; flex:0 0 54px; border-radius:50%; background:#f6e7e4; display:flex; align-items:center; justify-content:center; font-size:25px; }
+.benefit strong { display:block; font-size:14px; margin-bottom:6px; }
+.benefit p { margin:0; color:var(--muted); font-size:12px; line-height:1.4; }
+.benefit:last-child { cursor:pointer; }
+
+/* FEATURED */
+.featured-section, .products-section, .promotions-section, .instagram-section { width:100%; max-width:none; margin:0 auto; }
+.featured-section { padding:55px clamp(24px, 5vw, 80px) 70px; }
+.featured-heading { display:flex; align-items:end; justify-content:space-between; margin-bottom:30px; }
+.featured-heading p, .section-heading p, .promotion-content > p, .instagram-section > p:first-child { margin:0 0 10px; color:var(--wine); font-size:11px; letter-spacing:4px; }
+.featured-heading h2, .section-heading h2 { margin:0; font-family:'Playfair Display', Georgia, serif; font-size:42px; font-weight:500; }
+.view-all-button { border:0; background:transparent; color:var(--wine); cursor:pointer; font-size:13px; }
+.featured-grid, .product-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.product-card { background:#fff; border:1px solid var(--line); cursor:pointer; overflow:hidden; transition:transform .2s, box-shadow .2s; }
+.product-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(90,50,60,.08); }
+.product-image { position:relative; aspect-ratio:1/1; background:#f4e8e5; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.product-image img { width:100%; height:100%; object-fit:cover; display:block; }
+.sold-badge { position:absolute; z-index:2; top:12px; left:12px; background:#df7592; color:#fff; border-radius:14px; padding:6px 12px; font-size:9px; letter-spacing:.3px; }
+.product-info { padding:18px 16px 20px; }
+.product-info > span { color:var(--wine); font-size:10px; letter-spacing:2px; text-transform:uppercase; }
+.product-info h3 { margin:9px 0 8px; font-family:'Playfair Display',Georgia,serif; font-size:20px; font-weight:500; }
+.product-info strong { display:block; color:var(--wine); font-size:18px; margin-bottom:16px; }
+.add-button { width:100%; border:0; background:var(--wine); color:#fff; padding:13px 12px; cursor:pointer; font-size:12px; }
+.add-button:hover { background:var(--wine-dark); }
+
+/* PRODUCTS */
+.products-section { padding:40px clamp(24px, 5vw, 80px) 80px; }
+.categories-anchor { scroll-margin-top:100px; }
+.section-heading { text-align:center; margin-bottom:28px; }
+.section-heading h2 { font-size:38px; }
+.section-heading span { display:block; width:45px; height:1px; background:var(--pink); margin:20px auto 0; }
+.category-filters { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:30px; }
+.category-button { border:1px solid var(--line); background:transparent; color:var(--muted); padding:9px 16px; cursor:pointer; font-size:11px; }
+.category-button.active, .category-button:hover { background:var(--wine); border-color:var(--wine); color:#fff; }
+.product-grid { grid-template-columns:repeat(3,1fr); }
+
+/* PROMOTIONS */
+.promotions-section { width:100%; margin-top:20px; padding:80px clamp(24px, 5vw, 80px); background:#f2dfdc; text-align:center; }
+.promotion-content { max-width:650px; margin:auto; }
+.promotion-content h2, .instagram-section h2 { margin:0; font-family:'Playfair Display',Georgia,serif; font-size:40px; font-weight:500; }
+.promotion-content > span { display:block; width:45px; height:1px; background:var(--pink); margin:20px auto; }
+.promotion-text { color:var(--muted); line-height:1.7; margin:0 auto 25px; }
+
+/* INSTAGRAM */
+.instagram-section { text-align:center; padding:75px clamp(24px, 5vw, 80px); }
+.instagram-section h2 { margin-bottom:14px; }
+.instagram-section p:not(:first-child) { color:var(--muted); margin:0 auto 22px; }
+
+/* FOOTER */
+.footer { margin-top:0; background:#382d30; color:#fff; padding:55px max(24px,calc((100% - 1180px)/2)); display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+.footer-logo { color:#fff; }
+.footer-brand p, .footer-contact p { color:#d9cdd0; font-size:12px; }
+.footer-contact { justify-self:end; text-align:right; }
+.footer-bottom { grid-column:1/-1; padding-top:22px; border-top:1px solid rgba(255,255,255,.15); display:flex; justify-content:space-between; gap:15px; color:#c9bdc0; font-size:10px; }
+
+/* MOBILE NAV */
+.mobile-bottom-nav { display:none; }
+
+/* CART */
+.cart-overlay, .checkout-overlay, .product-detail-overlay { display:flex; justify-content:flex-end; }
+.cart-panel { width:min(480px,100%); height:100%; background:var(--cream); padding:28px; overflow:auto; box-shadow:-10px 0 35px rgba(0,0,0,.12); }
+.cart-header { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:20px; border-bottom:1px solid var(--line); }
+.cart-header span, .checkout-modal > span { color:var(--wine); font-size:10px; letter-spacing:3px; }
+.cart-header h2 { margin:6px 0 0; font-family:'Playfair Display',Georgia,serif; font-size:30px; font-weight:500; }
+.empty-cart { text-align:center; padding:70px 20px; }
+.empty-cart-icon { font-size:45px; }
+.empty-cart p { color:var(--muted); line-height:1.6; }
+.cart-item { display:grid; grid-template-columns:80px 1fr auto; gap:14px; padding:18px 0; border-bottom:1px solid var(--line); align-items:start; }
+.cart-item-image { width:80px; height:80px; background:#f4e8e5; }
+.cart-item-image img { width:100%; height:100%; object-fit:cover; }
+.cart-item-info > span { color:var(--wine); font-size:9px; text-transform:uppercase; letter-spacing:1px; }
+.cart-item-info h3 { margin:5px 0; font-size:14px; }
+.cart-item-info strong { color:var(--wine); font-size:14px; }
+.quantity-controls { display:flex; width:max-content; border:1px solid var(--line); margin-top:10px; }
+.quantity-controls button, .quantity-controls span { width:30px; height:28px; display:flex; align-items:center; justify-content:center; border:0; background:#fff; }
+.quantity-controls button { cursor:pointer; }
+.remove-item { border:0; background:transparent; color:#9b8187; cursor:pointer; font-size:20px; }
+.cart-summary { border-top:1px solid var(--line); margin-top:20px; padding-top:20px; }
+.cart-total { display:flex; justify-content:space-between; font-size:14px; margin-bottom:18px; }
+.cart-total strong { color:var(--wine); font-size:20px; }
+.checkout-button, .whatsapp-cart-button, .continue-shopping { width:100%; padding:14px; margin-top:9px; border:0; cursor:pointer; }
+.checkout-button { background:var(--wine); color:#fff; }
+.whatsapp-cart-button { background:#2b9d63; color:#fff; }
+.continue-shopping { background:transparent; color:var(--wine); }
+
+/* CHECKOUT */
+.checkout-overlay, .product-detail-overlay { align-items:center; justify-content:center; padding:20px; }
+.checkout-modal, .product-detail-modal {
+  position:relative;
+  width:min(480px,100%);
+  background:var(--cream);
+  padding:38px;
+}
+
+/* El checkout puede ser más alto que la pantalla: el propio modal debe desplazarse. */
+.checkout-modal {
+  max-height:calc(100vh - 40px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+.checkout-modal h2 { font-family:'Playfair Display',Georgia,serif; font-size:30px; font-weight:500; margin:10px 0; }
+.checkout-modal p { color:var(--muted); line-height:1.6; }
+.checkout-close, .product-detail-close { position:absolute; top:10px; right:15px; }
+.checkout-option { width:100%; border:0; padding:14px; margin-top:10px; cursor:pointer; }
+.checkout-option.whatsapp { background:#2b9d63; color:#fff; }
+.checkout-option.instagram { background:#f0dce1; color:var(--wine); }
+
+/* PRODUCT DETAIL */
+.product-detail-modal { max-width:800px; display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.product-detail-image { background:#f4e8e5; min-height:350px; }
+.product-detail-image img { width:100%; height:100%; object-fit:cover; }
+.product-detail-info { align-self:center; }
+.product-detail-info > span { color:var(--wine); font-size:10px; letter-spacing:2px; text-transform:uppercase; }
+.product-detail-info h2 { font-family:'Playfair Display',Georgia,serif; font-size:34px; font-weight:500; margin:10px 0; }
+.product-detail-info strong { color:var(--wine); font-size:24px; }
+.product-detail-info p { color:var(--muted); line-height:1.7; }
+
+@media (min-width: 900px) {
+  .header-inner { grid-template-columns:auto 1fr auto; }
+  .menu-button { display:none; }
+  .desktop-nav { display:flex; }
+  .brand { justify-self:start; order:0; }
+  .desktop-nav { order:1; justify-self:center; }
+  .cart-button { order:2; }
+}
+
+@media (max-width: 899px) {
+  .header-inner { grid-template-columns:48px 1fr 48px; min-height:76px; padding:0 30px; }
+  .menu-button { display:inline-flex; flex-direction:column; }
+  .desktop-nav { display:none; }
+  .brand-script { font-size:22px; }
+  .hero { padding:28px 30px 20px; }
+  .hero-slide { min-height:500px; }
+  .hero-brand { font-size:52px; }
+  .benefits { grid-template-columns:repeat(2,1fr); }
+  .featured-grid { grid-template-columns:repeat(2,1fr); }
+  .product-grid { grid-template-columns:repeat(2,1fr); }
+  .mobile-bottom-nav { display:grid; position:fixed; z-index:45; bottom:0; left:0; right:0; height:68px; background:rgba(255,250,248,.98); border-top:1px solid var(--line); grid-template-columns:repeat(4,1fr); padding-bottom:env(safe-area-inset-bottom); }
+  .mobile-bottom-nav button { border:0; background:transparent; color:var(--muted); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; }
+  .mobile-bottom-nav button span { font-size:20px; line-height:1; position:relative; }
+  .mobile-bottom-nav small { font-size:9px; }
+  .mobile-nav-active { color:var(--wine) !important; }
+  .mobile-cart-button b { position:absolute; top:-7px; right:-10px; background:#df7592; color:#fff; border-radius:50%; min-width:16px; height:16px; display:flex; align-items:center; justify-content:center; font-size:9px; }
+  .footer { padding-bottom:100px; }
+}
+
+@media (max-width: 600px) {
+  .header-inner { min-height:70px; padding:0 30px; }
+  .menu-button, .cart-button { width:48px; height:48px; }
+  .brand-script { font-size:19px; }
+  .brand small { font-size:6px; letter-spacing:1.5px; }
+  .hero { padding:28px 30px 15px; }
+  .hero-slide { min-height:440px; }
+  .hero-content { padding:45px 18px 35px; }
+  .hero-eyebrow { font-size:10px; letter-spacing:3.5px; margin-bottom:22px; }
+  .hero-brand { font-size:40px; }
+  .hero-text { font-size:16px; }
+  .hero-arrow { width:34px; height:34px; font-size:24px; }
+  .hero-arrow-left { left:10px; } .hero-arrow-right { right:10px; }
+  .benefits { display:grid; grid-template-columns:repeat(4,1fr); padding:18px 8px 30px; gap:5px; }
+  .benefit { display:flex; flex-direction:column; align-items:center; text-align:center; gap:7px; }
+  .benefit-icon { width:48px; height:48px; flex-basis:48px; font-size:21px; }
+  .benefit strong { font-size:9px; line-height:1.25; margin-bottom:3px; }
+  .benefit p { font-size:8px; line-height:1.25; }
+  .featured-section { padding:50px 30px 60px; }
+  .featured-heading { align-items:flex-start; gap:10px; }
+  .featured-heading h2 { font-size:31px; }
+  .featured-heading p { font-size:9px; letter-spacing:3px; }
+  .featured-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .product-info { padding:13px 12px 15px; }
+  .product-info h3 { font-size:16px; }
+  .product-info strong { font-size:16px; }
+  .product-info .add-button { font-size:10px; padding:11px 6px; }
+  .products-section { padding:30px 20px 60px; }
+  .section-heading h2 { font-size:31px; }
+  .product-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .category-filters { gap:6px; }
+  .category-button { padding:8px 11px; font-size:10px; }
+  .promotions-section { padding:60px 25px; }
+  .promotion-content h2, .instagram-section h2 { font-size:32px; }
+  .instagram-section { padding:60px 25px; }
+  .footer { grid-template-columns:1fr; }
+  .footer-contact { justify-self:start; text-align:left; }
+  .footer-bottom { flex-direction:column; }
+  .cart-panel { padding:22px 18px 90px; }
+  .product-detail-modal { grid-template-columns:1fr; max-height:90vh; overflow:auto; }
+  .product-detail-image { min-height:280px; }
+}
+
+/* =========================================================
+   DULCE ABRIL — DISEÑO FINAL DE REFERENCIA
+   ========================================================= */
+:root {
+  --dulce-bg: #fffafa;
+  --dulce-pink-soft: #fff4f2;
+  --dulce-pink: #f8e9e8;
+  --dulce-rose: #9b6071;
+  --dulce-rose-dark: #825264;
+  --dulce-text: #30292b;
+  --dulce-muted: #756b6d;
+  --dulce-line: #ead9d8;
+}
+
+html, body {
+  background: var(--dulce-bg) !important;
+}
+
+body, .app, main,
+.featured-section, .products-section,
+.promotions-section, .instagram-section, .footer {
+  background: var(--dulce-bg) !important;
+}
+
+/* ---------- ENCABEZADO ---------- */
+.header {
+  background: var(--dulce-pink-soft) !important;
+  border-bottom: 1px solid var(--dulce-line) !important;
+}
+
+.header-inner {
+  min-height: 92px !important;
+  background: transparent !important;
+}
+
+.brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  padding: 2px 10px !important;
+}
+
+.brand-logo-image {
+  display: block !important;
+  width: 88px !important;
+  height: 88px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.brand small {
+  display: block !important;
+  margin-top: 0 !important;
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 7px !important;
+  letter-spacing: .28em !important;
+  color: var(--dulce-muted) !important;
+}
+
+.menu-button,
+.cart-button {
+  background: rgba(255,250,248,.72) !important;
+  border-color: var(--dulce-line) !important;
+  color: var(--dulce-rose) !important;
+}
+
+.menu-button span {
+  background: var(--dulce-rose) !important;
+}
+
+.cart-icon {
+  filter: none !important;
+}
+
+/* ---------- MENÚ MÓVIL ---------- */
+.mobile-menu {
+  background: var(--dulce-pink-soft) !important;
+}
+
+.mobile-menu-brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.mobile-menu-logo {
+  width: 105px !important;
+  height: 105px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  background: var(--dulce-bg) !important;
+  padding: 30px 15px 36px !important;
+}
+
+.hero-slide {
+  min-height: 0 !important;
+  height: 520px !important;
+  overflow: hidden !important;
+  background: var(--dulce-pink) !important;
+  border: 1px solid #ead7d5 !important;
+}
+
+.hero-background {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,.52), transparent 34%),
+    radial-gradient(circle at 48% 86%, rgba(255,255,255,.40), transparent 38%),
+    linear-gradient(135deg, #f3dfdd 0%, #faeceb 52%, #f1dedd 100%) !important;
+}
+
+.hero-product-shape {
+  opacity: .12 !important;
+  background: rgba(255,255,255,.30) !important;
+}
+
+.hero-content {
+  padding: 38px 22px 25px !important;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: .34em !important;
+  margin-bottom: 18px !important;
+  color: #5e5053 !important;
+}
+
+.hero-logo-image {
+  display: block !important;
+  width: 225px !important;
+  height: 225px !important;
+  margin: 0 auto 10px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+.hero-text {
+  max-width: 700px !important;
+  margin: 0 auto 24px !important;
+  color: #665c5e !important;
+  font-size: 19px !important;
+  line-height: 1.45 !important;
+}
+
+.hero-main-button {
+  min-width: 230px !important;
+  padding: 15px 25px !important;
+  background: var(--dulce-rose) !important;
+  border-color: var(--dulce-rose) !important;
+  color: #fff !important;
+}
+
+.hero-main-button:hover {
+  background: var(--dulce-rose-dark) !important;
+}
+
+.hero-arrow {
+  background: #fff !important;
+  color: var(--dulce-text) !important;
+  border: 0 !important;
+  box-shadow: 0 5px 18px rgba(80,50,55,.12) !important;
+}
+
+.hero-dots span.active {
+  background: var(--dulce-text) !important;
+}
+
+/* ---------- BENEFICIOS ---------- */
+.benefits {
+  background: var(--dulce-bg) !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  padding: 28px 20px 45px !important;
+  gap: 10px !important;
+}
+
+.benefit {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 9px !important;
+}
+
+.benefit-icon {
+  width: 58px !important;
+  height: 58px !important;
+  flex-basis: 58px !important;
+  background: var(--dulce-pink) !important;
+  font-size: 25px !important;
+}
+
+.benefit strong {
+  color: var(--dulce-text) !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+}
+
+.benefit p {
+  color: var(--dulce-muted) !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+}
+
+/* ---------- PRODUCTOS DESTACADOS ---------- */
+.featured-section {
+  background: var(--dulce-bg) !important;
+  padding: 28px 30px 70px !important;
+}
+
+.featured-heading p,
+.section-heading p {
+  color: var(--dulce-rose) !important;
+  letter-spacing: .28em !important;
+}
+
+.featured-heading h2,
+.section-heading h2 {
+  color: var(--dulce-text) !important;
+}
+
+.view-all-button {
+  color: var(--dulce-rose) !important;
+}
+
+.product-card {
+  background: #fff !important;
+  border-color: var(--dulce-line) !important;
+}
+
+.product-image {
+  background: var(--dulce-pink) !important;
+}
+
+.sold-badge {
+  background: #df7195 !important;
+  color: #fff !important;
+}
+
+.product-info > span,
+.product-info strong {
+  color: var(--dulce-rose) !important;
+}
+
+.add-button,
+.category-button.active,
+.promotion-button,
+.instagram-button,
+.checkout-button {
+  background: var(--dulce-rose) !important;
+  border-color: var(--dulce-rose) !important;
+}
+
+/* ---------- BARRA INFERIOR ---------- */
+.mobile-bottom-nav {
+  background: var(--dulce-pink-soft) !important;
+  border-top: 1px solid var(--dulce-line) !important;
+}
+
+.mobile-bottom-nav button {
+  color: #776d6f !important;
+}
+
+.mobile-bottom-nav .mobile-nav-active {
+  color: var(--dulce-rose) !important;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (min-width: 900px) {
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .header-inner {
+    grid-template-columns: 52px 1fr 52px !important;
+    min-height: 104px !important;
+    padding: 0 20px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .hero-slide {
+    height: 500px !important;
+  }
+
+  .hero-logo-image {
+    width: 210px !important;
+    height: 210px !important;
+  }
+
+  .hero-text {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 104px !important;
+    padding: 0 18px !important;
+    grid-template-columns: 48px 1fr 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .brand small {
+    font-size: 6px !important;
+    letter-spacing: 1.8px !important;
+  }
+
+  .hero {
+    padding: 30px 15px 28px !important;
+  }
+
+  .hero-slide {
+    height: 445px !important;
+  }
+
+  .hero-content {
+    padding: 34px 14px 22px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .28em !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero-logo-image {
+    width: 185px !important;
+    height: 185px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .hero-text {
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .hero-main-button {
+    min-width: 205px !important;
+    padding: 13px 22px !important;
+  }
+
+  .hero-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 25px !important;
+  }
+
+  .hero-arrow-left { left: 12px !important; }
+  .hero-arrow-right { right: 12px !important; }
+
+  .benefits {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    padding: 25px 8px 38px !important;
+    gap: 5px !important;
+  }
+
+  .benefit-icon {
+    width: 50px !important;
+    height: 50px !important;
+    flex-basis: 50px !important;
+    font-size: 21px !important;
+  }
+
+  .benefit strong {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .benefit p {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .featured-section {
+    padding: 28px 30px 60px !important;
+  }
+
+  .featured-heading {
+    align-items: flex-end !important;
+    gap: 10px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 31px !important;
+  }
+
+  .featured-heading p {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .featured-grid,
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .product-info {
+    padding: 13px 12px 15px !important;
+  }
+
+  .product-info h3 {
+    font-size: 16px !important;
+  }
+
+  .product-info strong {
+    font-size: 16px !important;
+  }
+
+  .product-info .add-button {
+    font-size: 10px !important;
+    padding: 11px 6px !important;
+  }
+
+  .products-section {
+    padding: 30px 20px 60px !important;
+  }
+
+  .section-heading h2 {
+    font-size: 31px !important;
+  }
+
+  .category-filters {
+    gap: 6px !important;
+  }
+
+  .category-button {
+    padding: 8px 11px !important;
+    font-size: 10px !important;
+  }
+
+  .mobile-bottom-nav {
+    height: 68px !important;
+  }
+
+  .mobile-bottom-nav button span {
+    font-size: 20px !important;
+  }
+
+  .mobile-bottom-nav small {
+    font-size: 9px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL SEGÚN DISEÑO DE REFERENCIA
+   Logo real recortado + negro, header compacto y hero más
+   horizontal para coincidir con la referencia móvil.
+   ========================================================= */
+
+.brand-logo-image {
+  width: 78px !important;
+  height: 78px !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: none !important;
+}
+
+.hero-logo-image {
+  width: 155px !important;
+  height: 155px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto 4px !important;
+  filter: none !important;
+}
+
+.header-inner {
+  min-height: 92px !important;
+}
+
+.brand {
+  gap: 2px !important;
+  padding: 0 8px !important;
+}
+
+.brand small {
+  margin-top: 1px !important;
+  font-size: 6px !important;
+  letter-spacing: 2px !important;
+}
+
+.hero {
+  padding: 18px 15px 20px !important;
+}
+
+.hero-slide {
+  height: 285px !important;
+  min-height: 0 !important;
+  aspect-ratio: 1.45 / 1 !important;
+}
+
+.hero-content {
+  height: 100% !important;
+  padding: 18px 14px 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-eyebrow {
+  font-size: 9px !important;
+  letter-spacing: .28em !important;
+  margin-bottom: 7px !important;
+}
+
+.hero-text {
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+  margin: 2px auto 12px !important;
+}
+
+.hero-main-button {
+  min-width: 190px !important;
+  padding: 12px 22px !important;
+}
+
+.hero-dots {
+  margin-top: 12px !important;
+}
+
+.hero-arrow {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.benefits {
+  padding: 22px 8px 30px !important;
+  gap: 4px !important;
+}
+
+.benefit-icon {
+  width: 48px !important;
+  height: 48px !important;
+  flex-basis: 48px !important;
+}
+
+.featured-section {
+  padding-top: 28px !important;
+}
+
+/* En desktop mantenemos el logo protagonista sin deformarlo */
+@media (min-width: 900px) {
+  .header-inner {
+    min-height: 96px !important;
+  }
+
+  .brand-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .hero-slide {
+    height: 430px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .hero-logo-image {
+    width: 205px !important;
+    height: 205px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 92px !important;
+    padding: 0 18px !important;
+    grid-template-columns: 48px 1fr 48px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 78px !important;
+    height: 78px !important;
+  }
+
+  .hero {
+    padding: 18px 15px 20px !important;
+  }
+
+  .hero-slide {
+    height: 285px !important;
+  }
+
+  .hero-content {
+    padding: 16px 10px 10px !important;
+  }
+
+  .hero-logo-image {
+    width: 145px !important;
+    height: 145px !important;
+  }
+
+  .hero-text {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-main-button {
+    min-width: 190px !important;
+    padding: 12px 20px !important;
+  }
+
+  .hero-dots {
+    margin-top: 10px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE VISUAL FINAL 02
+   Basado directamente en la referencia enviada.
+   ========================================================= */
+:root {
+  --dulce-charcoal: #464243;
+  --dulce-card-pink: #f2dedd;
+  --dulce-button-pink: #d86f91;
+  --dulce-button-pink-hover: #c96082;
+}
+
+/* El PNG ya contiene el logo corregido: tipografía más pequeña
+   dentro del círculo y tono carbón en vez de negro puro. */
+.brand-logo-image,
+.hero-logo-image,
+.mobile-menu-logo {
+  filter: none !important;
+}
+
+/* Encabezado */
+.brand-logo-image {
+  width: 92px !important;
+  height: 92px !important;
+}
+
+/* Tarjeta principal: rosa visible como en la referencia */
+.hero-slide {
+  background: var(--dulce-card-pink) !important;
+  border: 1px solid #e5cfcd !important;
+}
+
+.hero-background {
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255,255,255,.42), transparent 31%),
+    radial-gradient(circle at 18% 78%, rgba(255,255,255,.20), transparent 35%),
+    linear-gradient(135deg, #efd7d5 0%, #f5e2e0 48%, #edd3d1 100%) !important;
+}
+
+.hero-product-shape {
+  opacity: .08 !important;
+}
+
+/* El logo protagonista conserva el círculo, pero ahora el texto
+   interno tiene la proporción de la referencia. */
+.hero-logo-image {
+  width: 205px !important;
+  height: 205px !important;
+  object-fit: contain !important;
+  margin: 0 auto 4px !important;
+}
+
+.hero-text {
+  color: var(--dulce-charcoal) !important;
+}
+
+/* Botón de la referencia: rosa, redondeado y sin aspecto de botón duro */
+.hero-main-button {
+  min-width: 220px !important;
+  min-height: 54px !important;
+  padding: 13px 28px !important;
+  background: var(--dulce-button-pink) !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  color: #fff !important;
+  box-shadow: 0 5px 14px rgba(120,70,85,.10) !important;
+}
+
+.hero-main-button:hover {
+  background: var(--dulce-button-pink-hover) !important;
+}
+
+.hero-eyebrow {
+  color: var(--dulce-charcoal) !important;
+}
+
+@media (min-width: 900px) {
+  .brand-logo-image {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .hero-logo-image {
+    width: 250px !important;
+    height: 250px !important;
+  }
+
+  .hero-main-button {
+    min-width: 250px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-logo-image {
+    width: 92px !important;
+    height: 92px !important;
+  }
+
+  .hero-slide {
+    background: var(--dulce-card-pink) !important;
+  }
+
+  .hero-logo-image {
+    width: 145px !important;
+    height: 145px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hero-main-button {
+    min-width: 190px !important;
+    min-height: 50px !important;
+    padding: 12px 20px !important;
+    border-radius: 11px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DEFINITIVO DE REFERENCIA
+   Logo real aclarado + proporción del texto corregida
+   + fondo floral desenfocado + responsive móvil centrado
+   ========================================================= */
+
+:root {
+  --dulce-logo-gray: #686465;
+  --dulce-card-pink-final: #f1dddd;
+  --dulce-button-final: #d86f91;
+}
+
+/* LOGO: la imagen ya contiene la tipografía original,
+   con "Dulce Abril" más pequeña dentro del círculo. */
+.brand-logo-image,
+.hero-logo-image,
+.mobile-menu-logo {
+  filter: none !important;
+  opacity: 1 !important;
+  object-fit: contain !important;
+}
+
+/* HEADER */
+.brand-logo-image {
+  width: 86px !important;
+  height: 86px !important;
+}
+
+/* HERO: fondo fotográfico rosa con flores/vegetación desenfocadas */
+.hero-slide {
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  overflow: hidden !important;
+  border: 1px solid #e5cfcd !important;
+  background: var(--dulce-card-pink-final) !important;
+}
+
+.hero-background {
+  inset: 0 !important;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(245,226,224,.10) 0%,
+      rgba(245,226,224,.03) 62%,
+      rgba(232,204,202,.10) 100%
+    ),
+    url('/dulce-abril-hero-bg.png') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.hero-background .circle-one,
+.hero-background .circle-two,
+.hero-background .hero-product-shape {
+  display: none !important;
+}
+
+/* Logo protagonista */
+.hero-logo-image {
+  width: 220px !important;
+  height: 220px !important;
+  margin: 0 auto 2px !important;
+}
+
+/* Tipografía y botón */
+.hero-eyebrow {
+  color: var(--dulce-logo-gray) !important;
+}
+
+.hero-text {
+  color: #514b4d !important;
+}
+
+.hero-main-button {
+  min-width: 250px !important;
+  min-height: 54px !important;
+  padding: 13px 28px !important;
+  background: var(--dulce-button-final) !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.hero-main-button:hover {
+  background: #c96082 !important;
+}
+
+/* TABLET / MÓVIL */
+@media (max-width: 899px) {
+  .header-inner {
+    width: 100% !important;
+    min-height: 92px !important;
+    padding: 0 18px !important;
+  }
+
+  .brand-logo-image {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .hero {
+    width: 100% !important;
+    padding: 18px 15px 22px !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1.52 / 1 !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 18px 12px 12px !important;
+    justify-content: center !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .28em !important;
+    margin-bottom: 4px !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-logo-image {
+    width: 132px !important;
+    height: 132px !important;
+    margin-bottom: 1px !important;
+  }
+
+  .hero-text {
+    max-width: 95% !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+    margin: 2px auto 12px !important;
+  }
+
+  .hero-main-button {
+    min-width: 190px !important;
+    min-height: 50px !important;
+    padding: 12px 20px !important;
+    border-radius: 11px !important;
+  }
+
+  .hero-dots {
+    margin-top: 10px !important;
+  }
+
+  .hero-arrow-left {
+    left: 10px !important;
+  }
+
+  .hero-arrow-right {
+    right: 10px !important;
+  }
+
+  /* Evita que la barra inferior tape el contenido */
+  .featured-section {
+    padding-bottom: 90px !important;
+  }
+}
+
+/* TELÉFONOS PEQUEÑOS */
+@media (max-width: 420px) {
+  .header-inner {
+    padding: 0 14px !important;
+  }
+
+  .brand-logo-image {
+    width: 68px !important;
+    height: 68px !important;
+  }
+
+  .hero {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 8px !important;
+  }
+
+  .hero-logo-image {
+    width: 122px !important;
+    height: 122px !important;
+  }
+
+  .hero-text {
+    font-size: 14px !important;
+  }
+
+  .hero-main-button {
+    min-width: 180px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — FONDO UNIFICADO CON LA BARRA SUPERIOR
+   Usa el mismo rosa muy suave del encabezado en las
+   superficies que antes quedaban blancas.
+   ========================================================= */
+:root {
+  --dulce-page-surface: #fff4f2;
+}
+
+html,
+body,
+.app,
+main,
+.hero,
+.benefits,
+.featured-section,
+.products-section,
+.promotions-section,
+.instagram-section {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* Botones del encabezado: mismo fondo que la barra superior */
+.menu-button,
+.cart-button {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* Tarjetas: se elimina el blanco puro para mantener la misma base visual */
+.product-card {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* Barra inferior ya usa este tono; se fuerza para mantener consistencia */
+.mobile-bottom-nav {
+  background: var(--dulce-page-surface) !important;
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DE PROPORCIONES
+   Logo de hero un poco más grande; texto y botón más compactos.
+   ========================================================= */
+.hero-logo-image {
+  width: 230px !important;
+  height: 230px !important;
+}
+
+.hero-text {
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  margin: 1px auto 9px !important;
+}
+
+.hero-main-button {
+  min-width: 205px !important;
+  min-height: 48px !important;
+  padding: 10px 20px !important;
+}
+
+@media (max-width: 899px) {
+  .hero-logo-image {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .hero-text {
+    max-width: 94% !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    margin: 1px auto 8px !important;
+  }
+
+  .hero-main-button {
+    min-width: 170px !important;
+    min-height: 46px !important;
+    padding: 9px 18px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* ---------- HERO: integrar la tarjeta con el fondo general ---------- */
+.hero-slide {
+  background: var(--dulce-bg) !important;
+  border: 1px solid rgba(234,217,216,.55) !important;
+}
+
+.hero-background {
+  background: var(--dulce-bg) !important;
+  isolation: isolate !important;
+}
+
+.hero-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/dulce-abril-hero-bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: .34;
+  filter: blur(1.5px);
+  transform: scale(1.015);
+  z-index: -1;
+}
+
+.hero-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(249,226,212,.38);
+  z-index: -1;
+}
+
+@media (max-width: 899px) {
+  .hero-background::before {
+    opacity: .30;
+  }
+  .hero-background::after {
+    background: rgba(249,226,212,.42);
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DE REFERENCIA MÓVIL 03
+   Basado en comparación directa con la maqueta enviada.
+   ========================================================= */
+@media (max-width: 600px) {
+  /* La tarjeta debe tocar el header, sin márgenes laterales. */
+  .hero {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    height: 350px !important;
+    min-height: 350px !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .hero-content {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 18px 16px 12px !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+  }
+
+  /* Título completamente visible arriba del logo. */
+  .hero-eyebrow {
+    flex: 0 0 auto !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    letter-spacing: .27em !important;
+    margin: 0 0 5px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Logo algo más contenido para que respire toda la composición. */
+  .hero-logo-image {
+    flex: 0 0 auto !important;
+    width: 135px !important;
+    height: 135px !important;
+    margin: 0 auto 1px !important;
+  }
+
+  /* Frase más cercana y más parecida a la maqueta. */
+  .hero-text {
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
+    margin: 0 auto 10px !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Botón pequeño como en la referencia. */
+  .hero-main-button {
+    flex: 0 0 auto !important;
+    min-width: 175px !important;
+    width: auto !important;
+    min-height: 45px !important;
+    height: 45px !important;
+    padding: 8px 18px !important;
+    border-radius: 9px !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+  }
+
+  .hero-dots {
+    flex: 0 0 auto !important;
+    margin-top: 13px !important;
+  }
+
+  .hero-arrow {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 22px !important;
+  }
+
+  .hero-arrow-left { left: 10px !important; }
+  .hero-arrow-right { right: 10px !important; }
+
+  /* Beneficios inmediatamente debajo de la tarjeta. */
+  .benefits {
+    padding: 25px 8px 32px !important;
+    gap: 4px !important;
+    background: var(--dulce-page-surface) !important;
+  }
+
+  .benefit {
+    gap: 7px !important;
+  }
+
+  .benefit-icon {
+    width: 50px !important;
+    height: 50px !important;
+    flex-basis: 50px !important;
+    border-radius: 50% !important;
+    background: #fae9e8 !important;
+    font-size: 0 !important;
+  }
+
+  .benefit-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+    display: block !important;
+  }
+
+  .benefit strong {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .benefit p {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .benefit-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+    background: transparent !important;
+    color: #3f3a3c !important;
+    border-radius: 0 !important;
+  }
+
+  .benefit-icon svg {
+    width: 31px !important;
+    height: 31px !important;
+  }
+
+  .benefit strong {
+    color: #252123 !important;
+    font-size: 10px !important;
+  }
+
+  .benefit p {
+    color: #777071 !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE ACTUAL / MOBILE
+   Header y hero más compactos + iconografía unificada.
+   ========================================================= */
+:root {
+  --dulce-logo-gray: #686465;
+  --dulce-action: #9b6071;
+}
+
+/* HEADER más corto */
+.header-inner {
+  min-height: 82px !important;
+}
+
+.brand-logo-image {
+  width: 70px !important;
+  height: 70px !important;
+}
+
+.brand small {
+  font-size: 6px !important;
+  letter-spacing: 1.8px !important;
+}
+
+.menu-button,
+.cart-button {
+  color: var(--dulce-logo-gray) !important;
+  border-color: #ead9d8 !important;
+}
+
+.menu-button span {
+  background: var(--dulce-logo-gray) !important;
+}
+
+.cart-icon {
+  color: var(--dulce-logo-gray) !important;
+  filter: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.cart-icon svg {
+  width: 25px !important;
+  height: 25px !important;
+  stroke: var(--dulce-logo-gray) !important;
+  color: var(--dulce-logo-gray) !important;
+}
+
+/* HERO: sin separación lateral y más corto */
+.hero {
+  padding: 0 !important;
+}
+
+.hero-slide {
+  width: 100% !important;
+  max-width: none !important;
+  height: 390px !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.hero-content {
+  height: 100% !important;
+  padding: 12px 12px 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.hero-eyebrow {
+  font-size: 9px !important;
+  letter-spacing: .28em !important;
+  margin: 3px 0 4px !important;
+  color: var(--dulce-logo-gray) !important;
+}
+
+.hero-logo-image {
+  width: 150px !important;
+  height: 150px !important;
+  margin: 0 auto 1px !important;
+}
+
+.hero-text {
+  max-width: 95% !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  margin: 2px auto 8px !important;
+  color: #514b4d !important;
+}
+
+/* Botón más pequeño y mismo color de los botones de producto */
+.hero-main-button {
+  min-width: 0 !important;
+  width: 150px !important;
+  min-height: 44px !important;
+  padding: 10px 14px !important;
+  background: var(--dulce-action) !important;
+  border-color: var(--dulce-action) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-size: 13px !important;
+}
+
+.hero-main-button:hover {
+  background: #825264 !important;
+}
+
+.hero-dots {
+  margin-top: 8px !important;
+}
+
+/* Flechas discretas */
+.hero-arrow {
+  width: 34px !important;
+  height: 34px !important;
+  color: var(--dulce-logo-gray) !important;
+}
+
+/* BENEFICIOS: mismo gris del logo, sin fondos de color */
+.benefit-icon {
+  width: 48px !important;
+  height: 48px !important;
+  flex-basis: 48px !important;
+  background: transparent !important;
+  color: var(--dulce-logo-gray) !important;
+  font-size: 21px !important;
+}
+
+.benefit-icon svg {
+  width: 31px !important;
+  height: 31px !important;
+  stroke: currentColor !important;
+}
+
+.benefit strong {
+  color: #30292b !important;
+}
+
+.benefit p {
+  color: #756b6d !important;
+}
+
+/* Carrito inferior: mismo lenguaje visual que los beneficios */
+.mobile-cart-button > span:first-child {
+  color: var(--dulce-logo-gray) !important;
+}
+
+.mobile-cart-button > span:first-child svg {
+  width: 24px !important;
+  height: 24px !important;
+  stroke: var(--dulce-logo-gray) !important;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .header-inner {
+    min-height: 82px !important;
+    padding: 0 18px !important;
+    grid-template-columns: 48px 1fr 48px !important;
+  }
+
+  .brand-logo-image {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .hero {
+    padding: 0 !important;
+  }
+
+  .hero-slide {
+    height: 390px !important;
+    min-height: 0 !important;
+  }
+
+  .hero-content {
+    padding: 10px 10px 8px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .hero-logo-image {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .hero-text {
+    font-size: 14px !important;
+    margin: 2px auto 8px !important;
+  }
+
+  .hero-main-button {
+    width: 150px !important;
+    min-width: 150px !important;
+    min-height: 44px !important;
+    padding: 9px 12px !important;
+  }
+
+  .benefits {
+    padding: 22px 8px 30px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .header-inner {
+    min-height: 78px !important;
+  }
+
+  .brand-logo-image {
+    width: 66px !important;
+    height: 66px !important;
+  }
+
+  .hero-slide {
+    height: 375px !important;
+  }
+
+  .hero-logo-image {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .hero-text {
+    font-size: 13px !important;
+  }
+
+  .hero-main-button {
+    width: 145px !important;
+    min-width: 145px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE DE PROPORCIONES 04
+   Header más compacto + hero más corto, manteniendo el
+   botón un poco más abajo dentro de la composición.
+   ========================================================= */
+@media (max-width: 600px) {
+  /* Barra superior más chica */
+  .header-inner {
+    min-height: 68px !important;
+    height: 68px !important;
+    padding: 0 14px !important;
+    grid-template-columns: 44px 1fr 44px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .brand-logo-image {
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  .brand small {
+    font-size: 5.5px !important;
+    letter-spacing: 1.6px !important;
+  }
+
+  /* Tarjeta principal más corta */
+  .hero-slide {
+    height: 330px !important;
+    min-height: 330px !important;
+  }
+
+  .hero-content {
+    padding: 12px 12px 8px !important;
+  }
+
+  .hero-eyebrow {
+    margin: 3px 0 4px !important;
+  }
+
+  .hero-logo-image {
+    width: 145px !important;
+    height: 145px !important;
+    margin: 0 auto 2px !important;
+  }
+
+  .hero-text {
+    margin: 1px auto 0 !important;
+  }
+
+  /* Bajamos ligeramente el botón, sin volver a agrandar la tarjeta */
+  .hero-main-button {
+    margin-top: 9px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 9px 14px !important;
+  }
+
+  .hero-dots {
+    margin-top: 8px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-slide {
+    height: 325px !important;
+    min-height: 325px !important;
+  }
+
+  .hero-logo-image {
+    width: 138px !important;
+    height: 138px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — DESKTOP ANCHO REAL
+   Corrección de los márgenes laterales exagerados en PC.
+   El diseño móvil se mantiene intacto.
+   ========================================================= */
+@media (min-width: 900px) {
+  .header-inner {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .hero {
+    width: 100% !important;
+    padding: 18px 0 20px !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .benefits,
+  .featured-section,
+  .products-section,
+  .promotions-section,
+  .instagram-section {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .benefits {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .featured-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .products-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .promotions-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .instagram-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .footer {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL HERO MÓVIL
+   Centra el contenido de la tarjeta un poco más abajo,
+   sin aumentar la altura de la tarjeta.
+   ========================================================= */
+@media (max-width: 600px) {
+  .hero-content {
+    transform: translateY(20px) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-content {
+    transform: translateY(18px) !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — CORRECCIÓN DESKTOP REAL 05
+   Se aplica al App.css que importa App(5).jsx.
+   NO modifica las reglas móviles.
+   ========================================================= */
+@media (min-width: 900px) {
+  /* ENCABEZADO */
+  .header-inner {
+    min-height: 104px !important;
+    height: 104px !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .brand {
+    min-width: 150px !important;
+    padding: 2px 8px !important;
+    gap: 2px !important;
+  }
+
+  .brand-logo-image {
+    width: 104px !important;
+    height: 104px !important;
+  }
+
+  .brand small {
+    display: block !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    letter-spacing: 2.8px !important;
+    margin-top: 1px !important;
+    white-space: nowrap !important;
+    color: #756b6d !important;
+  }
+
+  /* HERO */
+  .hero {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+    height: 520px !important;
+    min-height: 520px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 24px 30px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+  }
+
+  .hero-eyebrow {
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 6px !important;
+    margin: 0 0 14px !important;
+    white-space: nowrap !important;
+    color: #464243 !important;
+  }
+
+  .hero-logo-image {
+    display: block !important;
+    width: 260px !important;
+    height: 260px !important;
+    margin: 0 auto 8px !important;
+    object-fit: contain !important;
+  }
+
+  .hero-text {
+    max-width: 800px !important;
+    margin: 0 auto 20px !important;
+    font-size: 20px !important;
+    line-height: 1.35 !important;
+    color: #514b4d !important;
+  }
+
+  .hero-main-button {
+    width: 230px !important;
+    min-width: 230px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .hero-dots {
+    margin-top: 15px !important;
+  }
+
+  .hero-dots span {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .hero-arrow {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 30px !important;
+  }
+
+  .hero-arrow-left { left: 24px !important; }
+  .hero-arrow-right { right: 24px !important; }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL DESKTOP V4
+   Último ajuste de composición del hero.
+   MÓVIL SIN CAMBIOS.
+   ========================================================= */
+@media (min-width: 900px) {
+  .hero-slide {
+    height: 540px !important;
+    min-height: 540px !important;
+  }
+
+  .hero-content {
+    height: 100% !important;
+    padding: 38px 30px 22px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    transform: none !important;
+  }
+
+  .hero-eyebrow {
+    flex: 0 0 auto !important;
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 5.5px !important;
+    margin: 0 0 24px !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-logo-image {
+    flex: 0 0 auto !important;
+    width: 280px !important;
+    height: 280px !important;
+    margin: 0 auto 18px !important;
+    object-fit: contain !important;
+  }
+
+  .hero-text {
+    flex: 0 0 auto !important;
+    max-width: 800px !important;
+    margin: 0 auto 24px !important;
+    font-size: 21px !important;
+    line-height: 1.35 !important;
+  }
+
+  .hero-main-button {
+    flex: 0 0 auto !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    padding: 13px 24px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .hero-dots {
+    flex: 0 0 auto !important;
+    margin-top: 16px !important;
+  }
+
+  .hero-dots span {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .hero-arrow {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 30px !important;
+  }
+
+  .hero-arrow-left {
+    left: 24px !important;
+  }
+
+  .hero-arrow-right {
+    right: 24px !important;
+  }
+}
+
+
+/* =========================================================
+   AJUSTE PUNTUAL — BENEFICIOS DESKTOP
+   Mantener el diseño existente, solo dar aire y equilibrio.
+   ========================================================= */
+.hero-tagline {
+  color: #8b626f !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 4px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  text-align: center !important;
+  margin: 0 auto 18px !important;
+  white-space: nowrap !important;
+}
+
+@media (min-width: 900px) {
+  .hero-content {
+    padding-top: 20px !important;
+  }
+
+  .hero-tagline {
+    font-size: 14px !important;
+    letter-spacing: 5px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .benefits {
+    min-height: 190px !important;
+    padding-top: 30px !important;
+    padding-bottom: 34px !important;
+    align-items: center !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero-tagline {
+    font-size: 11px !important;
+    letter-spacing: 3.5px !important;
+    margin-bottom: 14px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-tagline {
+    font-size: 10px !important;
+    letter-spacing: 3px !important;
+    margin-bottom: 15px !important;
+  }
+}
+
+
+/* =========================================================
+   AJUSTE PUNTUAL V2
+   Iconos lineales restaurados + slogan móvil más pequeño.
+   No tocar el resto del hero.
+   ========================================================= */
+
+.benefit-icon {
+  background: transparent !important;
+  color: var(--dulce-logo-gray, #686465) !important;
+  font-size: 0 !important;
+}
+
+.benefit-icon svg {
+  width: 31px !important;
+  height: 31px !important;
+  display: block !important;
+  stroke: currentColor !important;
+}
+
+@media (max-width: 899px) {
+  .hero-tagline {
+    font-size: 7px !important;
+    letter-spacing: 2.6px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 9px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-tagline {
+    font-size: 7px !important;
+    letter-spacing: 2.5px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .28em !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — AJUSTE PC DEFINITIVO
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+  /* Hero completamente al ancho disponible */
+  .hero {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* VER PRODUCTOS — más chico */
+  .hero-main-button {
+    width: 180px !important;
+    min-width: 180px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — AJUSTE PC DEFINITIVO
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+  /* Hero completamente al ancho disponible */
+  .hero {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-slide {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* VER PRODUCTOS — más chico */
+  .hero-main-button {
+    width: 180px !important;
+    min-width: 180px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — CORRECCIÓN DEFINITIVA DE ANCHO PC
+   Elimina los márgenes laterales del contenedor raíz.
+   No modifica el diseño móvil.
+   ========================================================= */
+
+#root {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@media (min-width: 900px) {
+  html,
+  body,
+  #root,
+  .app,
+  main,
+  .header,
+  .hero,
+  .hero-slide,
+  .benefits,
+  .featured-section,
+  .products-section,
+  .promotions-section,
+  .instagram-section,
+  .footer {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .hero {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-slide {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE ÚNICO BOTÓN MÓVIL
+   Solo modifica "Ver productos" en pantallas móviles.
+   PC queda exactamente igual.
+   ========================================================= */
+@media (max-width: 899px) {
+  .hero-main-button {
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 8px 12px !important;
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE MÓVIL DEL BOTÓN
+   Solo móvil: más chico y un poco más abajo.
+   PC queda intacta.
+   ========================================================= */
+@media (max-width: 899px) {
+  .hero-main-button {
+    width: 125px !important;
+    min-width: 125px !important;
+    max-width: 125px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 6px 10px !important;
+    margin-top: 28px !important;
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    border-radius: 9px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — NUEVA SECCIÓN PRODUCTOS DESTACADOS
+   Usa los productos existentes sin modificar el catálogo.
+   ========================================================= */
+.featured-section {
+  padding: 72px 54px 82px !important;
+  background: var(--dulce-page-surface) !important;
+}
+
+.featured-heading {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 30px !important;
+  margin-bottom: 30px !important;
+}
+
+.featured-heading > div {
+  text-align: left !important;
+}
+
+.featured-heading p {
+  margin: 0 0 10px !important;
+  font-size: 10px !important;
+  letter-spacing: .30em !important;
+  line-height: 1.2 !important;
+}
+
+.featured-heading h2 {
+  margin: 0 !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 48px !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.02em !important;
+}
+
+.view-all-button {
+  flex: 0 0 auto !important;
+  padding: 8px 0 !important;
+  font-size: 13px !important;
+  letter-spacing: .02em !important;
+}
+
+.featured-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+}
+
+.featured-card {
+  border: 1px solid rgba(120, 88, 94, .13) !important;
+  border-radius: 2px !important;
+  box-shadow: 0 5px 20px rgba(90, 50, 60, .035) !important;
+  transition: transform .22s ease, box-shadow .22s ease !important;
+}
+
+.featured-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 14px 32px rgba(90, 50, 60, .09) !important;
+}
+
+.featured-card .product-image {
+  aspect-ratio: 1 / 1 !important;
+  background: #f8e9e6 !important;
+}
+
+.featured-card .product-image img {
+  transition: transform .3s ease !important;
+}
+
+.featured-card:hover .product-image img {
+  transform: scale(1.025) !important;
+}
+
+.featured-card .product-info {
+  padding: 17px 17px 18px !important;
+  text-align: left !important;
+}
+
+.featured-card .product-info > span {
+  font-size: 9px !important;
+  letter-spacing: .18em !important;
+}
+
+.featured-card .product-info h3 {
+  margin: 7px 0 6px !important;
+  font-size: 20px !important;
+  line-height: 1.15 !important;
+}
+
+.featured-card .product-info strong {
+  margin: 0 0 14px !important;
+  font-size: 17px !important;
+}
+
+.featured-card .add-button {
+  width: 100% !important;
+  min-height: 38px !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  border-radius: 7px !important;
+}
+
+.featured-card .sold-badge {
+  top: 12px !important;
+  left: 12px !important;
+  padding: 5px 8px !important;
+  border-radius: 20px !important;
+  font-size: 8px !important;
+  letter-spacing: .04em !important;
+  box-shadow: 0 3px 10px rgba(90, 50, 60, .10) !important;
+}
+
+@media (max-width: 899px) {
+  .featured-section {
+    padding: 58px 28px 90px !important;
+  }
+
+  .featured-heading {
+    align-items: flex-end !important;
+    margin-bottom: 24px !important;
+    gap: 16px !important;
+  }
+
+  .featured-heading p {
+    font-size: 9px !important;
+    letter-spacing: .25em !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 34px !important;
+    line-height: .98 !important;
+  }
+
+  .view-all-button {
+    font-size: 12px !important;
+    padding-bottom: 2px !important;
+  }
+
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .featured-card .product-info {
+    padding: 13px 11px 14px !important;
+  }
+
+  .featured-card .product-info > span {
+    font-size: 8px !important;
+    letter-spacing: .13em !important;
+  }
+
+  .featured-card .product-info h3 {
+    font-size: 16px !important;
+    margin: 6px 0 5px !important;
+  }
+
+  .featured-card .product-info strong {
+    font-size: 15px !important;
+    margin-bottom: 11px !important;
+  }
+
+  .featured-card .add-button {
+    min-height: 35px !important;
+    font-size: 10px !important;
+    padding: 7px 5px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .featured-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .featured-heading {
+    gap: 10px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 30px !important;
+  }
+
+  .featured-heading p {
+    font-size: 8px !important;
+    letter-spacing: .20em !important;
+  }
+
+  .view-all-button {
+    font-size: 11px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE SOLICITADO 28/09
+   Carrusel sin flechas + swipe + autoplay + destacados visibles.
+   ========================================================= */
+
+/* Las flechas desaparecen: el carrusel se maneja con swipe y puntos. */
+.hero-arrow {
+  display: none !important;
+}
+
+.hero-slide {
+  touch-action: pan-y !important;
+  user-select: none !important;
+}
+
+.hero-dots {
+  z-index: 5 !important;
+  position: relative !important;
+  gap: 8px !important;
+}
+
+.hero-dots button {
+  width: 8px !important;
+  height: 8px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+.hero-dots button.active {
+  background: #30272a !important;
+}
+
+/* Encabezado de destacados como la referencia: limpio, sans y contundente. */
+.featured-heading h2 {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.025em !important;
+  color: #30292b !important;
+}
+
+.view-all-button {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #d86f91 !important;
+}
+
+@media (max-width: 600px) {
+  /* Compactamos la primera pantalla sin tocar el catálogo. */
+  .hero-slide {
+    height: 300px !important;
+    min-height: 300px !important;
+  }
+
+  .hero-content {
+    transform: translateY(8px) !important;
+  }
+
+  .benefits {
+    padding: 16px 8px 22px !important;
+    gap: 4px !important;
+  }
+
+  .benefit-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  .benefit-icon svg {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .benefit strong {
+    font-size: 9px !important;
+  }
+
+  .benefit p {
+    font-size: 7px !important;
+  }
+
+  .featured-section {
+    padding: 20px 20px 70px !important;
+  }
+
+  .featured-heading {
+    margin-bottom: 12px !important;
+    gap: 8px !important;
+  }
+
+  .featured-heading > div {
+    text-align: left !important;
+  }
+
+  /* Ocultamos solo el pequeño subtítulo para copiar la referencia. */
+  .featured-heading p {
+    display: none !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 27px !important;
+    line-height: 1.05 !important;
+  }
+
+  .view-all-button {
+    font-size: 13px !important;
+    padding: 0 !important;
+    align-self: center !important;
+  }
+
+  .featured-grid {
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-slide {
+    height: 290px !important;
+    min-height: 290px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 26px !important;
+  }
+
+  .view-all-button {
+    font-size: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   BENEFICIOS — ICONOS LINEALES, COMPACTOS
+   ========================================================= */
+.benefit-icon {
+  width: 40px !important;
+  height: 40px !important;
+  flex-basis: 40px !important;
+  background: transparent !important;
+  color: #686465 !important;
+  font-size: 0 !important;
+  border-radius: 0 !important;
+}
+
+.benefit-icon svg {
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  stroke: currentColor !important;
+}
+
+@media (max-width: 600px) {
+  .benefits {
+    padding: 15px 8px 20px !important;
+    gap: 4px !important;
+  }
+
+  .benefit {
+    gap: 5px !important;
+  }
+
+  .benefit-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  .benefit-icon svg {
+    width: 29px !important;
+    height: 29px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINO DE LA PRIMERA PANTALLA
+   ========================================================= */
+
+@media (max-width: 600px) {
+  /* Iconos de beneficios: lineales, más pequeños y con más aire. */
+  .benefits {
+    padding: 13px 9px 14px !important;
+    gap: 3px !important;
+  }
+
+  .benefit {
+    gap: 4px !important;
+  }
+
+  .benefit-icon {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .benefit-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+  }
+
+  .benefit strong {
+    font-size: 9px !important;
+    line-height: 1.18 !important;
+  }
+
+  .benefit p {
+    font-size: 7.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Acercamos destacados a los beneficios, como en la referencia. */
+  .featured-section {
+    padding: 16px 20px 65px !important;
+  }
+
+  .featured-heading {
+    margin-bottom: 10px !important;
+    align-items: center !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 28px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.035em !important;
+    white-space: nowrap !important;
+  }
+
+  .view-all-button {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+  }
+
+  .featured-grid {
+    gap: 9px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .featured-section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: 26px !important;
+  }
+
+  .view-all-button {
+    font-size: 12px !important;
+  }
+}
+
+/* =========================================================
+   CATÁLOGO — PRIMERA VERSIÓN FUNCIONAL
+   ========================================================= */
+.products-section {
+  scroll-margin-top: 92px;
+}
+
+.catalog-count {
+  display: block;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: .4px;
+}
+
+.category-filters {
+  padding: 4px 0 8px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  scrollbar-width: none;
+}
+
+.category-filters::-webkit-scrollbar { display: none; }
+
+.category-button {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  transition: .2s ease;
+}
+
+.product-card {
+  border-radius: 10px;
+}
+
+.product-image {
+  border-radius: 10px 10px 0 0;
+}
+
+.sold-badge {
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 10px;
+}
+
+.catalog-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 45px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,.35);
+}
+
+.catalog-empty h3 {
+  margin: 0 0 8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.catalog-empty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .products-section {
+    padding-top: 42px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .section-heading {
+    margin-bottom: 20px !important;
+  }
+
+  .section-heading h2 {
+    font-size: 29px !important;
+    line-height: 1.05 !important;
+  }
+
+  .catalog-count {
+    margin-top: 10px;
+    font-size: 10px;
+  }
+
+  .category-filters {
+    justify-content: flex-start !important;
+    margin-bottom: 22px !important;
+    padding-bottom: 5px !important;
+  }
+
+  .category-button {
+    padding: 8px 13px !important;
+    font-size: 10px !important;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .product-info {
+    padding: 12px 10px 13px !important;
+  }
+
+  .product-info > span {
+    font-size: 8px !important;
+  }
+
+  .product-info h3 {
+    font-size: 15px !important;
+    margin: 7px 0 5px !important;
+  }
+
+  .product-info strong {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .product-info .add-button {
+    font-size: 9px !important;
+    padding: 10px 5px !important;
+  }
+
+  .sold-badge {
+    top: 9px !important;
+    left: 9px !important;
+    padding: 7px 10px !important;
+    font-size: 8px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — HEADER MÓVIL + CARRITO LINEAL
+   Último ajuste: barra superior más compacta y carrito con
+   el mismo lenguaje de iconos lineales de beneficios.
+   ========================================================= */
+.cart-icon {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  color:var(--dulce-logo-gray, #756b6d);
+  filter:none;
+}
+.cart-icon svg {
+  width:28px;
+  height:28px;
+  display:block;
+  stroke:currentColor;
+}
+.mobile-cart-icon {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:25px;
+  height:25px;
+  position:relative;
+  color:var(--dulce-logo-gray, #756b6d);
+  font-size:initial !important;
+}
+.mobile-cart-icon svg {
+  width:25px;
+  height:25px;
+  display:block;
+  stroke:currentColor;
+}
+.mobile-cart-icon b {
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:#df7592;
+  color:#fff;
+  border-radius:50%;
+  min-width:16px;
+  height:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:9px !important;
+  font-weight:500;
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    min-height:58px !important;
+    height:58px !important;
+    padding:0 12px !important;
+    grid-template-columns:40px 1fr 40px !important;
+    gap:8px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width:40px !important;
+    height:40px !important;
+    border-radius:6px !important;
+  }
+
+  .menu-button span {
+    width:21px !important;
+    height:2px !important;
+    margin:3px 0 !important;
+  }
+
+  .brand-logo-image {
+    width:52px !important;
+    height:52px !important;
+  }
+
+  .brand {
+    padding:0 !important;
+  }
+
+  .brand small {
+    display:none !important;
+  }
+
+  .cart-icon {
+    width:25px !important;
+    height:25px !important;
+  }
+
+  .cart-icon svg {
+    width:25px !important;
+    height:25px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — BOTONES HEADER MÁS CHICOS SOLO EN MÓVIL
+   No modifica PC
+   ========================================================= */
+@media (max-width: 600px) {
+  .header-inner {
+    grid-template-columns: 38px 1fr 38px !important;
+  }
+
+  .menu-button,
+  .cart-button {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .menu-button span {
+    width: 19px !important;
+    height: 2px !important;
+    margin: 2px 0 !important;
+  }
+
+  .cart-button {
+    font-size: 18px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — CORRECCIÓN SOLO PC ESCRITORIO
+   NO MODIFICA MÓVIL
+   ========================================================= */
+
+@media (min-width: 900px) {
+
+  /* Quitar "REGALOS QUE ENAMORAN" que aparece debajo
+     del logo del encabezado */
+  .header .brand > small {
+    display: none !important;
+  }
+
+  /* Encabezado */
+  .header-inner {
+    position: relative !important;
+  }
+
+  /* Navegación perfectamente centrada en la pantalla */
+  .desktop-nav {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Texto de navegación más elegante */
+  .desktop-nav a {
+    color: #756b6d !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.02em !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    padding: 6px 0 !important;
+  }
+
+  .desktop-nav a:hover {
+    color: #9b6071 !important;
+  }
+
+  /* Logo queda a la izquierda */
+  .header .brand {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  /* Carrito queda a la derecha */
+  .header .cart-button {
+    position: relative !important;
+    z-index: 2 !important;
+    margin-left: auto !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — BOTÓN CARRITO VACÍO
+   Cambio puntual: no modifica header ni responsive.
+   ========================================================= */
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 13px 24px;
+  margin-top: 18px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--dulce-rose, #9b6071);
+  color: #fff;
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.button-primary:hover {
+  background: var(--dulce-rose-dark, #825264);
+  transform: translateY(-1px);
+}
+/* =========================================================
+   DULCE ABRIL — PULIDO VISUAL DEL CARRITO
+   Solo apariencia. No modifica la funcionalidad.
+   ========================================================= */
+
+/* Cantidad */
+.quantity-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  border: 1px solid var(--dulce-line, #ead9d8) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  margin-top: 10px !important;
+}
+
+.quantity-controls button,
+.quantity-controls span {
+  width: 32px !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  background: #fff !important;
+  color: var(--dulce-rose, #9b6071) !important;
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 14px !important;
+}
+
+.quantity-controls button {
+  cursor: pointer !important;
+  font-weight: 500 !important;
+}
+
+.quantity-controls button:hover {
+  background: var(--dulce-pink-soft, #fff4f2) !important;
+}
+
+/* Botón WhatsApp */
+.whatsapp-cart-button {
+  width: 100% !important;
+  padding: 13px 16px !important;
+  margin-top: 9px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #2b9d63 !important;
+  color: #fff !important;
+  font-family: 'DM Sans', Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: .02em !important;
+  cursor: pointer !important;
+  transition: transform .2s ease, opacity .2s ease !important;
+}
+
+.whatsapp-cart-button:hover {
+  opacity: .92 !important;
+  transform: translateY(-1px) !important;
+}
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL CARRITO Y CONTACTO
+   SOLO ESTOS ELEMENTOS — NO MODIFICA EL RESTO DEL SITIO
+   ========================================================= */
+
+/* Fondo del carrito igual al fondo de la imagen 3 */
+.cart-panel {
+  background: var(--dulce-bg) !important;
+}
+
+/* Botones del carrito más chicos y redondeados */
+.checkout-button,
+.whatsapp-cart-button {
+  width: 92% !important;
+  max-width: 420px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+}
+
+/* Seguir comprando también más compacto */
+.continue-shopping {
+  width: auto !important;
+  display: block !important;
+  margin: 14px auto 0 !important;
+  border-radius: 10px !important;
+  padding: 10px 20px !important;
+}
+
+/* Tarjeta "Hacé tu pedido" */
+.checkout-modal {
+  background: var(--dulce-bg) !important;
+  border-radius: 18px !important;
+}
+
+/* Botones de contacto */
+.checkout-option {
+  width: 88% !important;
+  max-width: 380px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+}
+
+/* WhatsApp — color oficial aproximado + texto blanco */
+.checkout-option.whatsapp,
+.whatsapp-cart-button {
+  background: #25D366 !important;
+  color: #fff !important;
+}
+
+/* Instagram — degradado característico */
+.checkout-option.instagram {
+  background: linear-gradient(
+    135deg,
+    #833AB4 0%,
+    #C13584 35%,
+    #E1306C 65%,
+    #F77737 100%
+  ) !important;
+  color: #fff !important;
+}
+
+/* Botones superiores del carrito redondeados */
+.menu-button,
+.cart-button {
+  border-radius: 12px !important;
+}
+/* =========================================================
+   DULCE ABRIL — CARRITO MÓVIL
+   Solo móvil — NO modifica PC
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* Fondo del carrito igual al menú móvil */
+  .cart-panel {
+    background: #fff4f2 !important;
+  }
+
+  /* Carrito móvil con apariencia de panel */
+  .cart-panel {
+    width: 86% !important;
+    max-width: 420px !important;
+    min-height: 100vh !important;
+  }
+
+  /* Evita que el contenido quede pegado a los bordes */
+  .cart-panel {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Tarjeta "Hacé tu pedido" */
+  .checkout-modal {
+    background: #fff4f2 !important;
+    border-radius: 18px !important;
+  }
+
+  /* Botones del carrito */
+  .checkout-button,
+  .whatsapp-cart-button {
+    border-radius: 12px !important;
+  }
+
+  /* Botones de contacto */
+  .checkout-option {
+    border-radius: 12px !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — COLOR CARRITO PC
+   Solo PC — NO TOCAR MOBILE
+   ========================================================= */
+
+@media (min-width: 601px) {
+  .cart-panel,
+  .checkout-modal {
+    background: #fff4f2 !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — PRODUCTO ABIERTO
+   Corrección estética solamente.
+   NO modifica carrito, menú ni diseño móvil general.
+   ========================================================= */
+
+.product-detail-modal {
+  background: #fff4f2 !important;
+  color: #3f3739 !important;
+  border-radius: 0 !important;
+  border: 1px solid #ead8d5 !important;
+  box-shadow: 0 18px 50px rgba(80, 55, 60, 0.16) !important;
+  overflow: hidden !important;
+}
+
+.product-detail-image {
+  background: #f1dddd !important;
+  border: 1px solid #ead8d5 !important;
+}
+
+.product-detail-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.product-detail-info {
+  color: #3f3739 !important;
+}
+
+.product-detail-info > span {
+  color: #9b6172 !important;
+}
+
+.product-detail-info h2 {
+  color: #3f3739 !important;
+}
+
+.product-detail-info strong {
+  color: #9b6172 !important;
+}
+
+.product-detail-info p {
+  color: #756b6e !important;
+}
+
+.product-detail-close {
+  color: #9b6172 !important;
+  background: transparent !important;
+}
+
+/* Botón del producto: mismo lenguaje visual de Dulce Abril */
+.product-detail-info .add-button {
+  background: #a66378 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.product-detail-info .add-button:hover {
+  background: #91566a !important;
+}
+
+/* MÓVIL: solamente colores, NO tocar tamaños ni distribución */
+@media (max-width: 899px) {
+  .product-detail-modal {
+    background: #fff4f2 !important;
+  }
+
+  .product-detail-image {
+    background: #f1dddd !important;
+  }
+
+  .product-detail-info h2 {
+    color: #3f3739 !important;
+  }
+
+  .product-detail-info p {
+    color: #756b6e !important;
+  }
+}
+/* =========================================================
+   DULCE ABRIL — GALERÍA DE PRODUCTO
+   Solo modifica la galería dentro del producto abierto.
+   ========================================================= */
+.product-detail-gallery {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-detail-image {
+  width: 100%;
+  height: 390px !important;
+  min-height: 0 !important;
+  overflow: hidden;
+  background: #f4e8e5 !important;
+}
+
+.product-detail-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.product-detail-thumbnails {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.product-detail-thumbnail {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  padding: 0;
+  border: 1px solid #ead8d5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+}
+
+.product-detail-thumbnail.active {
+  border: 2px solid #9b6071;
+}
+
+.product-detail-thumbnail img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+@media (max-width: 899px) {
+  .product-detail-image {
+    height: 300px !important;
+  }
+
+  .product-detail-thumbnail {
+    width: 58px;
+    height: 58px;
+    flex-basis: 58px;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — PRODUCT DETAIL / REFINAMIENTO PROFESIONAL
+   Última capa visual para desktop + mobile.
+   ========================================================= */
+
+.product-detail-overlay {
+  padding: 20px !important;
+  background: rgba(55, 42, 46, 0.48) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000 !important;
+}
+
+.product-detail-modal {
+  position: relative !important;
+  width: min(980px, calc(100vw - 40px)) !important;
+  max-width: 980px !important;
+  max-height: 92vh !important;
+  margin: auto !important;
+  padding: 30px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr) !important;
+  gap: 34px !important;
+  align-items: start !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  border-radius: 24px !important;
+  border: 1px solid #ead8d5 !important;
+  background: #fff8f6 !important;
+  box-shadow: 0 28px 80px rgba(63, 55, 57, 0.28) !important;
+  scrollbar-width: thin;
+  scrollbar-color: #c9a4ae transparent;
+}
+
+.product-detail-modal::-webkit-scrollbar {
+  width: 7px;
+}
+
+.product-detail-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.product-detail-modal::-webkit-scrollbar-thumb {
+  background: #c9a4ae;
+  border-radius: 99px;
+}
+
+.product-detail-close {
+  position: absolute !important;
+  top: 14px !important;
+  right: 16px !important;
+  z-index: 5 !important;
+  width: 38px !important;
+  height: 38px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(255, 248, 246, 0.92) !important;
+  color: #956071 !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+.product-detail-gallery {
+  min-width: 0 !important;
+  gap: 12px !important;
+  position: sticky !important;
+  top: 0 !important;
+}
+
+.product-detail-image {
+  width: 100% !important;
+  height: 430px !important;
+  min-height: 0 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: #f7efed !important;
+  border: 1px solid #ead8d5 !important;
+}
+
+.product-detail-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.product-detail-thumbnails {
+  gap: 9px !important;
+  padding: 0 2px !important;
+}
+
+.product-detail-thumbnail {
+  width: 62px !important;
+  height: 62px !important;
+  flex: 0 0 62px !important;
+  border-radius: 10px !important;
+  border: 1px solid #e5d4d1 !important;
+  background: #fff !important;
+}
+
+.product-detail-thumbnail.active {
+  border: 2px solid #9b6071 !important;
+  box-shadow: 0 0 0 2px rgba(155, 96, 113, 0.10) !important;
+}
+
+.product-detail-info {
+  min-width: 0 !important;
+  align-self: start !important;
+  padding: 12px 8px 8px 0 !important;
+}
+
+.product-detail-info > span {
+  display: block !important;
+  margin-bottom: 8px !important;
+  color: #9b6172 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+}
+
+.product-detail-info h2 {
+  margin: 0 42px 6px 0 !important;
+  color: #3f3739 !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 30px !important;
+  font-weight: 500 !important;
+  line-height: 1.12 !important;
+  overflow-wrap: anywhere !important;
+}
+
+.product-detail-info strong {
+  display: block !important;
+  margin-bottom: 22px !important;
+  color: #9b6172 !important;
+  font-size: 25px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+}
+
+.product-detail-info > div[style] {
+  margin-top: 0 !important;
+  margin-bottom: 18px !important;
+  padding: 14px 15px !important;
+  border: 1px solid #ead8d5 !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,0.52) !important;
+}
+
+.product-detail-info > div[style] > div:first-child {
+  margin-bottom: 9px !important;
+  color: #4c4245 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+.product-detail-info > div[style] button {
+  padding: 7px 12px !important;
+  min-height: 36px !important;
+  font-size: 14px !important;
+  color: #4c4245 !important;
+}
+
+.product-detail-info > div[style] small {
+  margin-top: 8px !important;
+  font-size: 13px !important;
+  color: #7d7275 !important;
+}
+
+.product-detail-info p {
+  margin: 0 0 22px !important;
+  color: #756b6e !important;
+  font-size: 15.5px !important;
+  line-height: 1.62 !important;
+  white-space: pre-line !important;
+}
+
+.product-detail-info .add-button {
+  width: 100% !important;
+  min-height: 48px !important;
+  margin-top: 2px !important;
+  border-radius: 12px !important;
+  background: #a66378 !important;
+  color: #fff !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+  border: 0 !important;
+  box-shadow: 0 8px 20px rgba(166, 99, 120, 0.16) !important;
+}
+
+@media (max-width: 899px) {
+  .product-detail-overlay {
+    align-items: center !important;
+    padding: 10px !important;
+  }
+
+  .product-detail-modal {
+    width: min(560px, calc(100vw - 20px)) !important;
+    max-height: 94vh !important;
+    padding: 18px !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    border-radius: 20px !important;
+  }
+
+  .product-detail-close {
+    top: 10px !important;
+    right: 10px !important;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 25px !important;
+  }
+
+  .product-detail-gallery {
+    position: static !important;
+    gap: 9px !important;
+  }
+
+  .product-detail-image {
+    height: min(285px, 58vw) !important;
+    min-height: 210px !important;
+    border-radius: 14px !important;
+  }
+
+  .product-detail-thumbnail {
+    width: 54px !important;
+    height: 54px !important;
+    flex-basis: 54px !important;
+  }
+
+  .product-detail-info {
+    padding: 0 3px 5px !important;
+  }
+
+  .product-detail-info > span {
+    margin-bottom: 5px !important;
+    font-size: 10px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .product-detail-info h2 {
+    margin: 0 35px 4px 0 !important;
+    font-size: 27px !important;
+    line-height: 1.1 !important;
+  }
+
+  .product-detail-info strong {
+    margin-bottom: 14px !important;
+    font-size: 23px !important;
+  }
+
+  .product-detail-info > div[style] {
+    margin-bottom: 14px !important;
+    padding: 11px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .product-detail-info > div[style] > div:first-child {
+    margin-bottom: 7px !important;
+    font-size: 15px !important;
+  }
+
+  .product-detail-info > div[style] button {
+    min-height: 34px !important;
+    padding: 6px 11px !important;
+    font-size: 13.5px !important;
+  }
+
+  .product-detail-info p {
+    margin-bottom: 18px !important;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  .product-detail-info .add-button {
+    min-height: 46px !important;
+    font-size: 14.5px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .product-detail-modal {
+    padding: 15px !important;
+    gap: 15px !important;
+  }
+
+  .product-detail-image {
+    height: 235px !important;
+    min-height: 0 !important;
+  }
+
+  .product-detail-info h2 {
+    font-size: 25px !important;
+  }
+
+  .product-detail-info strong {
+    font-size: 22px !important;
+  }
+
+  .product-detail-info p {
+    font-size: 14.5px !important;
+    line-height: 1.52 !important;
+  }
+}
+
+/* Variante del producto — estructura limpia */
+.product-detail-info .variant-selector {
+  margin-top: 0 !important;
+  margin-bottom: 18px !important;
+  padding: 14px 15px !important;
+  border: 1px solid #ead8d5 !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,0.52) !important;
+}
+
+.product-detail-info .variant-title {
+  margin-bottom: 9px !important;
+  color: #4c4245 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+.product-detail-info .variant-buttons {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.product-detail-info .variant-button {
+  min-height: 36px !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid #ddd !important;
+  background: #fff !important;
+  color: #4c4245 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+}
+
+.product-detail-info .variant-button.active {
+  border: 2px solid #7b4256 !important;
+  background: #f8edf2 !important;
+}
+
+.product-detail-info .variant-meta {
+  display: block !important;
+  margin-top: 8px !important;
+  color: #777 !important;
+  font-size: 13px !important;
+}
+
+@media (max-width: 899px) {
+  .product-detail-info .variant-selector {
+    margin-bottom: 14px !important;
+    padding: 11px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .product-detail-info .variant-title {
+    margin-bottom: 7px !important;
+    font-size: 15px !important;
+  }
+
+  .product-detail-info .variant-button {
+    min-height: 34px !important;
+    padding: 6px 11px !important;
+    font-size: 13.5px !important;
+  }
+
+  .product-detail-info .variant-meta {
+    margin-top: 7px !important;
+    font-size: 12.5px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — LIGHTBOX DE FOTOS DE PRODUCTO
+   Solo afecta la visualización ampliada al tocar la foto.
+   ========================================================= */
+.product-detail-image-button {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  cursor: zoom-in;
+  font: inherit;
+  text-align: inherit;
+}
+
+.product-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 70px 110px;
+  background: rgba(25, 18, 21, 0.92);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.product-image-lightbox-content {
+  width: min(92vw, 1100px);
+  height: min(78vh, 820px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+
+.product-image-lightbox-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center center;
+  transition: transform 0.18s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.product-image-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 248, 246, 0.95);
+  color: #956071;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.product-image-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 248, 246, 0.92);
+  color: #956071;
+  font-size: 42px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.product-image-lightbox-prev { left: 18px; }
+.product-image-lightbox-next { right: 18px; }
+
+.product-image-lightbox-controls {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(255, 248, 246, 0.96);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+  z-index: 2;
+}
+
+.product-image-lightbox-controls button {
+  min-width: 38px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #ead8d5;
+  border-radius: 999px;
+  background: #fff;
+  color: #956071;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.product-image-lightbox-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.product-image-lightbox-controls span {
+  min-width: 48px;
+  text-align: center;
+  color: #5d5155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.product-image-lightbox-controls .product-image-lightbox-reset {
+  font-size: 13px;
+}
+
+@media (max-width: 899px) {
+  .product-image-lightbox {
+    padding: 60px 48px 95px;
+  }
+
+  .product-image-lightbox-content {
+    width: 96vw;
+    height: 78vh;
+  }
+
+  .product-image-lightbox-nav {
+    width: 42px;
+    height: 42px;
+    font-size: 36px;
+  }
+
+  .product-image-lightbox-prev { left: 8px; }
+  .product-image-lightbox-next { right: 8px; }
+
+  .product-image-lightbox-controls {
+    bottom: 14px;
+  }
+
+  .product-image-lightbox-controls .product-image-lightbox-reset {
+    display: none;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — BÚSQUEDA MÓVIL PROFESIONAL
+   Solo móvil. No modifica la búsqueda de escritorio.
+   ========================================================= */
+.mobile-search-page {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: var(--dulce-page-surface, #fcf8f6);
+  overflow-y: auto;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-search-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--dulce-line, #ead7d5);
+}
+
+.mobile-search-back {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--dulce-logo-gray, #756b6d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mobile-search-back span {
+  font-size: 34px;
+  line-height: 1;
+  transform: translateY(-2px);
+}
+
+.mobile-search-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mobile-search-title span {
+  color: var(--dulce-rose, #9b6071);
+  font-size: 9px;
+  letter-spacing: .24em;
+  font-weight: 600;
+}
+
+.mobile-search-title strong {
+  color: #30292b;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.mobile-search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 20px 18px 10px;
+  padding: 0 15px;
+  min-height: 54px;
+  background: #fff;
+  border: 1px solid rgba(128, 77, 98, .18);
+  border-radius: 17px;
+  box-shadow: 0 8px 24px rgba(73, 45, 56, .07);
+  color: var(--dulce-logo-gray, #756b6d);
+}
+
+.mobile-search-input-wrap input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #3f3438;
+  font-size: 16px;
+  padding: 14px 0;
+}
+
+.mobile-search-input-wrap input::placeholder {
+  color: #9b8d91;
+}
+
+.mobile-search-input-wrap svg {
+  flex: 0 0 auto;
+}
+
+.mobile-search-clear {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #f4e6e5;
+  color: var(--dulce-rose, #9b6071);
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mobile-search-meta {
+  margin: 0 22px 14px;
+  color: #806f74;
+  font-size: 11px;
+}
+
+.mobile-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 0 18px;
+}
+
+.mobile-search-result {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 13px;
+  padding: 10px;
+  border: 1px solid var(--dulce-line, #ead7d5);
+  border-radius: 16px;
+  background: rgba(255,255,255,.72);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-search-result-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f5ebe8;
+}
+
+.mobile-search-result-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.mobile-search-result-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mobile-search-result-info span {
+  color: var(--dulce-rose, #9b6071);
+  font-size: 8px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.mobile-search-result-info strong {
+  color: #30292b;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.mobile-search-result-info em {
+  color: var(--dulce-rose, #9b6071);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.mobile-search-result-arrow {
+  color: #a0838b;
+  font-size: 26px;
+  line-height: 1;
+  text-align: center;
+}
+
+.mobile-search-empty,
+.mobile-search-status {
+  text-align: center;
+  color: #806f74;
+  padding: 42px 20px;
+}
+
+.mobile-search-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.mobile-search-empty strong {
+  color: #403437;
+  font-size: 16px;
+}
+
+.mobile-search-empty span {
+  font-size: 12px;
+}
+
+@media (max-width: 899px) {
+  .catalog-search-box {
+    display: none !important;
+  }
+
+  .mobile-bottom-nav button span {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 0 !important;
+  }
+
+  .mobile-bottom-nav button span svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block;
+    stroke: currentColor !important;
+  }
+
+  .mobile-bottom-nav button small {
+    font-size: 9px !important;
+    line-height: 1.1;
+  }
+
+  .mobile-cart-button > span:first-child svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .mobile-cart-button b {
+    top: -6px !important;
+    right: -7px !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .mobile-search-page {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   PUNTO 5 — AJUSTES MÓVILES SIN ALTERAR EL RESTO
+   ========================================================= */
+@media (max-width: 899px) {
+  /* La búsqueda del catálogo no aparece en móvil.
+     La búsqueda móvil profesional se abre desde la lupa inferior. */
+  .catalog-search-box {
+    display: none !important;
+  }
+
+  .mobile-menu-category-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mobile-menu-category-chevron {
+    font-size: 18px;
+    line-height: 1;
+    opacity: .7;
+  }
+
+  .mobile-menu-category-list {
+    display: grid;
+    gap: 6px;
+    margin: -2px 0 8px;
+    padding: 4px 0 4px 12px;
+    border-left: 1px solid var(--dulce-line, #ead7d5);
+  }
+
+  .mobile-menu-category-list button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted, #806f74);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mobile-menu-category-list button.active {
+    background: var(--dulce-pink-soft, #f8e7eb);
+    color: var(--dulce-rose, #9b6071);
+    font-weight: 600;
+  }
+
+  .mobile-menu-category-count {
+    min-width: 24px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(155, 96, 113, .10);
+    color: var(--dulce-rose, #9b6071);
+    font-size: 10px;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — MICRO-INTERACCIONES PREMIUM
+   Capa visual únicamente. No modifica lógica ni navegación.
+   ========================================================= */
+
+@keyframes daHeroAmbient {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); }
+  50% { transform: scale(1.035) translate3d(0, -5px, 0); }
+}
+
+@keyframes daHeroGlowOne {
+  0%, 100% { transform: translate3d(-12px, 4px, 0) scale(1); opacity: .48; }
+  50% { transform: translate3d(18px, -12px, 0) scale(1.08); opacity: .68; }
+}
+
+@keyframes daHeroGlowTwo {
+  0%, 100% { transform: translate3d(8px, -5px, 0) scale(1); opacity: .34; }
+  50% { transform: translate3d(-20px, 14px, 0) scale(1.1); opacity: .55; }
+}
+
+@keyframes daHeroLogoFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -5px, 0); }
+}
+
+@keyframes daHeroProductFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  50% { transform: translate3d(-8px, -10px, 0) rotate(1deg); }
+}
+
+@keyframes daHeroReveal {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes daHeroLogoReveal {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(.96); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes daButtonShine {
+  0%, 72% { transform: translateX(-140%); opacity: 0; }
+  78% { opacity: .55; }
+  88%, 100% { transform: translateX(140%); opacity: 0; }
+}
+
+@keyframes daDotPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(48,39,42,0); }
+  50% { transform: scale(1.18); box-shadow: 0 0 0 4px rgba(48,39,42,.08); }
+}
+
+@keyframes daCardReveal {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.hero-background {
+  transform-origin: center;
+  animation: daHeroAmbient 12s ease-in-out infinite;
+}
+
+.hero-blur-circle.circle-one {
+  animation: daHeroGlowOne 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hero-blur-circle.circle-two {
+  animation: daHeroGlowTwo 11s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hero-product-shape {
+  animation: daHeroProductFloat 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-content > .hero-tagline {
+  animation: daHeroReveal .65s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay: .05s;
+}
+
+.hero-content > .hero-eyebrow {
+  animation: daHeroReveal .65s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay: .13s;
+}
+
+.hero-content > .hero-logo-image {
+  animation: daHeroLogoReveal .9s cubic-bezier(.22,.61,.36,1) both, daHeroLogoFloat 6s ease-in-out 1.15s infinite;
+  transform-origin: center;
+}
+
+.hero-content > .hero-text {
+  animation: daHeroReveal .7s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay: .34s;
+}
+
+.hero-content > .hero-main-button {
+  animation: daHeroReveal .7s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay: .43s;
+}
+
+.hero-content > .hero-dots {
+  animation: daHeroReveal .6s ease both;
+  animation-delay: .55s;
+}
+
+.hero-main-button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+
+.hero-main-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 42%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.42), transparent);
+  transform: translateX(-140%);
+  pointer-events: none;
+  animation: daButtonShine 6.5s ease-in-out 1.4s infinite;
+}
+
+.hero-main-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(126,82,96,.18);
+}
+
+.hero-main-button:active {
+  transform: translateY(0) scale(.985);
+}
+
+.hero-arrow {
+  transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+
+.hero-arrow:hover {
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+}
+
+.hero-dots span.active {
+  animation: daDotPulse 2.6s ease-in-out infinite;
+}
+
+.benefit {
+  opacity: 0;
+  animation: daCardReveal .7s cubic-bezier(.22,.61,.36,1) both;
+}
+
+.benefit:nth-child(1) { animation-delay: .08s; }
+.benefit:nth-child(2) { animation-delay: .16s; }
+.benefit:nth-child(3) { animation-delay: .24s; }
+.benefit:nth-child(4) { animation-delay: .32s; }
+
+.benefit-icon {
+  transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+}
+
+.benefit:hover .benefit-icon {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 18px rgba(126,82,96,.10);
+}
+
+.featured-heading {
+  animation: daCardReveal .7s cubic-bezier(.22,.61,.36,1) both;
+}
+
+.featured-card {
+  opacity: 0;
+  animation: daCardReveal .75s cubic-bezier(.22,.61,.36,1) both;
+  transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;
+}
+
+.featured-card:nth-child(1) { animation-delay: .10s; }
+.featured-card:nth-child(2) { animation-delay: .18s; }
+.featured-card:nth-child(3) { animation-delay: .26s; }
+.featured-card:nth-child(4) { animation-delay: .34s; }
+
+.featured-card .product-image {
+  overflow: hidden;
+}
+
+.featured-card .product-image img {
+  transition: transform .65s cubic-bezier(.22,.61,.36,1), filter .35s ease;
+  will-change: transform;
+}
+
+.featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px rgba(78,55,61,.10);
+}
+
+.featured-card:hover .product-image img {
+  transform: scale(1.045);
+}
+
+.sold-badge {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.featured-card:hover .sold-badge {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(223,117,146,.18);
+}
+
+@media (max-width: 899px) {
+  .hero-background {
+    animation-duration: 16s;
+  }
+
+  .hero-blur-circle.circle-one {
+    animation-duration: 12s;
+  }
+
+  .hero-blur-circle.circle-two {
+    animation-duration: 14s;
+  }
+
+  .hero-product-shape {
+    animation-duration: 10s;
+  }
+
+  .hero-content > .hero-logo-image {
+    animation-duration: .9s, 7s;
+  }
+
+  .featured-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .featured-card:hover .product-image img {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background,
+  .hero-blur-circle.circle-one,
+  .hero-blur-circle.circle-two,
+  .hero-product-shape,
+  .hero-content > *,
+  .hero-dots span.active,
+  .benefit,
+  .featured-heading,
+  .featured-card,
+  .hero-main-button::after {
+    animation: none !important;
+  }
+
+  .benefit,
+  .featured-card {
+    opacity: 1 !important;
+  }
+
+  .hero-main-button,
+  .hero-arrow,
+  .benefit-icon,
+  .featured-card,
+  .featured-card .product-image img,
+  .sold-badge {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — CARRUSEL DE 3 SLIDES / CAPA SEGURA
+   La slide WELCOME no se modifica. Estas reglas solo afectan
+   las slides de producto y evitan cortes de texto en móvil.
+   ========================================================= */
+
+.hero-slide-featured,
+.hero-slide-promotion {
+  isolation: isolate !important;
+}
+
+.hero-slide-featured .hero-slide-image,
+.hero-slide-promotion .hero-slide-image {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  transform: scale(1.02) !important;
+  animation: daHeroImageReveal .9s cubic-bezier(.22,.61,.36,1) both !important;
+}
+
+.hero-slide-featured .hero-background::after,
+.hero-slide-promotion .hero-background::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(247,225,222,.02) 12%,
+      rgba(247,225,222,.08) 34%,
+      rgba(247,225,222,.58) 62%,
+      rgba(247,225,222,.96) 100%
+    ) !important;
+  pointer-events: none !important;
+}
+
+.hero-slide-featured .hero-content,
+.hero-slide-promotion .hero-content {
+  position: relative !important;
+  z-index: 3 !important;
+  height: 100% !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  padding: 30px 28px 46px !important;
+  text-align: center !important;
+}
+
+.hero-slide-featured .hero-copy,
+.hero-slide-promotion .hero-copy {
+  width: min(760px, 92%) !important;
+  align-items: center !important;
+  text-align: center !important;
+  margin: 0 !important;
+  animation: daHeroReveal .65s cubic-bezier(.22,.61,.36,1) both !important;
+}
+
+.hero-slide-featured .hero-eyebrow,
+.hero-slide-promotion .hero-eyebrow {
+  margin: 0 0 7px !important;
+  color: #66575a !important;
+  font-size: 9px !important;
+  line-height: 1.2 !important;
+  letter-spacing: .28em !important;
+  white-space: normal !important;
+}
+
+.hero-slide-featured .hero-editorial-mark,
+.hero-slide-promotion .hero-editorial-mark {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin: 0 0 7px !important;
+  color: #9b6071 !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 8px !important;
+  line-height: 1 !important;
+  letter-spacing: .24em !important;
+  text-transform: uppercase !important;
+}
+
+.hero-slide-featured .hero-tagline,
+.hero-slide-promotion .hero-tagline {
+  width: 100% !important;
+  max-width: 900px !important;
+  margin: 0 auto 8px !important;
+  color: #3f3639 !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(21px, 3vw, 34px) !important;
+  line-height: 1.08 !important;
+  font-weight: 500 !important;
+  letter-spacing: .01em !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+
+.hero-slide-featured .hero-text,
+.hero-slide-promotion .hero-text {
+  width: 100% !important;
+  max-width: 720px !important;
+  margin: 0 auto 13px !important;
+  color: #665c5e !important;
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+.hero-slide-featured .hero-main-button,
+.hero-slide-promotion .hero-main-button {
+  width: 150px !important;
+  min-width: 150px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+}
+
+.hero-slide-featured .hero-dots,
+.hero-slide-promotion .hero-dots {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 12px !important;
+  transform: translateX(-50%) !important;
+  z-index: 6 !important;
+  margin: 0 !important;
+}
+
+@keyframes daHeroImageReveal {
+  from { opacity: 0; transform: scale(1.06); }
+  to { opacity: 1; transform: scale(1.02); }
+}
+
+@media (min-width: 900px) {
+  .hero-slide-featured .hero-content,
+  .hero-slide-promotion .hero-content {
+    padding: 42px 60px 50px !important;
+  }
+
+  .hero-slide-featured .hero-copy,
+  .hero-slide-promotion .hero-copy {
+    width: min(700px, 54%) !important;
+  }
+
+  .hero-slide-featured .hero-eyebrow,
+  .hero-slide-promotion .hero-eyebrow {
+    font-size: 11px !important;
+  }
+
+  .hero-slide-featured .hero-tagline,
+  .hero-slide-promotion .hero-tagline {
+    font-size: clamp(28px, 3vw, 42px) !important;
+  }
+
+  .hero-slide-featured .hero-text,
+  .hero-slide-promotion .hero-text {
+    font-size: 17px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-slide-featured .hero-background::after,
+  .hero-slide-promotion .hero-background::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(247,225,222,.02) 8%,
+        rgba(247,225,222,.10) 32%,
+        rgba(247,225,222,.60) 58%,
+        rgba(247,225,222,.98) 100%
+      ) !important;
+  }
+
+  .hero-slide-featured .hero-content,
+  .hero-slide-promotion .hero-content {
+    padding: 18px 14px 42px !important;
+  }
+
+  .hero-slide-featured .hero-copy,
+  .hero-slide-promotion .hero-copy {
+    width: min(94%, 520px) !important;
+  }
+
+  .hero-slide-featured .hero-tagline,
+  .hero-slide-promotion .hero-tagline {
+    max-width: 95% !important;
+    font-size: clamp(20px, 6vw, 27px) !important;
+    line-height: 1.06 !important;
+    margin-bottom: 7px !important;
+  }
+
+  .hero-slide-featured .hero-text,
+  .hero-slide-promotion .hero-text {
+    max-width: 94% !important;
+    font-size: 13px !important;
+    line-height: 1.28 !important;
+    margin-bottom: 11px !important;
+  }
+
+  .hero-slide-featured .hero-main-button,
+  .hero-slide-promotion .hero-main-button {
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    font-size: 12px !important;
+  }
+
+  .hero-slide-featured .hero-editorial-mark,
+  .hero-slide-promotion .hero-editorial-mark {
+    font-size: 7px !important;
+    letter-spacing: .20em !important;
+    margin-bottom: 6px !important;
+  }
+
+  .hero-slide-featured .hero-eyebrow,
+  .hero-slide-promotion .hero-eyebrow {
+    font-size: 8px !important;
+    letter-spacing: .22em !important;
+    margin-bottom: 5px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-slide-featured .hero-content,
+  .hero-slide-promotion .hero-content {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 41px !important;
+  }
+
+  .hero-slide-featured .hero-tagline,
+  .hero-slide-promotion .hero-tagline {
+    font-size: 20px !important;
+  }
+
+  .hero-slide-featured .hero-text,
+  .hero-slide-promotion .hero-text {
+    font-size: 12px !important;
+    max-width: 96% !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — HERO FINAL / FLECHA ÚNICA + DESKTOP EDITORIAL
+   - Oculta los indicadores con puntos.
+   - Deja una sola flecha sutil en el lateral izquierdo,
+     inspirada en la referencia enviada.
+   - En PC, las slides 2 y 3 pasan a una composición foto + texto.
+   - En móvil se conserva la composición que ya estaba funcionando.
+   ========================================================= */
+
+/* Indicadores: fuera los puntitos */
+.hero-dots {
+  display: none !important;
+}
+
+/* Una sola flecha, limpia y discreta */
+.hero-arrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 58px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(92, 82, 84, .48) !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 43px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  transform: translateY(-50%) !important;
+  transition: color .25s ease, opacity .25s ease !important;
+  z-index: 12 !important;
+}
+
+.hero-arrow:hover {
+  color: rgba(92, 82, 84, .78) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: translateY(-50%) !important;
+}
+
+.hero-arrow-left {
+  left: 18px !important;
+}
+
+.hero-arrow-right {
+  display: none !important;
+}
+
+/* PC: foto protagonista a la izquierda + texto editorial a la derecha */
+@media (min-width: 900px) {
+  .hero-slide-featured,
+  .hero-slide-promotion {
+    height: 540px !important;
+    min-height: 540px !important;
+    background: #f6e5e2 !important;
+  }
+
+  .hero-slide-featured .hero-background,
+  .hero-slide-promotion .hero-background {
+    background: #f6e5e2 !important;
+  }
+
+  .hero-slide-featured .hero-slide-image,
+  .hero-slide-promotion .hero-slide-image {
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    bottom: 0 !important;
+    width: 68% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+    animation: daHeroImageReveal .75s cubic-bezier(.22,.61,.36,1) both !important;
+  }
+
+  .hero-slide-featured .hero-background::after,
+  .hero-slide-promotion .hero-background::after {
+    inset: 0 auto 0 0 !important;
+    width: 72% !important;
+    height: 100% !important;
+    background: linear-gradient(
+      90deg,
+      rgba(246,229,226,0) 0%,
+      rgba(246,229,226,0) 72%,
+      rgba(246,229,226,.72) 91%,
+      #f6e5e2 100%
+    ) !important;
+  }
+
+  .hero-slide-featured .hero-content,
+  .hero-slide-promotion .hero-content {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    width: 32% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 50px 5% 50px 3% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    text-align: left !important;
+    background: #f6e5e2 !important;
+  }
+
+  .hero-slide-featured .hero-copy,
+  .hero-slide-promotion .hero-copy {
+    width: 100% !important;
+    max-width: 390px !important;
+    margin: 0 !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    animation: daHeroReveal .65s cubic-bezier(.22,.61,.36,1) both !important;
+  }
+
+  .hero-slide-featured .hero-eyebrow,
+  .hero-slide-promotion .hero-eyebrow {
+    margin: 0 0 12px !important;
+    font-size: 10px !important;
+    letter-spacing: .24em !important;
+    white-space: normal !important;
+  }
+
+  .hero-slide-featured .hero-editorial-mark,
+  .hero-slide-promotion .hero-editorial-mark {
+    justify-content: flex-start !important;
+    font-size: 8px !important;
+    margin: 0 0 12px !important;
+  }
+
+  .hero-slide-featured .hero-tagline,
+  .hero-slide-promotion .hero-tagline {
+    max-width: 390px !important;
+    margin: 0 0 14px !important;
+    font-size: clamp(28px, 2.5vw, 40px) !important;
+    line-height: 1.06 !important;
+    text-align: left !important;
+  }
+
+  .hero-slide-featured .hero-text,
+  .hero-slide-promotion .hero-text {
+    max-width: 360px !important;
+    margin: 0 0 22px !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+  }
+
+  .hero-slide-featured .hero-main-button,
+  .hero-slide-promotion .hero-main-button {
+    width: 170px !important;
+    min-width: 170px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+  }
+
+  /* La flecha queda sobre la foto, no sobre el texto */
+  .hero-arrow-left {
+    left: 20px !important;
+  }
+}
+
+/* Móvil: no tocar la composición de las slides 2 y 3; solo la navegación. */
+@media (max-width: 899px) {
+  .hero-arrow-left {
+    left: 8px !important;
+    width: 38px !important;
+    height: 50px !important;
+    font-size: 36px !important;
+  }
+
+  .hero-arrow-right {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — ANIMACIÓN HERO REFINADA
+   - Entrada más lenta y suave.
+   - Foto, texto y botón entran escalonados.
+   - Respeta el diseño actual de desktop y móvil.
+   ========================================================= */
+
+@keyframes dulceHeroImageRevealSlow {
+  0% {
+    opacity: 0;
+    transform: scale(1.055);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dulceHeroCopyRevealSlow {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dulceHeroElementRevealSlow {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cada cambio de slide reinicia estas animaciones porque React
+   monta nuevamente el contenido de la slide activa. */
+.hero-slide-image {
+  animation: dulceHeroImageRevealSlow 1.35s cubic-bezier(.22,.61,.36,1) both !important;
+}
+
+.hero-slide-featured .hero-copy,
+.hero-slide-promotion .hero-copy {
+  animation: dulceHeroCopyRevealSlow 1.15s cubic-bezier(.22,.61,.36,1) .12s both !important;
+}
+
+.hero-slide-featured .hero-eyebrow,
+.hero-slide-promotion .hero-eyebrow {
+  animation: dulceHeroElementRevealSlow .85s cubic-bezier(.22,.61,.36,1) .30s both !important;
+}
+
+.hero-slide-featured .hero-editorial-mark,
+.hero-slide-promotion .hero-editorial-mark {
+  animation: dulceHeroElementRevealSlow .85s cubic-bezier(.22,.61,.36,1) .42s both !important;
+}
+
+.hero-slide-featured .hero-tagline,
+.hero-slide-promotion .hero-tagline {
+  animation: dulceHeroElementRevealSlow .95s cubic-bezier(.22,.61,.36,1) .52s both !important;
+}
+
+.hero-slide-featured .hero-text,
+.hero-slide-promotion .hero-text {
+  animation: dulceHeroElementRevealSlow .95s cubic-bezier(.22,.61,.36,1) .64s both !important;
+}
+
+.hero-slide-featured .hero-main-button,
+.hero-slide-promotion .hero-main-button {
+  animation: dulceHeroElementRevealSlow .95s cubic-bezier(.22,.61,.36,1) .78s both !important;
+}
+
+/* Hero principal: conserva su identidad y recupera una entrada más pausada. */
+.hero-content-welcome .hero-copy {
+  animation: dulceHeroCopyRevealSlow 1.15s cubic-bezier(.22,.61,.36,1) .10s both !important;
+}
+
+.hero-content-welcome .hero-eyebrow {
+  animation: dulceHeroElementRevealSlow .90s cubic-bezier(.22,.61,.36,1) .25s both !important;
+}
+
+.hero-content-welcome .hero-logo-image {
+  animation:
+    dulceHeroElementRevealSlow 1.10s cubic-bezier(.22,.61,.36,1) .38s both,
+    heroLogoFloat 7s ease-in-out 1.48s infinite !important;
+}
+
+.hero-content-welcome .hero-text {
+  animation: dulceHeroElementRevealSlow .95s cubic-bezier(.22,.61,.36,1) .60s both !important;
+}
+
+.hero-content-welcome .hero-main-button {
+  animation: dulceHeroElementRevealSlow .95s cubic-bezier(.22,.61,.36,1) .76s both !important;
+}
+
+/* Accesibilidad: respeta usuarios que pidieron menos movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-image,
+  .hero-slide-featured .hero-copy,
+  .hero-slide-promotion .hero-copy,
+  .hero-slide-featured .hero-eyebrow,
+  .hero-slide-promotion .hero-eyebrow,
+  .hero-slide-featured .hero-editorial-mark,
+  .hero-slide-promotion .hero-editorial-mark,
+  .hero-slide-featured .hero-tagline,
+  .hero-slide-promotion .hero-tagline,
+  .hero-slide-featured .hero-text,
+  .hero-slide-promotion .hero-text,
+  .hero-slide-featured .hero-main-button,
+  .hero-slide-promotion .hero-main-button,
+  .hero-content-welcome .hero-copy,
+  .hero-content-welcome .hero-eyebrow,
+  .hero-content-welcome .hero-logo-image,
+  .hero-content-welcome .hero-text,
+  .hero-content-welcome .hero-main-button {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — PUNTO 7: HOME / PRODUCTOS DESTACADOS
+   Presentación editorial y responsive.
+   No modifica catálogo, stock, carrito ni Hero.
+   ========================================================= */
+
+.featured-section {
+  width: 100% !important;
+  max-width: 1500px !important;
+  margin: 0 auto !important;
+  padding: 76px clamp(28px, 4.5vw, 68px) 88px !important;
+  box-sizing: border-box !important;
+}
+
+.featured-heading {
+  max-width: 1400px !important;
+  margin: 0 auto 34px !important;
+  align-items: flex-end !important;
+}
+
+.featured-heading h2 {
+  font-size: clamp(36px, 3.2vw, 50px) !important;
+  letter-spacing: -.035em !important;
+}
+
+.featured-heading p {
+  margin-bottom: 11px !important;
+  font-size: 10px !important;
+  letter-spacing: .30em !important;
+}
+
+.view-all-button {
+  min-height: 40px !important;
+  padding: 8px 2px !important;
+  white-space: nowrap !important;
+}
+
+.featured-grid {
+  width: 100% !important;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: clamp(18px, 2vw, 30px) !important;
+  align-items: stretch !important;
+}
+
+.featured-card {
+  min-width: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  border-radius: 4px !important;
+}
+
+.featured-card .product-image {
+  width: 100% !important;
+  aspect-ratio: 1 / 1.06 !important;
+  flex: 0 0 auto !important;
+  overflow: hidden !important;
+}
+
+.featured-card .product-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.featured-card .product-info {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 18px 18px 19px !important;
+}
+
+.featured-card .product-info h3 {
+  min-height: 2.3em !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  overflow: hidden !important;
+}
+
+.featured-card .product-info strong {
+  margin-top: auto !important;
+  padding-top: 8px !important;
+}
+
+.featured-card .add-button {
+  margin-top: 2px !important;
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  .featured-section {
+    padding-left: 34px !important;
+    padding-right: 34px !important;
+  }
+
+  .featured-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+}
+
+/* En móvil aprovechamos el ancho con un carrusel táctil.
+   Se deja ver parte de la siguiente tarjeta para indicar que hay más. */
+@media (max-width: 899px) {
+  .featured-section {
+    max-width: none !important;
+    padding: 34px 0 72px !important;
+    overflow: hidden !important;
+  }
+
+  .featured-heading {
+    padding: 0 20px !important;
+    margin-bottom: 18px !important;
+    gap: 12px !important;
+  }
+
+  .featured-heading h2 {
+    font-size: clamp(27px, 7vw, 34px) !important;
+    white-space: nowrap !important;
+  }
+
+  .featured-heading p {
+    display: none !important;
+  }
+
+  .view-all-button {
+    min-height: auto !important;
+    font-size: 12px !important;
+  }
+
+  .featured-grid {
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 20px 6px !important;
+    display: flex !important;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-left: 20px !important;
+    overscroll-behavior-x: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+
+  .featured-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .featured-card {
+    flex: 0 0 min(78vw, 310px) !important;
+    width: min(78vw, 310px) !important;
+    scroll-snap-align: start !important;
+  }
+
+  .featured-card .product-image {
+    aspect-ratio: 1 / 1.03 !important;
+  }
+
+  .featured-card .product-info {
+    padding: 15px 14px 16px !important;
+  }
+
+  .featured-card .product-info h3 {
+    font-size: 17px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .featured-heading {
+    padding: 0 18px !important;
+  }
+
+  .featured-grid {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    scroll-padding-left: 18px !important;
+  }
+
+  .featured-card {
+    flex-basis: 79vw !important;
+    width: 79vw !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — PUNTO 8 / INSTAGRAM FINAL
+   Aislado del Hero, productos, carrito y navegación.
+   La sección usa fotos reales del catálogo y abre Instagram.
+   ========================================================= */
+.instagram-section {
+  position: relative !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: clamp(78px, 8vw, 118px) clamp(24px, 5.5vw, 86px) clamp(92px, 9vw, 128px) !important;
+  background: var(--dulce-page-surface, #fff4f2) !important;
+  border-top: 1px solid rgba(234,217,216,.72) !important;
+  border-bottom: 1px solid rgba(234,217,216,.72) !important;
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+.instagram-section::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  right: -220px;
+  top: -260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216,111,145,.12) 0%, rgba(216,111,145,0) 70%);
+  pointer-events: none;
+}
+
+.instagram-section::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  left: -210px;
+  bottom: -250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155,96,113,.08) 0%, rgba(155,96,113,0) 70%);
+  pointer-events: none;
+}
+
+.instagram-inner {
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(1240px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(330px, .88fr) minmax(480px, 1.12fr) !important;
+  align-items: center !important;
+  gap: clamp(48px, 7vw, 105px) !important;
+}
+
+.instagram-copy {
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.instagram-eyebrow {
+  margin: 0 0 18px !important;
+  color: var(--dulce-rose, #9b6071) !important;
+  font-size: 10px !important;
+  line-height: 1.3 !important;
+  letter-spacing: .30em !important;
+  font-weight: 600 !important;
+}
+
+.instagram-section h2 {
+  max-width: 560px !important;
+  margin: 0 0 20px !important;
+  color: var(--dulce-text, #30292b) !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(42px, 4.5vw, 62px) !important;
+  line-height: .98 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.035em !important;
+}
+
+.instagram-description {
+  max-width: 500px !important;
+  margin: 0 0 32px !important;
+  color: var(--dulce-muted, #756b6d) !important;
+  font-size: 14px !important;
+  line-height: 1.8 !important;
+}
+
+.instagram-button {
+  width: min(390px, 100%) !important;
+  min-height: 68px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+  padding: 12px 18px !important;
+  border: 1px solid rgba(255,255,255,.28) !important;
+  border-radius: 16px !important;
+  background: var(--dulce-rose, #9b6071) !important;
+  color: #fff !important;
+  box-shadow: 0 14px 34px rgba(130,82,100,.16) !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease !important;
+}
+
+.instagram-button:hover {
+  transform: translateY(-2px) !important;
+  background: var(--dulce-rose-dark, #825264) !important;
+  box-shadow: 0 18px 38px rgba(130,82,100,.21) !important;
+}
+
+.instagram-button-icon {
+  width: 44px !important;
+  height: 44px !important;
+  flex: 0 0 44px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(255,255,255,.45) !important;
+  border-radius: 13px !important;
+}
+
+.instagram-button-icon svg { width: 24px !important; height: 24px !important; }
+
+.instagram-button span:nth-child(2) {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  font-size: 15px !important;
+  letter-spacing: .04em !important;
+}
+
+.instagram-button small {
+  font-size: 8px !important;
+  line-height: 1.2 !important;
+  letter-spacing: .22em !important;
+  opacity: .78 !important;
+}
+
+.instagram-button-arrow {
+  margin-left: auto !important;
+  font-size: 25px !important;
+  line-height: 1 !important;
+  opacity: .92 !important;
+}
+
+.instagram-showcase {
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: clamp(390px, 36vw, 510px) !important;
+  padding: 12px !important;
+  border: 1px solid var(--dulce-line, #ead9d8) !important;
+  border-radius: 30px !important;
+  background: rgba(255,250,248,.80) !important;
+  box-shadow: 0 24px 65px rgba(90,50,60,.09) !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+.instagram-photo-grid {
+  width: 100% !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-columns: 1.38fr .62fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 10px !important;
+}
+
+.instagram-photo {
+  position: relative !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 19px !important;
+  background: #f1e4e1 !important;
+}
+
+.instagram-photo.photo-1 { grid-row: 1 / span 2 !important; }
+.instagram-photo.photo-2 { grid-column: 2 !important; grid-row: 1 !important; }
+.instagram-photo.photo-3 { grid-column: 2 !important; grid-row: 2 !important; }
+
+.instagram-photo.photo-2:only-child,
+.instagram-photo.photo-2:nth-child(2):last-child {
+  grid-row: 1 / span 2 !important;
+}
+
+.instagram-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1), filter .35s ease !important;
+}
+
+.instagram-showcase:hover .instagram-photo img {
+  transform: scale(1.035) !important;
+}
+
+/* =========================================================
+   DULCE ABRIL — INSTAGRAM OPCIÓN 2 / ENLACE REAL
+   La dueña pega solamente el enlace. La Home muestra
+   la publicación real mediante el embed oficial de Instagram.
+   ========================================================= */
+.instagram-showcase {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  cursor: default !important;
+  padding: 10px !important;
+  overflow: hidden !important;
+}
+
+.instagram-embed-shell {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  overflow: auto !important;
+  border-radius: 22px !important;
+  background: #fff !important;
+  scrollbar-width: thin !important;
+}
+
+.instagram-embed-shell .instagram-media {
+  width: 100% !important;
+  max-width: 540px !important;
+  min-width: 0 !important;
+  margin: 0 auto !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+.instagram-embed-shell iframe {
+  width: 100% !important;
+  max-width: 540px !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+.instagram-showcase-footer {
+  flex: 0 0 auto !important;
+  min-height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 12px 6px 2px !important;
+}
+
+.instagram-post-controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.instagram-post-controls > button {
+  width: 30px !important;
+  height: 30px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--dulce-line, #ead9d8) !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  color: var(--dulce-rose-dark, #825264) !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+.instagram-post-dots {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.instagram-post-dots button {
+  width: 5px !important;
+  height: 5px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #d8c5c7 !important;
+  cursor: pointer !important;
+}
+
+.instagram-post-dots button.active {
+  width: 16px !important;
+  border-radius: 999px !important;
+  background: var(--dulce-rose, #9b6071) !important;
+}
+
+.instagram-embed-status {
+  width: 100% !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 30px !important;
+  color: var(--dulce-rose, #9b6071) !important;
+  text-align: center !important;
+}
+
+.instagram-embed-status strong {
+  color: var(--dulce-text, #30292b) !important;
+  font-size: 14px !important;
+}
+
+.instagram-embed-status span:last-child {
+  color: var(--dulce-muted, #756b6d) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.instagram-empty-showcase {
+  border: 0 !important;
+  cursor: pointer !important;
+}
+
+.instagram-empty-link {
+  margin-top: 4px !important;
+  color: var(--dulce-rose-dark, #825264) !important;
+  font-size: 11px !important;
+  letter-spacing: .05em !important;
+}
+
+.instagram-showcase-overlay {
+  position: absolute !important;
+  left: 28px !important;
+  right: 28px !important;
+  bottom: 28px !important;
+  min-height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 16px 12px 18px !important;
+  border: 1px solid rgba(255,255,255,.34) !important;
+  border-radius: 14px !important;
+  background: rgba(56,45,48,.70) !important;
+  color: #fff !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  font-size: 11px !important;
+  letter-spacing: .06em !important;
+  opacity: 0 !important;
+  transform: translateY(8px) !important;
+  transition: opacity .25s ease, transform .25s ease !important;
+  pointer-events: none !important;
+}
+
+.instagram-showcase:hover .instagram-showcase-overlay,
+.instagram-showcase:focus-visible .instagram-showcase-overlay {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.instagram-empty-showcase {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  color: var(--dulce-rose, #9b6071) !important;
+  text-align: center !important;
+}
+
+.instagram-empty-icon {
+  width: 76px !important;
+  height: 76px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--dulce-line, #ead9d8) !important;
+  border-radius: 22px !important;
+  background: rgba(255,250,248,.8) !important;
+}
+
+.instagram-empty-icon svg { width: 34px !important; height: 34px !important; }
+
+@media (max-width: 899px) {
+  .instagram-section {
+    padding: 70px 25px 100px !important;
+  }
+
+  .instagram-inner {
+    grid-template-columns: 1fr !important;
+    gap: 34px !important;
+  }
+
+  .instagram-copy {
+    text-align: center !important;
+  }
+
+  .instagram-eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .25em !important;
+  }
+
+  .instagram-section h2 {
+    max-width: 560px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: clamp(38px, 7vw, 50px) !important;
+  }
+
+  .instagram-description {
+    max-width: 560px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 13.5px !important;
+  }
+
+  .instagram-button {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: left !important;
+  }
+
+  .instagram-showcase {
+    width: min(680px, 100%) !important;
+    height: 560px !important;
+    margin: 0 auto !important;
+    border-radius: 25px !important;
+  }
+
+  .instagram-showcase-overlay {
+    opacity: 1 !important;
+    transform: none !important;
+    left: 22px !important;
+    right: 22px !important;
+    bottom: 22px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .instagram-section {
+    padding: 64px 20px 96px !important;
+  }
+
+  .instagram-inner {
+    gap: 28px !important;
+  }
+
+  .instagram-section h2 {
+    font-size: clamp(34px, 10vw, 42px) !important;
+    line-height: 1.02 !important;
+  }
+
+  .instagram-description {
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+  }
+
+  .instagram-button {
+    width: 100% !important;
+    min-height: 64px !important;
+    border-radius: 15px !important;
+  }
+
+  .instagram-showcase {
+    width: 100% !important;
+    height: 555px !important;
+    padding: 8px !important;
+    border-radius: 23px !important;
+  }
+
+  .instagram-showcase-footer {
+    min-height: 48px !important;
+    padding-top: 8px !important;
+  }
+
+
+  .instagram-photo-grid {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1.35fr .75fr !important;
+    gap: 8px !important;
+  }
+
+  .instagram-photo.photo-1 {
+    grid-column: 1 / span 2 !important;
+    grid-row: 1 !important;
+  }
+
+  .instagram-photo.photo-2,
+  .instagram-photo.photo-3 {
+    grid-row: 2 !important;
+  }
+
+  .instagram-photo.photo-2 { grid-column: 1 !important; }
+  .instagram-photo.photo-3 { grid-column: 2 !important; }
+
+  .instagram-showcase-overlay {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    min-height: 44px !important;
+    padding: 10px 13px 10px 15px !important;
+    border-radius: 12px !important;
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .instagram-section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .instagram-showcase {
+    height: 330px !important;
+    padding: 7px !important;
+    border-radius: 21px !important;
+  }
+
+  .instagram-photo-grid { gap: 7px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instagram-button,
+  .instagram-photo img,
+  .instagram-showcase-overlay {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   PUNTO 8 — INSTAGRAM / REFINAMIENTO MÓVIL
+   CTA superior compacto y editorial.
+   La galería sigue siendo completamente clickeable.
+   ========================================================= */
+@media (max-width: 600px) {
+  .instagram-button {
+    width: min(100%, 278px) !important;
+    min-height: 54px !important;
+    margin: 0 auto !important;
+    padding: 8px 13px 8px 10px !important;
+    border-radius: 999px !important;
+    gap: 10px !important;
+    box-shadow: 0 10px 26px rgba(130,82,100,.13) !important;
+  }
+
+  .instagram-button-icon {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+    border-radius: 50% !important;
+  }
+
+  .instagram-button-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .instagram-button span:nth-child(2) {
+    gap: 2px !important;
+    font-size: 14px !important;
+    letter-spacing: .025em !important;
+  }
+
+  .instagram-button small {
+    font-size: 7px !important;
+    letter-spacing: .20em !important;
+  }
+
+  .instagram-button-arrow {
+    font-size: 21px !important;
+  }
+
+  /* En móvil evitamos duplicar el CTA sobre las fotos.
+     El botón superior ya es la llamada a la acción principal. */
+  .instagram-showcase-overlay {
+    display: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .instagram-button {
+    width: min(100%, 268px) !important;
+    min-height: 52px !important;
+  }
+
+  .instagram-button-icon {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .instagram-button-icon svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — INSTAGRAM CAROUSEL / AUTOPLAY
+   Solo afecta el cambio entre publicaciones de Instagram.
+   El embed oficial mantiene su tamaño y comportamiento.
+   ========================================================= */
+.instagram-embed-shell {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: auto !important;
+  overscroll-behavior: contain !important;
+}
+
+.instagram-embed-shell .instagram-media {
+  transition: none !important;
+}
+
+.instagram-post-controls > button,
+.instagram-post-dots button {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instagram-embed-shell .instagram-media {
+    transition: none !important;
+  }
+}
+
+
+/* =========================================================
+   PUNTO 8 — CAMBIO DE PUBLICACIÓN SIN DESTELLO BLANCO
+   Todos los embeds permanecen montados. Solo cambia la capa visible,
+   por lo que el scroll natural del embed activo se conserva.
+   ========================================================= */
+.instagram-embed-stage {
+  position: relative !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.instagram-embed-stage > .instagram-embed-shell {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 22px !important;
+  background: #fff !important;
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
+
+.instagram-embed-stage > .instagram-embed-active {
+  z-index: 2 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.instagram-embed-stage > .instagram-embed-hidden {
+  z-index: 1 !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.instagram-embed-stage .instagram-media {
+  width: 100% !important;
+  max-width: 540px !important;
+  min-width: 0 !important;
+  margin: 0 auto !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.instagram-embed-stage iframe {
+  width: 100% !important;
+  max-width: 540px !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+
+/* =========================================================
+   PUNTO 10 — CHECKOUT CORREGIDO
+   Se agrega al CSS original sin tocar el bloque de Instagram.
+   ========================================================= */
+.checkout-intro {
+  margin: 8px 0 20px !important;
+  font-size: 13px;
+}
+
+.delivery-methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0 18px;
+}
+
+.delivery-method {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 1px solid var(--dulce-line, #ead9d8);
+  border-radius: 13px;
+  background: #fff;
+  color: var(--dulce-text, #30292b);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.delivery-method:hover {
+  border-color: #d7a0ae;
+}
+
+.delivery-method.active {
+  border-color: var(--dulce-button-pink, #d86f91);
+  background: #fff5f5;
+  box-shadow: 0 5px 16px rgba(120,70,85,.07);
+}
+
+.delivery-method-icon {
+  font-size: 23px;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.delivery-method strong,
+.delivery-method small {
+  display: block;
+}
+
+.delivery-method strong {
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.delivery-method small {
+  margin-top: 4px;
+  color: var(--dulce-muted, #756b6d);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.checkout-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.checkout-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--dulce-text, #30292b);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.checkout-form label em {
+  color: var(--dulce-muted, #756b6d);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+  width: 100%;
+  border: 1px solid var(--dulce-line, #ead9d8);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--dulce-text, #30292b);
+  outline: none;
+  padding: 11px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+  border-color: #d58ca0;
+  box-shadow: 0 0 0 3px rgba(216,111,145,.10);
+}
+
+.checkout-form .checkout-field-wide {
+  grid-column: 1 / -1;
+}
+
+.checkout-delivery-note {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 16px 0 4px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: #f8eceb;
+  color: var(--dulce-muted, #756b6d);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.checkout-delivery-note strong {
+  color: var(--dulce-rose, #9b6071);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.checkout-option.checkout-confirm {
+  margin-top: 12px;
+  min-height: 48px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.checkout-option.checkout-secondary {
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .checkout-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .checkout-modal {
+    width: 100% !important;
+    max-height: 94vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 28px 18px calc(28px + env(safe-area-inset-bottom)) !important;
+    box-shadow: 0 -18px 50px rgba(73,45,56,.16);
+  }
+
+  .checkout-modal h2 {
+    font-size: 27px !important;
+    line-height: 1.08;
+    padding-right: 28px;
+  }
+
+  .delivery-methods {
+    gap: 8px;
+  }
+
+  .delivery-method {
+    min-height: 70px;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .delivery-method-icon {
+    font-size: 20px;
+  }
+
+  .delivery-method strong {
+    font-size: 11px;
+  }
+
+  .delivery-method small {
+    font-size: 9px;
+  }
+
+  .checkout-form {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .checkout-form .checkout-field-wide {
+    grid-column: auto;
+  }
+}
+
+
+/* =========================================================
+   PUNTO 9 — FOOTER PROFESIONAL DULCE ABRIL
+   Solo afecta al footer. Mantiene intactos Hero, productos,
+   Instagram, carrito y navegación.
+   ========================================================= */
+.footer {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 72px max(28px, calc((100% - 1180px) / 2)) 26px !important;
+  background: #f7eeec !important;
+  color: #30292b !important;
+  border-top: 1px solid #ead9d7 !important;
+  box-sizing: border-box !important;
+}
+
+.footer-main {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(250px, 1.35fr) minmax(130px, .72fr) minmax(150px, .82fr) minmax(220px, 1fr) !important;
+  gap: clamp(34px, 5vw, 72px) !important;
+  align-items: start !important;
+}
+
+.footer-brand-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  cursor: pointer !important;
+}
+
+.footer-logo-image {
+  width: 96px !important;
+  height: 96px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.footer-tagline {
+  margin: 18px 0 10px !important;
+  color: #8f5b6b !important;
+  font-family: inherit !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  font-weight: 700 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+}
+
+.footer-description {
+  max-width: 315px !important;
+  margin: 0 !important;
+  color: #776a6e !important;
+  font-size: 13px !important;
+  line-height: 1.75 !important;
+}
+
+.footer-column {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 9px !important;
+  min-width: 0 !important;
+}
+
+.footer-column h3 {
+  margin: 0 0 9px !important;
+  color: #30292b !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  font-weight: 800 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+}
+
+.footer-column > button {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #76686d !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  transition: color .18s ease, transform .18s ease !important;
+}
+
+.footer-column > button:hover,
+.footer-column > button:focus-visible {
+  color: #9b6071 !important;
+  transform: translateX(2px) !important;
+  outline: none !important;
+}
+
+.footer-contact p {
+  max-width: 255px !important;
+  margin: 0 0 5px !important;
+  color: #776a6e !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+
+.footer-contact-link {
+  width: 100% !important;
+  max-width: 255px !important;
+  min-height: 40px !important;
+  display: grid !important;
+  grid-template-columns: 26px 1fr auto !important;
+  align-items: center !important;
+  gap: 9px !important;
+  padding: 8px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e3d1d0 !important;
+  background: transparent !important;
+  color: #40363a !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: color .18s ease, border-color .18s ease !important;
+}
+
+.footer-contact-link:hover,
+.footer-contact-link:focus-visible {
+  color: #9b6071 !important;
+  border-bottom-color: #c895a3 !important;
+  outline: none !important;
+}
+
+.footer-contact-icon {
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #9b6071 !important;
+}
+
+.footer-contact-icon svg {
+  width: 20px !important;
+  height: 20px !important;
+  display: block !important;
+  fill: currentColor !important;
+}
+
+.footer-contact-icon-instagram svg rect {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+}
+
+.footer-contact-icon-instagram svg circle:not(.instagram-dot) {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+}
+
+.footer-contact-icon-instagram .instagram-dot {
+  fill: currentColor !important;
+}
+
+.footer-bottom {
+  margin-top: 52px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid #e2cfcd !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 18px !important;
+  color: #95878b !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+.footer-developer strong {
+  color: #755361 !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 899px) {
+  .footer {
+    padding: 58px 28px 96px !important;
+  }
+
+  .footer-main {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr) !important;
+    gap: 40px 30px !important;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1 !important;
+  }
+
+  .footer-logo-image {
+    width: 86px !important;
+    height: 86px !important;
+  }
+
+  .footer-description {
+    max-width: 440px !important;
+  }
+
+  .footer-bottom {
+    margin-top: 42px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 7px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 34px 22px 94px !important;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 34px 22px !important;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1 !important;
+    padding-bottom: 2px !important;
+  }
+
+  .footer-logo-image {
+    width: 78px !important;
+    height: 78px !important;
+  }
+
+  .footer-tagline {
+    margin-top: 14px !important;
+    font-size: 10px !important;
+    letter-spacing: .14em !important;
+  }
+
+  .footer-description {
+    max-width: 340px !important;
+    font-size: 12px !important;
+    line-height: 1.65 !important;
+  }
+
+  .footer-column h3 {
+    font-size: 10px !important;
+    letter-spacing: .13em !important;
+    margin-bottom: 7px !important;
+  }
+
+  .footer-column > button,
+  .footer-contact-link {
+    font-size: 12px !important;
+  }
+
+  .footer-contact p {
+    font-size: 11px !important;
+    line-height: 1.6 !important;
+  }
+
+  .footer-contact-link {
+    min-height: 38px !important;
+    grid-template-columns: 23px 1fr auto !important;
+    gap: 7px !important;
+  }
+
+  .footer-contact-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .footer-contact-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .footer-bottom {
+    margin-top: 36px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .footer-main {
+    gap: 30px 18px !important;
+  }
+}
+
+/* =========================================================
+   AJUSTE FINAL — CHECKOUT MINIMALISTA / MONOCROMÁTICO
+   Solo checkout y botón de WhatsApp del carrito.
+   No modifica Instagram, footer ni navegación.
+   ========================================================= */
+
+.checkout-modal h2 {
+  color: var(--dulce-text, #30292b) !important;
+  -webkit-text-fill-color: var(--dulce-text, #30292b) !important;
+}
+
+.checkout-modal > span {
+  color: #756b6d !important;
+}
+
+.checkout-intro,
+.checkout-modal p {
+  color: #625a5c !important;
+}
+
+.delivery-method {
+  color: var(--dulce-text, #30292b) !important;
+  border-color: #ded8d7 !important;
+  background: #fff !important;
+}
+
+.delivery-method:hover,
+.delivery-method.active {
+  border-color: #8a8385 !important;
+  background: #f7f5f4 !important;
+  box-shadow: none !important;
+}
+
+.checkout-form label {
+  color: var(--dulce-text, #30292b) !important;
+}
+
+.checkout-form label em,
+.delivery-method small,
+.checkout-delivery-note,
+.checkout-delivery-note span {
+  color: #756f70 !important;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+  color: var(--dulce-text, #30292b) !important;
+  border-color: #ded8d7 !important;
+}
+
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder {
+  color: #858082 !important;
+  opacity: 1 !important;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+  border-color: #8a8385 !important;
+  box-shadow: 0 0 0 3px rgba(70,66,67,.07) !important;
+}
+
+.checkout-delivery-note {
+  background: #f3f0ef !important;
+}
+
+.checkout-delivery-note strong {
+  color: #5f585a !important;
+}
+
+/* WhatsApp: sin verde, integrado al lenguaje monocromático */
+.checkout-option.whatsapp,
+.whatsapp-cart-button {
+  background: #4b4547 !important;
+  border: 1px solid #4b4547 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.checkout-option.whatsapp:hover,
+.whatsapp-cart-button:hover {
+  background: #302c2e !important;
+  border-color: #302c2e !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Instagram también queda neutro dentro del checkout */
+.checkout-option.instagram {
+  background: #f3f0ef !important;
+  border: 1px solid #ded8d7 !important;
+  color: #4b4547 !important;
+  box-shadow: none !important;
+}
+
+.checkout-option.instagram:hover {
+  background: #ebe7e6 !important;
+  color: #302c2e !important;
+}
+
+/* =========================================================
+   DULCE ABRIL — PULIDO FINAL CARRITO / CHECKOUT
+   - Unifica tipografía y pesos de todos los botones.
+   - Usa el mismo rosa del botón "Ver producto" (#d86f91).
+   - Reduce el tamaño de los botones del carrito.
+   - Elimina nombres redundantes de WhatsApp/Instagram.
+   - Igualá el fondo del carrito al menú lateral.
+   - Refuerza el scroll del checkout en móvil y escritorio.
+   ========================================================= */
+
+:root {
+  --dulce-accent: #936371;
+  --dulce-accent-hover: #815564;
+  --dulce-panel-bg: #fff4f2;
+}
+
+/* Tipografía única para controles y botones */
+button,
+.checkout-button,
+.whatsapp-cart-button,
+.continue-shopping,
+.checkout-option,
+.delivery-method,
+.quantity-controls button,
+.quantity-controls span {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+}
+
+/* Carrito y menú: exactamente el mismo fondo */
+.mobile-menu,
+.cart-panel,
+.checkout-modal {
+  background: var(--dulce-panel-bg) !important;
+}
+
+/* Botones principales del carrito: compactos, elegantes y sin relleno */
+.checkout-button,
+.whatsapp-cart-button,
+.continue-shopping {
+  box-sizing: border-box !important;
+  background: transparent !important;
+  color: var(--dulce-accent) !important;
+  border: 1px solid var(--dulce-accent) !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: .015em !important;
+  line-height: 1.25 !important;
+  min-height: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+
+.checkout-button,
+.whatsapp-cart-button {
+  width: 92% !important;
+  max-width: 420px !important;
+  padding: 11px 14px !important;
+  margin: 9px auto 0 !important;
+}
+
+.continue-shopping {
+  width: auto !important;
+  max-width: 240px !important;
+  padding: 9px 18px !important;
+  margin: 13px auto 0 !important;
+}
+
+.checkout-button:hover,
+.whatsapp-cart-button:hover,
+.continue-shopping:hover {
+  background: rgba(216,111,145,.07) !important;
+  color: var(--dulce-accent-hover) !important;
+  border-color: var(--dulce-accent-hover) !important;
+}
+
+/* El botón del checkout mantiene el mismo lenguaje visual */
+.checkout-option {
+  box-sizing: border-box !important;
+  width: 88% !important;
+  max-width: 380px !important;
+  padding: 11px 14px !important;
+  margin: 10px auto 0 !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+.checkout-option.whatsapp,
+.checkout-option.instagram,
+.checkout-option.checkout-confirm,
+.checkout-option.checkout-secondary {
+  background: transparent !important;
+  color: var(--dulce-accent) !important;
+  border: 1px solid var(--dulce-accent) !important;
+}
+
+.checkout-option.whatsapp:hover,
+.checkout-option.instagram:hover,
+.checkout-option.checkout-confirm:hover,
+.checkout-option.checkout-secondary:hover {
+  background: rgba(216,111,145,.07) !important;
+  color: var(--dulce-accent-hover) !important;
+  border-color: var(--dulce-accent-hover) !important;
+}
+
+/* Opciones de entrega: misma tipografía y sin pesos exagerados */
+.delivery-method,
+.delivery-method strong,
+.delivery-method small {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+}
+
+.delivery-method strong {
+  font-weight: 500 !important;
+}
+
+/* Checkout: scroll real y usable, especialmente en teléfonos */
+.checkout-overlay {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
+
+.checkout-modal {
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 600px) {
+  .checkout-overlay {
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: 8px 0 0 !important;
+  }
+
+  .checkout-modal {
+    width: 100% !important;
+    height: calc(100dvh - 8px) !important;
+    max-height: calc(100dvh - 8px) !important;
+    margin: 0 !important;
+    border-radius: 18px 18px 0 0 !important;
+    padding: 25px 18px calc(30px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .checkout-button,
+  .whatsapp-cart-button {
+    width: 94% !important;
+    padding: 10px 13px !important;
+    font-size: 12.5px !important;
+  }
+
+  .continue-shopping {
+    padding: 8px 17px !important;
+    font-size: 12.5px !important;
+  }
+
+  .checkout-option {
+    width: 94% !important;
+    padding: 10px 13px !important;
+    font-size: 12.5px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — COLOR FINAL + LOGOS SOCIALES
+   El color coincide con el fondo del botón "Ver producto".
+   ========================================================= */
+
+:root {
+  --dulce-accent: #936371;
+  --dulce-accent-hover: #815564;
+}
+
+/* Logo real de WhatsApp / Instagram, siempre heredando el rosa Dulce Abril */
+.social-button-content {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  color: inherit !important;
+}
+
+.social-button-content svg {
+  display: block !important;
+  flex: 0 0 auto !important;
+  color: inherit !important;
+}
+
+.checkout-button,
+.whatsapp-cart-button,
+.continue-shopping,
+.checkout-option,
+.checkout-option.whatsapp,
+.checkout-option.instagram {
+  color: var(--dulce-accent) !important;
+  border-color: var(--dulce-accent) !important;
+}
+
+.checkout-button:hover,
+.whatsapp-cart-button:hover,
+.continue-shopping:hover,
+.checkout-option:hover {
+  color: var(--dulce-accent-hover) !important;
+  border-color: var(--dulce-accent-hover) !important;
+  background: rgba(147, 99, 113, .06) !important;
+}
+
+/* No permitir que reglas antiguas vuelvan a pintar WhatsApp de verde */
+.whatsapp-cart-button,
+.checkout-option.whatsapp {
+  background: transparent !important;
+}
+
+.whatsapp-cart-button .social-button-content,
+.checkout-option.whatsapp .social-button-content,
+.checkout-option.instagram .social-button-content {
+  color: inherit !important;
+}
+
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL DEL CARRITO
+   - Elimina el botón redundante "Enviar pedido" del carrito.
+   - Los dos botones restantes tienen exactamente el mismo tamaño.
+   - Usa el rosa del botón "Ver producto" (#d86f91).
+   - Corrige "Tu carrito" para que sea legible.
+   - Refuerza el color de los campos del formulario.
+   ========================================================= */
+
+:root {
+  --dulce-accent: #936371 !important;
+  --dulce-accent-hover: #815564 !important;
+  --dulce-panel-bg: #fff4f2 !important;
+}
+
+/* Fondo idéntico al menú lateral */
+.mobile-menu,
+.cart-panel,
+.checkout-modal {
+  background: #fff4f2 !important;
+}
+
+/* Título del carrito: nunca blanco */
+.cart-header h2 {
+  color: #30292b !important;
+  -webkit-text-fill-color: #30292b !important;
+}
+
+/* Los dos únicos botones del resumen del carrito: mismo tamaño */
+.cart-summary .checkout-button,
+.cart-summary .continue-shopping {
+  box-sizing: border-box !important;
+  width: 360px !important;
+  max-width: 82% !important;
+  min-height: 50px !important;
+  margin: 9px auto 0 !important;
+  padding: 11px 16px !important;
+  border: 2.5px solid #936371 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: #936371 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  box-shadow: none !important;
+}
+
+.cart-summary .continue-shopping {
+  margin-top: 13px !important;
+}
+
+.cart-summary .checkout-button:hover,
+.cart-summary .continue-shopping:hover {
+  background: rgba(147,99,113,.07) !important;
+  color: #815564 !important;
+  border-color: #815564 !important;
+}
+
+/* El botón eliminado no debe poder reaparecer por reglas antiguas */
+.cart-summary .whatsapp-cart-button {
+  display: none !important;
+}
+
+/* Campos del formulario: texto oscuro y legible incluso en Android/autofill */
+.checkout-form input,
+.checkout-form textarea {
+  background: #fff !important;
+  color: #30292b !important;
+  -webkit-text-fill-color: #30292b !important;
+  caret-color: #30292b !important;
+  color-scheme: light !important;
+}
+
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder {
+  color: #858082 !important;
+  -webkit-text-fill-color: #858082 !important;
+  opacity: 1 !important;
+}
+
+/* El checkout conserva el mismo rosa para WhatsApp e Instagram */
+.checkout-option.whatsapp,
+.checkout-option.instagram,
+.checkout-option.checkout-confirm,
+.checkout-option.checkout-secondary {
+  background: transparent !important;
+  color: #936371 !important;
+  border-color: #936371 !important;
+}
+
+.checkout-option.whatsapp:hover,
+.checkout-option.instagram:hover,
+.checkout-option.checkout-confirm:hover,
+.checkout-option.checkout-secondary:hover {
+  background: rgba(147,99,113,.07) !important;
+  color: #815564 !important;
+  border-color: #815564 !important;
+}
+
+@media (max-width: 600px) {
+  .cart-summary .checkout-button,
+  .cart-summary .continue-shopping {
+    width: 360px !important;
+    max-width: 82% !important;
+    min-height: 48px !important;
+    padding: 10px 14px !important;
+  }
+}
+
+
+/* =========================================================
+   DULCE ABRIL — BOTONES DEL CARRITO: COLOR DE REFERENCIA
+   El tono es el mismo del precio de la referencia (#936371).
+   Contorno deliberadamente grueso y letras/iconos en el mismo tono.
+   ========================================================= */
+.cart-summary .checkout-button,
+.cart-summary .continue-shopping {
+  width: 360px !important;
+  max-width: 82% !important;
+  min-height: 50px !important;
+  box-sizing: border-box !important;
+  border: 2.5px solid #936371 !important;
+  color: #936371 !important;
+  background: transparent !important;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+}
+
+.cart-summary .checkout-button svg,
+.cart-summary .continue-shopping svg,
+.cart-summary .checkout-button .icon,
+.cart-summary .continue-shopping .icon {
+  color: #936371 !important;
+  stroke: #936371 !important;
+}
+
+.checkout-option.whatsapp,
+.checkout-option.instagram,
+.checkout-option.checkout-confirm,
+.checkout-option.checkout-secondary {
+  color: #936371 !important;
+  border-color: #936371 !important;
+}
+
+.checkout-option.whatsapp svg,
+.checkout-option.instagram svg,
+.checkout-option.checkout-confirm svg,
+.checkout-option.checkout-secondary svg {
+  color: #936371 !important;
+  stroke: #936371 !important;
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL DEL FOOTER
+   PC: contenido visualmente centrado.
+   MÓVIL: ¿Hablamos? a la izquierda y redes a la derecha.
+   ========================================================= */
+.footer-main {
+  width: min(100%, 1120px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (min-width: 900px) {
+  .footer-main {
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-main {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 30px 22px !important;
+  }
+
+  .footer-contact {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(135px, .78fr) !important;
+    column-gap: 24px !important;
+    row-gap: 7px !important;
+    align-items: start !important;
+  }
+
+  .footer-contact h3 {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .footer-contact p {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    max-width: 260px !important;
+    margin: 0 !important;
+  }
+
+  .footer-contact-link {
+    grid-column: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+  }
+
+  .footer-contact-link:first-of-type {
+    grid-row: 1 !important;
+  }
+
+  .footer-contact-link:last-of-type {
+    grid-row: 2 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer-contact {
+    grid-template-columns: minmax(0, 1fr) minmax(118px, .78fr) !important;
+    column-gap: 16px !important;
+  }
+
+  .footer-contact-link {
+    font-size: 11px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — CENTRADO DEFINITIVO DEL FOOTER EN PC
+   Mantiene intacto el diseño móvil.
+   ========================================================= */
+@media (min-width: 900px) {
+  .footer-main {
+    width: min(100%, 1040px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 42px !important;
+    justify-content: center !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — CENTRADO VISUAL FINAL DEL FOOTER PC
+   Ajuste exclusivo para escritorio: reduce el ancho del grupo
+   y lo centra exactamente dentro del footer.
+   ========================================================= */
+@media (min-width: 900px) {
+  .footer-main {
+    width: min(100%, 1000px) !important;
+    max-width: 1000px !important;
+    margin-inline: auto !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 34px !important;
+    justify-content: center !important;
+  }
+}
+
+/* DULCE ABRIL — PRECIO + COMPARTIR: ajuste aislado.
+   No modifica carrito, checkout ni footer. */
+.product-detail-info > div.product-price-share-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin: 2px 0 18px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.product-detail-info > div.product-price-share-row > strong {
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #9b6172 !important;
+  font-size: clamp(25px, 6vw, 28px) !important;
+  line-height: 1.1 !important;
+}
+
+.product-detail-info > div.product-price-share-row > button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  flex: 0 0 30px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #9b6172 !important;
+  box-shadow: none !important;
+}
+
+.product-detail-info > div.product-price-share-row > button svg {
+  width: 25px !important;
+  height: 25px !important;
+  display: block !important;
+}
+
+@media (max-width: 600px) {
+  .product-detail-info > div.product-price-share-row {
+    margin-bottom: 18px !important;
+    padding: 0 !important;
+  }
+
+  .product-detail-info > div.product-price-share-row > strong {
+    margin: 0 !important;
+    font-size: clamp(25px, 6vw, 28px) !important;
+  }
+}
+
+/* SOLO CAMBIO: tipografía de nombres de productos */
+.product-info h3,
+.featured-card .product-info h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+}
+
+/* =========================================================
+   AJUSTE FINAL — SOLO LO SOLICITADO
+   1) Títulos principales = misma fuente/tamaño que Destacados.
+   2) Elimina el espacio superior antes de Destacados en móvil.
+   No modifica producto, carrito, compartir, footer ni botones.
+   ========================================================= */
+
+.section-heading h2,
+.promotion-content h2,
+.instagram-section h2,
+.cart-header h2,
+.checkout-modal h2 {
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.025em !important;
+  color: #30292b !important;
+  -webkit-text-fill-color: #30292b !important;
+}
+
+@media (max-width: 600px) {
+  .section-heading h2,
+  .promotion-content h2,
+  .instagram-section h2,
+  .cart-header h2,
+  .checkout-modal h2 {
+    font-size: 27px !important;
+    line-height: 1.05 !important;
+  }
+
+  .featured-section {
+    padding-top: 0 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .section-heading h2,
+  .promotion-content h2,
+  .instagram-section h2,
+  .cart-header h2,
+  .checkout-modal h2 {
+    font-size: 26px !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — SOLO REDUCCIÓN DE ESPACIOS ENTRE SECCIONES
+   No modifica tipografías, productos, tarjetas, botones ni títulos.
+   ========================================================= */
+@media (max-width: 600px) {
+  /* Solo ajuste de aire entre secciones — no tocar tipografías ni componentes */
+  .products-section {
+    padding-bottom: 32px !important;
+    padding-top: 0 !important;
+  }
+
+  .promotions-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 42px !important;
+  }
+}
+
+/* UNIFICAR RADIO DE BOTONES — NO MODIFICAR OTRAS REGLAS */.add-button,.hero-main-button,.promotion-button,.instagram-button,.product-detail-info .add-button,.featured-card .add-button {  border-radius: 12px !important;}
+/* COLOR UNIFICADO — SOLO DESTACADOS */.featured-section .view-all-button {  color: var(--dulce-action) !important;}.featured-section .sold-badge {  background: var(--dulce-action) !important;}
+
+/* =========================================================
+   DULCE ABRIL — ANIMACIÓN PROFESIONAL DE PANELES LATERALES
+   Solo afecta al menú móvil y al carrito.
+   No modifica tamaños, colores ni espaciados existentes.
+   ========================================================= */
+
+.mobile-menu-overlay,
+.cart-overlay {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility 0s linear .28s;
+}
+
+.mobile-menu-overlay.is-open,
+.cart-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity .28s ease, visibility 0s linear 0s;
+}
+
+.mobile-menu {
+  transform: translateX(-100%);
+  will-change: transform;
+  transition: transform .32s cubic-bezier(.22, 1, .36, 1);
+}
+
+.mobile-menu-overlay.is-open .mobile-menu {
+  transform: translateX(0);
+}
+
+.cart-panel {
+  transform: translateX(100%);
+  will-change: transform;
+  transition: transform .32s cubic-bezier(.22, 1, .36, 1);
+}
+
+.cart-overlay.is-open .cart-panel {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-overlay,
+  .cart-overlay,
+  .mobile-menu,
+  .cart-panel {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — MENÚ MÓVIL CON SCROLL INTERNO
+   Solo permite recorrer el menú cuando las categorías crecen.
+   No modifica tamaños, colores ni espaciados existentes.
+   ========================================================= */
+@media (max-width: 899px) {
+  .mobile-menu {
+    box-sizing: border-box !important;
+    max-height: 100dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+}
+
+
+/* PROMOCIONES — productos administrados desde Supabase */
+.promotion-products-grid {
+  width: min(1180px, 100%);
+  margin: 34px auto 28px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  text-align: left;
+}
+
+.promotion-product-card {
+  min-width: 0;
+}
+
+.promotion-see-all {
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .promotion-products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .promotion-products-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* =========================================================
+   DULCE ABRIL — AJUSTE FINAL ICONOS FOOTER
+   Igualar tamaño visual de WhatsApp e Instagram.
+   ========================================================= */
+.footer-contact-icon-whatsapp svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+/* Instagram tiene un margen interno propio en su SVG; se compensa
+   visualmente sin cambiar el espacio reservado por el footer. */
+.footer-contact-icon-instagram svg {
+  width: 22px !important;
+  height: 22px !important;
+  transform: scale(1.28);
+}

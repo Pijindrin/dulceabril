@@ -1,0 +1,20 @@
+{
+  "name": "Dulce Abril | Mates, Termos, Tazas y Combos",
+  "short_name": "Dulce Abril",
+  "description": "Tienda online de Dulce Abril: mates, termos, tazas y combos.",
+  "lang": "es-AR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/dulce-abril-logo.png",
+      "sizes": "1200x1200",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
