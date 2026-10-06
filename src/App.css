@@ -7441,9 +7441,8 @@ button,
     height: 24px !important;
   }
 }
-/* PRUEBA TEMPORAL — HERO */
 @media (max-width: 899px) {
-  .hero {
+  .hero-slide-image {
     display: none !important;
   }
 }
