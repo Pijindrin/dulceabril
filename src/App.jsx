@@ -943,6 +943,15 @@ function App() {
     window.open(whatsappUrl, "_blank");
   };
 
+  const sendPriceInquiry = (product, variant = null) => {
+    if (!product) return;
+    const phoneNumber = "5493876745397";
+    const variantText = variant?.name ? `\nModelo/color: ${variant.name}` : "";
+    const message = `Hola! Quería consultar el precio de "${product.name}".${variantText}\n\n¿Me pasan el precio, por favor?`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=` + encodeURIComponent(message);
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  };
+
   const openCheckout = () => setCheckoutOpen(true);
 
 
@@ -1616,7 +1625,7 @@ function App() {
                       <button
                         className="add-button"
                         onClick={() => {
-                          const phoneNumber = "5493815086810";
+                          const phoneNumber = "5493876745397";
                           const variantText = activeVariant?.name
                             ? `\nModelo/color: ${activeVariant.name}`
                             : "";
@@ -1879,9 +1888,13 @@ function App() {
 
                     <button
                       className="add-button"
-                      disabled={Number(product.price) === 0 || (!product.variants?.length && Number(product.stock ?? 0) <= 0)}
+                      disabled={Number(product.price) === 0 ? false : (!product.variants?.length && Number(product.stock ?? 0) <= 0)}
                       onClick={(event) => {
                         event.stopPropagation();
+                        if (Number(product.price) === 0) {
+                          sendPriceInquiry(product);
+                          return;
+                        }
                         if (product.variants?.length) {
                           setSelectedProduct({...product, image: product.image});
                           setSelectedVariantIndex(null);
@@ -2168,9 +2181,13 @@ function App() {
 
                     <button
                       className="add-button"
-                      disabled={Number(product.price) === 0 || (!product.variants?.length && Number(product.stock ?? 0) <= 0)}
+                      disabled={Number(product.price) === 0 ? false : (!product.variants?.length && Number(product.stock ?? 0) <= 0)}
                       onClick={(event) => {
                         event.stopPropagation();
+                        if (Number(product.price) === 0) {
+                          sendPriceInquiry(product);
+                          return;
+                        }
                         if (product.variants?.length) {
                           setSelectedProduct({...product, image: product.image});
                           setSelectedVariantIndex(null);
@@ -2256,12 +2273,13 @@ function App() {
                     </strong>
                     <button
                       className="add-button"
-                      disabled={
-                        Number(product.price) === 0 ||
-                        (!product.variants?.length && Number(product.stock ?? 0) <= 0)
-                      }
+                      disabled={Number(product.price) === 0 ? false : (!product.variants?.length && Number(product.stock ?? 0) <= 0)}
                       onClick={(event) => {
                         event.stopPropagation();
+                        if (Number(product.price) === 0) {
+                          sendPriceInquiry(product);
+                          return;
+                        }
                         if (product.variants?.length) {
                           setSelectedProduct({ ...product, image: product.image });
                           setSelectedVariantIndex(null);
