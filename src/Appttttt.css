@@ -7450,25 +7450,3 @@ button,
     -webkit-backdrop-filter: none !important;
   }
 }
-
-
-/* TEST 2: diagnóstico de carga gráfica en móviles
-   No modifica las reglas anteriores; desactiva animaciones/transiciones
-   únicamente en pantallas móviles para identificar si el parpadeo
-   proviene de una composición gráfica continua. */
-@media (max-width: 899px) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-
-  .hero-background,
-  .hero-blur-circle,
-  .hero-product-shape {
-    filter: none !important;
-    will-change: auto !important;
-  }
-}
