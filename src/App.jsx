@@ -983,7 +983,7 @@ function App() {
           >
             <img
               className="brand-logo-image"
-              src="/dulce-abril-logo.png"
+              src="/dulce-abril-logo.webp"
               alt="Dulce Abril — Tienda de Ideas"
             />
           </button>
@@ -1036,7 +1036,7 @@ function App() {
             <div className="mobile-menu-brand">
               <img
                 className="mobile-menu-logo"
-                src="/dulce-abril-logo.png"
+                src="/dulce-abril-logo.webp"
                 alt="Dulce Abril"
               />
               <small>REGALOS QUE ENAMORAN</small>
@@ -1155,7 +1155,7 @@ function App() {
                     <div className="cart-item" key={item.cartKey || item.id}>
 
                       <div className="cart-item-image">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src={item.image}
                           alt={item.name}
                           onError={(event) => handleImageError(event, item)}
@@ -1444,7 +1444,7 @@ function App() {
                             className={`product-detail-thumbnail ${i === safeImageIndex ? "active" : ""}`}
                             onClick={() => setSelectedImageIndex(i)}
                           >
-                            <img src={img.url} alt={`${selectedProduct.name} ${i + 1}`} />
+                            <img loading="lazy" decoding="async" src={img.url} alt={`${selectedProduct.name} ${i + 1}`} />
                           </button>
                         ))}
                       </div>
@@ -1698,7 +1698,7 @@ function App() {
                 <div className="hero-eyebrow">{heroSlides[heroIndex]?.eyebrow}</div>
 
                 {heroSlides[heroIndex]?.type === "welcome" && (
-                  <img className="hero-logo-image" src="/dulce-abril-logo.png" alt="Dulce Abril — Tienda de Ideas" />
+                  <img className="hero-logo-image" src="/dulce-abril-logo.webp" alt="Dulce Abril — Tienda de Ideas" />
                 )}
 
                 <div className="hero-tagline">{heroSlides[heroIndex]?.tagline}</div>
@@ -1862,7 +1862,7 @@ function App() {
                       </span>
                     )}
 
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={product.image}
                       alt={product.name}
                       onError={(event) => handleImageError(event, product)}
@@ -2155,7 +2155,7 @@ function App() {
 
                   <div className="product-image">
 
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={product.image}
                       alt={product.name}
                       onError={(event) => handleImageError(event, product)}
@@ -2256,7 +2256,7 @@ function App() {
                   }}
                 >
                   <div className="product-image">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={product.image}
                       alt={product.name}
                       onError={(event) => handleImageError(event, product)}
@@ -2519,7 +2519,7 @@ function App() {
                   }}
                 >
                   <div className="mobile-search-result-image">
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={product.image}
                       alt={product.name}
                       onError={(event) => handleImageError(event, product)}
@@ -2548,7 +2548,7 @@ function App() {
         <div className="footer-main">
           <div className="footer-brand">
             <button type="button" className="footer-brand-button" onClick={() => goTo("inicio")} aria-label="Volver al inicio">
-              <img src="/dulce-abril-logo.png" alt="Dulce Abril" className="footer-logo-image" />
+              <img loading="lazy" decoding="async" src="/dulce-abril-logo.webp" alt="Dulce Abril" className="footer-logo-image" />
             </button>
             <p className="footer-tagline">Regalos que enamoran</p>
             <p className="footer-description">

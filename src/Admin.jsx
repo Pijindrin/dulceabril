@@ -2959,7 +2959,7 @@ console.log("USER EMAIL:", user?.email);
             <div className="admin-brand">
               <img
                 className="admin-brand-logo"
-                src="/dulce-abril-logo.png"
+                src="/dulce-abril-logo.webp"
                 alt="Dulce Abril"
               />
               <p>Administración de la tienda</p>
