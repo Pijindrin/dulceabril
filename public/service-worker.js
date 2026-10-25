@@ -1,8 +1,11 @@
-const CACHE_NAME = "dulce-abril-v1";
+// Cambiá este número cada vez que quieras forzar que los clientes descarten la caché vieja.
+const CACHE_NAME = "dulce-abril-v2";
+
 const APP_SHELL = [
   "/",
   "/manifest.webmanifest",
-  "/dulce-abril-logo.png",
+  "/dulce-abril-logo.webp",
+  "/dulce-abril-hero-bg.webp",
   "/favicon.svg"
 ];
 
@@ -27,15 +30,29 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
+  const { request } = event;
+  if (request.method !== "GET") return;
 
+  const url = new URL(request.url);
+
+  // Solo se cachean archivos de la propia web.
+  // Supabase (productos, precios, stock), Instagram y Google Fonts van siempre directo a la red,
+  // así nadie ve precios o productos viejos.
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith("/admin")) return;
+
+  // Red primero; si no hay conexión, se usa lo último guardado.
   event.respondWith(
-    fetch(event.request)
+    fetch(request)
       .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/")))
+      .catch(() =>
+        caches.match(request).then((cached) => cached || caches.match("/"))
+      )
   );
 });

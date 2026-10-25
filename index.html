@@ -7,7 +7,19 @@
     <meta charset="UTF-8" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/dulce-abril-logo.png" />
+    <link rel="apple-touch-icon" href="/dulce-abril-pwa-192.png" />
+
+    <!-- Fuentes: cargadas desde el head (más rápido que @import en el CSS) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap"
+    />
+
+    <!-- Hero: se piden antes de que cargue React -->
+    <link rel="preload" as="image" href="/dulce-abril-hero-bg.webp" type="image/webp" />
+    <link rel="preload" as="image" href="/dulce-abril-logo.webp" type="image/webp" fetchpriority="high" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
     <link
@@ -47,10 +59,13 @@
     />
     <meta property="og:url" content="https://www.dulceabril.com.ar/" />
     <meta property="og:site_name" content="Dulce Abril" />
-    <meta property="og:image" content="https://www.dulceabril.com.ar/dulce-abril-logo.png" />
+    <meta property="og:image" content="https://www.dulceabril.com.ar/dulce-abril-og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dulce Abril — Tienda de Ideas" />
 
     <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
       content="Dulce Abril | Mates, Termos, Tazas y Combos"
@@ -59,7 +74,7 @@
       name="twitter:description"
       content="Descubrí los productos de Dulce Abril y realizá tu pedido."
     />
-    <meta name="twitter:image" content="https://www.dulceabril.com.ar/dulce-abril-logo.png" />
+    <meta name="twitter:image" content="https://www.dulceabril.com.ar/dulce-abril-og.jpg" />
 
     <script type="application/ld+json">
       {
@@ -80,6 +95,12 @@
   <body>
 
     <div id="root"></div>
+
+    <noscript>
+      <p style="font-family: Georgia, serif; text-align: center; padding: 40px 20px;">
+        Dulce Abril — Mates, termos, tazas y combos. Para ver la tienda necesitás activar JavaScript.
+      </p>
+    </noscript>
 
     <script type="module" src="/src/main.jsx"></script>
 
