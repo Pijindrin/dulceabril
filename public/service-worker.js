@@ -1,12 +1,12 @@
 // Cambiá este número cada vez que quieras forzar que los clientes descarten la caché vieja.
-const CACHE_NAME = "dulce-abril-v2";
+const CACHE_NAME = "dulce-abril-v3";
 
 const APP_SHELL = [
   "/",
   "/manifest.webmanifest",
   "/dulce-abril-logo.webp",
   "/dulce-abril-hero-bg.webp",
-  "/favicon.svg"
+  "/favicon.ico"
 ];
 
 self.addEventListener("install", (event) => {
