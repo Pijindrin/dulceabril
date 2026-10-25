@@ -601,10 +601,10 @@ console.log("USER EMAIL:", user?.email);
     if (file.type === "image/gif" || file.type === "image/svg+xml") return file;
 
     // Si ya es una imagen liviana y de tamaño razonable, la dejamos tal cual.
-    if (file.size <= 800 * 1024) {
+    if (file.size <= 300 * 1024) {
       try {
         const bitmap = await createImageBitmap(file);
-        if (bitmap.width <= 1600 && bitmap.height <= 1600) {
+        if (bitmap.width <= 1200 && bitmap.height <= 1200) {
           bitmap.close();
           return file;
         }
@@ -618,7 +618,7 @@ console.log("USER EMAIL:", user?.email);
 
       img.onload = () => {
         try {
-          const maxSize = 1600;
+          const maxSize = 1200;
           const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight));
           const width = Math.max(1, Math.round(img.naturalWidth * scale));
           const height = Math.max(1, Math.round(img.naturalHeight * scale));
