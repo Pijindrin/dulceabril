@@ -6459,6 +6459,18 @@ main,
   font-weight: 700 !important;
 }
 
+.footer-developer a {
+  color: inherit !important;
+  text-decoration: none !important;
+  border-bottom: 1px dotted currentColor;
+}
+
+.footer-developer a:hover strong,
+.footer-developer a:focus-visible strong {
+  color: var(--dulce-rose, #755361) !important;
+  text-decoration: underline;
+}
+
 @media (max-width: 899px) {
   .footer {
     padding: 58px 28px 96px !important;

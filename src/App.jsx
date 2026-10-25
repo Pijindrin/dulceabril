@@ -2600,7 +2600,17 @@ function App() {
 
         <div className="footer-bottom">
           <span>© 2026 Dulce Abril · Todos los derechos reservados</span>
-          <span className="footer-developer">Sitio web desarrollado por <strong>Chuncho</strong></span>
+          <span className="footer-developer">
+            Sitio web desarrollado por{" "}
+            <a
+              href="https://wa.me/5493815086810?text=Hola%20Chuncho%2C%20vi%20la%20web%20de%20Dulce%20Abril%20y%20quer%C3%ADa%20consultarte%20por%20una%20p%C3%A1gina%20web."
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Escribirle a Chuncho por WhatsApp"
+            >
+              <strong>Chuncho</strong>
+            </a>
+          </span>
         </div>
       </footer>
 
