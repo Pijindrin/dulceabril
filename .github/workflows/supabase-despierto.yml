@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
+    # Datos de la base de datos expuestos al publico, sugerencia de seguridad cambiar el supabase key por uno nuevo y ponerlo solo en el .env
       SUPABASE_URL: https://ihsziuubwukxndryxaxn.supabase.co
       SUPABASE_KEY: sb_publishable_gVJotWDy5kcmBchuG3YR-A_HvVw_uS6
       TABLA: products
